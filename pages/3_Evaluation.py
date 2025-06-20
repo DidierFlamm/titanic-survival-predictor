@@ -7,6 +7,11 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import classification_report, confusion_matrix
 
+if "go_next_3" in st.session_state:
+    if st.session_state.go_next_3:
+        st.session_state.go_next_3 = False
+        st.switch_page(st.session_state.pages[3])
+
 st.set_page_config(page_title="Titanic - Evaluation")
 st.header("Evaluation")
 
@@ -148,12 +153,16 @@ df_cm = pd.DataFrame(cm, index=["Actual 0", "Actual 1"], columns=["Pred 0", "Pre
 st.markdown("- Confusion Matrix")
 st.dataframe(df_cm)
 
+st.session_state.go_next_3 = True
+
 if st.button("Passer à l'étape suivante"):
+    st.session_state.go_next_3 = True
     if len(st.session_state.pages) == 3:
         st.session_state.pages.append(
             st.Page("pages/4_Optimisation.py", title="Optimisation", icon="📈")
         )
     st.switch_page(st.session_state.pages[3])
+
 
 st.markdown(
     """
