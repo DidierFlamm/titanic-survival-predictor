@@ -19,7 +19,7 @@ st.sidebar.audio(
 
 if "pages" not in st.session_state:
     st.session_state.pages = [
-        st.Page("pages/1_Accueil.py", title="Accueil", icon="🛳️", default=True)
+        st.Page("pages/1_Accueil.py", title="Accueil", icon="⚓", default=True)
     ]
 
 # st.session_state.pages est incrémenté par les boutons en fin de chaque page
