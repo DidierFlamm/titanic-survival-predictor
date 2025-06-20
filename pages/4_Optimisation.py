@@ -9,6 +9,11 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import balanced_accuracy_score
 import pandas as pd
 
+if "go_next_4" in st.session_state:
+    if st.session_state.go_next_4:
+        st.session_state.go_next_4 = False
+        st.switch_page(st.session_state.pages[4])
+
 st.set_page_config(page_title="Titanic - Optimisation")
 st.header("Optimisation")
 
@@ -131,12 +136,15 @@ df_results = (
 )
 st.dataframe(df_results)
 
+st.session_state.go_next_4 = True
+
 if st.button("Passer à l'étape suivante"):
+    st.session_state.go_next_4 = True
     if len(st.session_state.pages) == 4:
         st.session_state.pages.append(
             st.Page("pages/5_Predictions.py", title="Prédictions", icon="🎯")
         )
-    st.switch_page(st.session_state.pages[4])
+
 
 st.markdown(
     """
