@@ -7,12 +7,22 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import classification_report, confusion_matrix
 
+# set title
+st.set_page_config(page_title="Titanic - Evaluation")
+
+# add next page
+if len(st.session_state.pages) == 3:
+    st.session_state.pages.append(
+        st.Page("pages/4_Optimisation.py", title="Optimisation", icon="📈")
+    )
+
+# manage switch
 if "go_next_3" in st.session_state:
     if st.session_state.go_next_3:
         st.session_state.go_next_3 = False
         st.switch_page(st.session_state.pages[3])
 
-st.set_page_config(page_title="Titanic - Evaluation")
+
 st.header("Evaluation")
 
 set_seed()
@@ -155,13 +165,7 @@ st.dataframe(df_cm)
 
 st.session_state.go_next_3 = True
 
-if st.button("Passer à l'étape suivante"):
-    st.session_state.go_next_3 = True
-    if len(st.session_state.pages) == 3:
-        st.session_state.pages.append(
-            st.Page("pages/4_Optimisation.py", title="Optimisation", icon="📈")
-        )
-    st.switch_page(st.session_state.pages[3])
+st.button("Passer à l'étape suivante")
 
 
 st.markdown(

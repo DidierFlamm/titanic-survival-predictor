@@ -5,7 +5,26 @@ from utils import load_csv
 import pandas as pd
 import streamlit.components.v1 as components
 
+# set title
 st.set_page_config(page_title="Titanic")
+
+# add next page
+if len(st.session_state.pages) == 1:
+    st.session_state.pages.append(
+        st.Page(
+            "pages/2_Visualisation.py",
+            title="Visualisation",
+            icon="📊",
+        )
+    )
+
+# manage switch
+if "go_next_1" in st.session_state:
+    if st.session_state.go_next_1:
+        st.session_state.go_next_1 = False
+        st.switch_page(st.session_state.pages[1])
+
+
 st.title("Titanic")
 
 
@@ -124,19 +143,10 @@ if st.button("🚢 Embarquez à bord du Titanic") or "go_next_1" in st.session_s
     # ajout d'une variable d'état go_next pour éviter que l’appel à st.switch_page() soit ignoré
     # parce que le bouton a déclenché un rerun qui reset des variables.
 
+st.session_state.go_next_1 = True
 
 if st.button("Passer à l'étape suivante"):
 
-    st.session_state.go_next_1 = True
-
-    if len(st.session_state.pages) == 1:
-        st.session_state.pages.append(
-            st.Page(
-                "pages/2_Visualisation.py",
-                title="Visualisation",
-                icon="📊",
-            )
-        )
     st.switch_page(st.session_state.pages[1])
 
 st.markdown(

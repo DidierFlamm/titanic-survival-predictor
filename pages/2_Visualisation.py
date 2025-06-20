@@ -4,12 +4,21 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 
+# set title
+st.set_page_config(page_title="Titanic - Visualisation")
+
+# add next page
+if len(st.session_state.pages) == 2:
+    st.session_state.pages.append(
+        st.Page("pages/3_Evaluation.py", title="Evaluation", icon="📝")
+    )
+
+# manage switch
 if "go_next_2" in st.session_state:
     if st.session_state.go_next_2:
         st.session_state.go_next_2 = False
         st.switch_page(st.session_state.pages[2])
 
-st.set_page_config(page_title="Titanic - Visualisation")
 
 st.header("Visualisation")
 
@@ -180,12 +189,7 @@ st.plotly_chart(hist_bis)
 
 st.session_state.go_next_2 = True
 
-if st.button("Passer à l'étape suivante"):
-    st.session_state.go_next_2 = True
-    if len(st.session_state.pages) == 2:
-        st.session_state.pages.append(
-            st.Page("pages/3_Evaluation.py", title="Evaluation", icon="📝")
-        )
+st.button("Passer à l'étape suivante")
 
 
 st.markdown(
