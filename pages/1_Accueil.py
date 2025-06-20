@@ -44,9 +44,9 @@ Bien que le hasard ait joué un rôle dans les chances de survie, certains group
 
 L'objectif de ce projet est de construire un modèle prédictif pour répondre à la question « Quels types de personnes avaient le plus de chances de survivre ? », en s’appuyant sur les données disponibles de 891 passagers (nom, âge, sexe, classe socio-économique, etc...)
 
-⚓ Votre capitaine Flamm Didier et la compagnie DIDS (Dive into Data Science), vous souhaitent la bienvenue à bord du projet Titanic.  
+Votre capitaine Flamm Didier et la compagnie DIDS (Dive into Data Science), vous souhaitent la bienvenue à bord du projet Titanic.  
 
-Bon voyage ! 🚢 🌊 ⚠️ 🧊 🚨 💥 🆘 🛟 🚣 
+Bon voyage ! ⚓ 🚢 ⚠️ 🧊 🚨 💥 🆘 🛟 🚣 
 """
 
 
