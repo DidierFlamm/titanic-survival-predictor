@@ -4,8 +4,8 @@ from utils import load_csv
 import pandas as pd
 
 st.set_page_config(page_title="Titanic")
+st.title("Bienvenue à bord du projet Titanic")
 
-st.title("Titanic")
 
 st.image(
     "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Titanic_in_color.png/960px-Titanic_in_color.png",
@@ -78,6 +78,16 @@ st.table(df.set_index("Variable"))
 
 st.image("https://upload.wikimedia.org/wikipedia/commons/a/af/TitanicRoute.svg")
 
+if st.button("Passer à l'étape suivante"):
+    if len(st.session_state.pages) == 1:
+        st.session_state.pages.append(
+            st.Page(
+                "pages/2_Visualisation.py",
+                title="Visualisation",
+                icon="📊",
+            )
+        )
+    st.switch_page(st.session_state.pages[1])
 
 st.markdown(
     """

@@ -7,6 +7,7 @@ import plotly.express as px
 st.set_page_config(page_title="Titanic - Visualisation")
 st.header("Visualisation")
 
+
 df = load_csv()
 
 df_display = df.copy()
@@ -170,6 +171,13 @@ st.plotly_chart(hist)
 
 hist_bis = px.sunburst(df, path=["Sex", "Pclass"])
 st.plotly_chart(hist_bis)
+
+if st.button("Passer à l'étape suivante"):
+    if len(st.session_state.pages) == 2:
+        st.session_state.pages.append(
+            st.Page("pages/3_Evaluation.py", title="Evaluation", icon="📝")
+        )
+    st.switch_page(st.session_state.pages[2])
 
 
 st.markdown(

@@ -10,6 +10,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 st.set_page_config(page_title="Titanic - Evaluation")
 st.header("Evaluation")
 
+
 set_seed()
 
 # Récupérer tous les classifiers
@@ -99,11 +100,14 @@ for i, (name, ClfClass) in enumerate(all_classifiers):
     placeholder.dataframe(df_results)
 
 duration = int(1000 * (time.time() - start_total_time))
-status.text(f"ℹ️ {len(all_classifiers)} modèles évalués en {duration} ms")
+status.text(f"ℹ️ {len(all_classifiers)} modèles testés en {duration} ms")
 
 st.success(f"{len(results)} modèles ont été évalués avec succès", icon="✅")
 
-st.error(f"{len(errors)} modèles n'ont pas pu être entraînés", icon="🚨")
+st.info(
+    f"{len(errors)} modèles n'ont pas pu être entraînés avec leurs paramètres par défaut",
+    icon="ℹ️",
+)
 
 with st.expander("Afficher le rapport d'erreurs"):
     st.dataframe(errors)
@@ -142,6 +146,12 @@ df_cm = pd.DataFrame(cm, index=["Actual 0", "Actual 1"], columns=["Pred 0", "Pre
 st.markdown("- Confusion Matrix")
 st.dataframe(df_cm)
 
+if st.button("Passer à l'étape suivante"):
+    if len(st.session_state.pages) == 3:
+        st.session_state.pages.append(
+            st.Page("pages/4_Optimisation.py", title="Optimisation", icon="📈")
+        )
+    st.switch_page(st.session_state.pages[3])
 
 st.markdown(
     """

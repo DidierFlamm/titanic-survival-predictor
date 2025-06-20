@@ -11,6 +11,7 @@ import pandas as pd
 st.set_page_config(page_title="Titanic - Optimisation")
 st.header("Optimisation")
 
+
 st.subheader("🔧 Fine tuning des hyperparamètres de 5 modèles")
 
 set_seed()
@@ -98,6 +99,12 @@ df_results = (
 )
 st.dataframe(df_results)
 
+if st.button("Passer à l'étape suivante"):
+    if len(st.session_state.pages) == 4:
+        st.session_state.pages.append(
+            st.Page("pages/5_Predictions.py", title="Prédictions", icon="🎯")
+        )
+    st.switch_page(st.session_state.pages[4])
 
 st.markdown(
     """
