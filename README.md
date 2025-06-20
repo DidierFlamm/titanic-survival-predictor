@@ -8,8 +8,8 @@ The goal: predict the probability of survival for each Titanic passenger based o
 ---
 
 ## 📁 Project Structure
-.  
-├── main.py          # Runs streamlit_app  
+[root](https://github.com/DidierFlamm/titanic-survival-predictor)  
+├── main.py          # Streamlit app launcher  
 ├── streamlit_app.py # Main Streamlit app (entry point)  
 ├── utils.py         # Utility functions  
 ├── /pages/          # Additional Streamlit pages  
@@ -30,6 +30,7 @@ pip install -r requirements.txt
 ```
 
 ### 3. Launch the Streamlit app
+You can launch the app either by running main.py or with streamlit run streamlit_app.py :  
 ```bash
 python main.py
 ```
@@ -62,4 +63,4 @@ No setup needed — try it instantly online:
 MIT License – feel free to reuse and adapt.
   
 ## 🙌 Acknowledgements  
-Inspired by the famous Titanic survival classification challenge from Kaggle.
+Inspired by the famous Titanic survival classification challenge from [Kaggle](https://www.kaggle.com/competitions/titanic/overview).
