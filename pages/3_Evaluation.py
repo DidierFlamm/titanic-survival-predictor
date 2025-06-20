@@ -10,14 +10,13 @@ from sklearn.metrics import classification_report, confusion_matrix
 st.set_page_config(page_title="Titanic - Evaluation")
 st.header("Evaluation")
 
-
 set_seed()
 
 # Récupérer tous les classifiers
 all_classifiers = all_estimators(type_filter="classifier")
 
 st.write(
-    "Entraînement puis évaluation de la performance par stratified-KFold Cross Validation des modèles de la librairie scikit-learn"
+    "Entraînement puis évaluation de la performance par stratified-KFold Cross Validation de tous les modèles de la librairie scikit-learn"
 )
 
 df = load_csv()
