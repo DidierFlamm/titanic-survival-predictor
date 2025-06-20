@@ -39,7 +39,7 @@ def stream_data():
 
 
 # 👇 Lancement au clic
-if st.button("🚢 Embarquez à bord du Titanic") or "go_next" in st.session_state:
+if st.button("🚢 Embarquez à bord du Titanic") or "go_next_1" in st.session_state:
 
     # 🔊 Synthèse vocale avec interaction utilisateur (voix française)
     components.html(
@@ -57,7 +57,7 @@ if st.button("🚢 Embarquez à bord du Titanic") or "go_next" in st.session_sta
         height=40,
     )
 
-    if "go_next" not in st.session_state:
+    if "go_next_1" not in st.session_state:
         st.write_stream(stream_data)
     else:
         st.write(text)
@@ -124,13 +124,11 @@ if st.button("🚢 Embarquez à bord du Titanic") or "go_next" in st.session_sta
     # ajout d'une variable d'état go_next pour éviter que l’appel à st.switch_page() soit ignoré
     # parce que le bouton a déclenché un rerun qui reset des variables.
 
-if "go_next" not in st.session_state:
-    st.session_state.go_next = False
 
 if st.button("Passer à l'étape suivante"):
-    # st.session_state.go_next = True
 
-    # if st.session_state.go_next:
+    st.session_state.go_next_1 = True
+
     if len(st.session_state.pages) == 1:
         st.session_state.pages.append(
             st.Page(
