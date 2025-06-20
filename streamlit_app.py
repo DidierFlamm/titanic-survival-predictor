@@ -4,7 +4,12 @@ import streamlit as st
 st.sidebar.header("Settings", divider=True)
 st.sidebar.subheader("Musique")
 mp3_url = "https://archive.org/download/celine-dion-my-heart-will-go-on_202207/Celine%20Dion%20-%20My%20Heart%20Will%20Go%20On.mp3"
-st.sidebar.audio(mp3_url, format="audio/mp3", loop=True, autoplay=True)
+st.sidebar.audio(
+    mp3_url,
+    format="audio/mp3",
+    loop=True,
+    autoplay=True,
+)
 
 
 if "pages" not in st.session_state:
