@@ -58,10 +58,10 @@ def stream_data():
 
 
 # 👇 Lancement au clic
-if st.button("🚢 Embarquez à bord du Titanic") or "go_next_1" in st.session_state:
+#if st.button("🚢 Embarquez à bord du Titanic") or "go_next_1" in st.session_state:
 
     # 🔊 Synthèse vocale avec interaction utilisateur (voix française)
-    components.html(
+components.html(
         f"""
         <button onclick="speak()">🔊 Écouter votre guide</button>
         <script>
@@ -76,20 +76,20 @@ if st.button("🚢 Embarquez à bord du Titanic") or "go_next_1" in st.session_s
         height=40,
     )
 
-    if "go_next_1" not in st.session_state:
+if "go_next_1" not in st.session_state:
         st.write_stream(stream_data)
-    else:
+else:
         st.write(text)
 
-    st.divider()
+st.divider()
 
-    st.write("Liste des passagers (échantillon de 891 personnes) :")
+st.write("Liste des passagers (échantillon de 891 personnes) :")
 
-    df = load_csv()
-    st.dataframe(df)
-    st.caption("Les valeurs 'None' grises indiquent des données manquantes")
+df = load_csv()
+st.dataframe(df)
+st.caption("Les valeurs 'None' grises indiquent des données manquantes")
 
-    with st.expander("Afficher les données urs manquantes"):
+with st.expander("Afficher les données urs manquantes"):
         # Compter les valeurs manquantes et formater proprement
         missing = df.isna().sum().to_frame(name="Valeurs manquantes")
         missing["%"] = missing["Valeurs manquantes"] / len(df)
@@ -103,8 +103,8 @@ if st.button("🚢 Embarquez à bord du Titanic") or "go_next_1" in st.session_s
             unsafe_allow_html=True,
         )
 
-    st.write("Note concernant les variables :")
-    df = pd.DataFrame(
+st.write("Note concernant les variables :")
+df = pd.DataFrame(
         {
             "Variable": [
                 "    Survived",
@@ -136,9 +136,9 @@ if st.button("🚢 Embarquez à bord du Titanic") or "go_next_1" in st.session_s
         }
     )
 
-    st.table(df.set_index("Variable"))
+st.table(df.set_index("Variable"))
 
-    st.image("https://upload.wikimedia.org/wikipedia/commons/a/af/TitanicRoute.svg")
+st.image("https://upload.wikimedia.org/wikipedia/commons/a/af/TitanicRoute.svg")
 
     # ajout d'une variable d'état go_next pour éviter que l’appel à st.switch_page() soit ignoré
     # parce que le bouton a déclenché un rerun qui reset des variables.
