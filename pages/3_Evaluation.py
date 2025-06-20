@@ -16,7 +16,7 @@ set_seed()
 all_classifiers = all_estimators(type_filter="classifier")
 
 st.write(
-    "Entraînement puis évaluation de la performance par stratified-KFold Cross Validation de tous les modèles de la librairie scikit-learn"
+    "Entraînement puis évaluation de la performance par stratified-KFold Cross Validation de tous les modèles de la librairie scikit-learn avec leurs paramètres par défaut"
 )
 
 df = load_csv()
@@ -26,7 +26,7 @@ X_train, X_test, y_train, y_test = preprocess_data(df)
 # st.dataframe(X_train)
 # st.dataframe(X_test)
 
-# Récupérer tous les classifieurs
+# Récupérer tous les classifiers
 all_classifiers = all_estimators(type_filter="classifier")
 
 # warnings.filterwarnings("ignore")
@@ -37,9 +37,8 @@ df_results = pd.DataFrame()
 
 progress_bar = st.progress(0)
 status = st.empty()
-st.caption(
-    f"Evaluation réalisée par cross validation avec une seed fixée aléatoirement (seed = {st.session_state.seed})"
-)
+container = st.container()
+
 total = len(all_classifiers)
 
 placeholder = st.empty()
@@ -98,26 +97,30 @@ for i, (name, ClfClass) in enumerate(all_classifiers):
 
     placeholder.dataframe(df_results)
 
-duration = int(1000 * (time.time() - start_total_time))
-status.text(f"ℹ️ {len(all_classifiers)} modèles testés en {duration} ms")
+duration = round(time.time() - start_total_time, 1)
 
-st.success(f"{len(results)} modèles ont été évalués avec succès", icon="✅")
+status.text("")
 
-st.info(
-    f"{len(errors)} modèles n'ont pas pu être entraînés avec leurs paramètres par défaut",
+container.success(
+    f"{len(results)} modèles ont été évalués avec succès en {duration} s", icon="✅"
+)
+
+container.warning(
+    f"{len(errors)} modèles n'ont pas pu être entraînés",
     icon="ℹ️",
 )
 
-with st.expander("Afficher le rapport d'erreurs"):
+st.caption(f"seed = {st.session_state.seed} (fixée aléatoirement pour chaque session)")
+
+with st.expander("Afficher les modèles qui n'ont pas pu être entraînés"):
     st.dataframe(errors)
 
 st.divider()
 
 best_model_name = df_results.iloc[0, 0]
 
-st.write(
-    f"🥇 {best_model_name} présente la balanced accuracy la plus élevée : {df_results.iloc[0, 1]} %"
-)
+st.write(f"🥇 {best_model_name} est le modèle le modèle le plus performant :")
+st.markdown(f"- Balanced accuracy = {df_results.iloc[0, 1]} %")
 
 best_model = None
 
