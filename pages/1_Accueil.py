@@ -58,8 +58,8 @@ def stream_data():
 
 
 # 👇 Lancement au clic
-#if st.button("🚢 Embarquez à bord du Titanic") or "go_next_1" in st.session_state:
-
+if st.button("🚢 Accélérer l'embarquement"): #or "go_next_1" in st.session_state:
+    st.session_state.go_next_1 = False
     # 🔊 Synthèse vocale avec interaction utilisateur (voix française)
 components.html(
         f"""
