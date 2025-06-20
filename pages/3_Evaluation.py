@@ -16,7 +16,7 @@ set_seed()
 all_classifiers = all_estimators(type_filter="classifier")
 
 st.write(
-    "Entraînement puis évaluation de la performance par stratified-KFold Cross Validation de tous les modèles de la librairie scikit-learn avec leurs paramètres par défaut"
+    "Entraînement puis évaluation de la performance de tous les modèles de la librairie scikit-learn (avec leurs paramètres par défaut) par 'stratified KFolded Grid Search Cross Validation'"
 )
 
 df = load_csv()
@@ -110,7 +110,7 @@ container.warning(
     icon="ℹ️",
 )
 
-st.caption(f"seed = {st.session_state.seed} (fixée aléatoirement pour chaque session)")
+st.caption(f"(seed fixée aléatoirement pour chaque session = {st.session_state.seed})")
 
 with st.expander("Afficher les modèles qui n'ont pas pu être entraînés"):
     st.dataframe(errors)
@@ -119,7 +119,7 @@ st.divider()
 
 best_model_name = df_results.iloc[0, 0]
 
-st.write(f"🥇 {best_model_name} est le modèle le modèle le plus performant :")
+st.subheader(f"🏆 {best_model_name}")
 st.markdown(f"- Balanced accuracy = {df_results.iloc[0, 1]} %")
 
 best_model = None
