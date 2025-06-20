@@ -1,4 +1,5 @@
 import streamlit as st
+import time
 from utils import set_seed, load_csv, preprocess_data
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
 from sklearn.svm import SVC
@@ -12,7 +13,10 @@ st.set_page_config(page_title="Titanic - Optimisation")
 st.header("Optimisation")
 
 
-st.subheader("🔧 Fine tuning des hyperparamètres de 5 modèles")
+st.subheader("🔧 Fine tuning")
+st.write(
+    "Optimisation des hyperparamètres de 5 modèles par Grid Search Cross-Validation"
+)
 
 set_seed()
 df = load_csv()
@@ -20,20 +24,20 @@ df = load_csv()
 X_train, X_test, y_train, y_test = preprocess_data(df)
 
 models = {
-    "LogisticRegression": LogisticRegression(),
-    "KNeighbors": KNeighborsClassifier(),
+    "Logistic Regression": LogisticRegression(),
+    "K-Neighbors": KNeighborsClassifier(),
     "SVC": SVC(probability=True),
-    "RandomForest": RandomForestClassifier(),
-    "GradientBoosting": GradientBoostingClassifier(),
+    "Random Forest": RandomForestClassifier(),
+    "Gradient Boosting": GradientBoostingClassifier(),
 }
 
 params = {
-    "LogisticRegression": {
+    "Logistic Regression": {
         "C": [0.01, 0.1, 1, 10],
         "penalty": ["l2"],
         "solver": ["lbfgs"],
     },
-    "KNeighbors": {
+    "K-Neighbors": {
         "n_neighbors": [3, 5, 7],
         "weights": ["uniform", "distance"],
     },
@@ -42,22 +46,40 @@ params = {
         "kernel": ["linear", "rbf"],
         "gamma": ["scale", "auto"],
     },
-    "RandomForest": {
+    "Random Forest": {
         "n_estimators": [50, 100],
         "max_depth": [None, 5, 10],
         "min_samples_split": [2, 5],
     },
-    "GradientBoosting": {
+    "Gradient Boosting": {
         "n_estimators": [50, 100],
         "learning_rate": [0.01, 0.1],
         "max_depth": [3, 5],
     },
 }
 
+st.write(
+    "Cliquer ci-dessous pour développer l'arborescence de la grille de recherche :"
+)
+st.json(params, expanded=False)
+
+progress_bar = st.progress(0)
+status = st.empty()
+placeholder = st.empty()
+
+start_total_time = time.time()
+
+st.subheader("🎯 Résultats")
+
 best_models = {}
 results = []
 
-for name in models:
+
+for idx, name in enumerate(models):
+
+    progress_bar.progress((idx + 1) / len(models))
+    status.text(f"{idx+1}/{len(models)} - {name}")
+
     # print(f"🔍 GridSearch for {name}...")
     grid = GridSearchCV(
         models[name], params[name], cv=5, n_jobs=-1, scoring="balanced_accuracy"
@@ -65,7 +87,9 @@ for name in models:
     grid.fit(X_train, y_train)
 
     best_model = grid.best_estimator_
-    best_models[name] = best_model
+
+    st.session_state[name] = best_model
+
     y_pred = best_model.predict(X_test)
 
     bal_acc = balanced_accuracy_score(y_test, y_pred)
@@ -90,7 +114,15 @@ for name in models:
 
     st.divider()
 
-st.subheader("🎯 Classement")
+duration = round(time.time() - start_total_time, 1)
+
+status.text("")
+
+placeholder.success(
+    f"{len(models)} modèles ont été optimisés avec succès en {duration} s", icon="✅"
+)
+
+st.subheader("🏆 Classement")
 
 df_results = (
     pd.DataFrame(results)
