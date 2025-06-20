@@ -12,7 +12,7 @@ st.header("Evaluation")
 
 set_seed()
 
-# Récupérer tous les classifieurs
+# Récupérer tous les classifiers
 all_classifiers = all_estimators(type_filter="classifier")
 
 st.write(
@@ -99,11 +99,13 @@ for i, (name, ClfClass) in enumerate(all_classifiers):
     placeholder.dataframe(df_results)
 
 duration = int(1000 * (time.time() - start_total_time))
-status.text(
-    f"ℹ️ {len(all_classifiers)} modèles évalués en {duration} ms (✔️ {len(results)} succès, ❌ {len(errors)} erreurs)"
-)
+status.text(f"ℹ️ {len(all_classifiers)} modèles évalués en {duration} ms")
 
-with st.expander("Afficher les erreurs"):
+st.success(f"{len(results)} modèles ont été évalués avec succès", icon="✅")
+
+st.error(f"{len(errors)} modèles n'ont pas pu être entraînés", icon="🚨")
+
+with st.expander("Afficher le rapport d'erreurs"):
     st.dataframe(errors)
 
 st.divider()

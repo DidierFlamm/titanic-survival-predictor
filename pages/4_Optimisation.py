@@ -89,7 +89,7 @@ for name in models:
 
     st.divider()
 
-st.subheader("🎯 Résultats")
+st.subheader("🎯 Classement")
 
 df_results = (
     pd.DataFrame(results)
