@@ -62,11 +62,15 @@ if st.button("🚢 Embarquez à bord du Titanic") or "go_next" in st.session_sta
     else:
         st.write(text)
 
+    st.divider()
+
+    st.write("Liste des passagers (échantillon de 891 personnes) :")
+
     df = load_csv()
     st.dataframe(df)
-    st.caption("Les valeurs grises indiquent des données manquantes.")
+    st.caption("Les valeurs 'None' grises indiquent des données manquantes")
 
-    with st.expander("Afficher les valeurs manquantes"):
+    with st.expander("Afficher les données urs manquantes"):
         # Compter les valeurs manquantes et formater proprement
         missing = df.isna().sum().to_frame(name="Valeurs manquantes")
         missing["%"] = missing["Valeurs manquantes"] / len(df)
@@ -80,7 +84,6 @@ if st.button("🚢 Embarquez à bord du Titanic") or "go_next" in st.session_sta
             unsafe_allow_html=True,
         )
 
-    st.markdown("---")
     st.write("Note concernant les variables :")
     df = pd.DataFrame(
         {
