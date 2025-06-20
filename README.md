@@ -15,8 +15,7 @@ The goal: predict the probability of survival for each Titanic passenger based o
 ├── /pages/          # Additional Streamlit pages  
 └── README.md        # This file
 
----
-
+  
 ## 🚀 Quick Start
 
 ### 1. Clone the repo
@@ -25,7 +24,7 @@ git clone https://github.com/your-username/titanic-survival-predictor.git
 cd titanic-survival-predictor
 ```
 
-###2. Install dependencies
+### 2. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
@@ -38,32 +37,30 @@ or
 ```bash
 streamlit run streamlit_app.py
 ```
-
-
-## 🔍 Features
-
-Visualisations
-Exploratory Data Analysis
-Model training and evaluation
-Optimisation by cross-validation
-Individual survival prediction
-
-Modular multi-page layout (/pages)
-Clean and readable codebase
-
-## 🛠 Built With
-Python 
-Streamlit 
-Scikit-learn 
-Pandas / NumPy 
-Matplotlib / Seaborn / Plotly
-
+  
+## 🔍 Features
+Visualisations  
+Models training and evaluation  
+Optimisation  
+Individual survival prediction  
+  
+## 🛠 Built With
+Python  
+Streamlit  
+Scikit-learn  
+Pandas / NumPy  
+Matplotlib / Seaborn / Plotly  
+  
 ## 📊 Example
 Predict the survival of a 28-year-old woman in 1st class with no family aboard.
 
-📄 License
+## 🌐 Live App  
+No setup needed — try it instantly online:  
+👉 [https://didstitanic.streamlit.app](https://didstitanic.streamlit.app)
+  
+## 📄 License  
 MIT License – feel free to reuse and adapt.
-
-🙌 Acknowledgements
+  
+## 🙌 Acknowledgements  
 Inspired by the famous Titanic survival classification challenge from Kaggle.
 ---
