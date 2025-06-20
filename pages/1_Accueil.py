@@ -89,7 +89,7 @@ df = load_csv()
 st.dataframe(df)
 st.caption("Les valeurs 'None' grises indiquent des données manquantes")
 
-with st.expander("Afficher les données urs manquantes"):
+with st.expander("Afficher les données manquantes"):
         # Compter les valeurs manquantes et formater proprement
         missing = df.isna().sum().to_frame(name="Valeurs manquantes")
         missing["%"] = missing["Valeurs manquantes"] / len(df)
