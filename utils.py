@@ -25,7 +25,7 @@ def load_csv():
 
 
 @st.cache_data
-def preprocess_data(df):
+def preprocess_data(df: pd.DataFrame, split: bool):
     # features
     X = df.copy()
 
@@ -42,29 +42,39 @@ def preprocess_data(df):
     y = X.pop("Survived")
 
     # Train/test split
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y)
+    if split:
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=0.2, stratify=y
+        )
+    else:
+        X_train, X_test, y_train, y_test = X, None, y, None
 
-    # gestion des valeurs manquantes
+    # gestion des valeurs manquantes (age : médiane, embarked : mode)
     age_median = X_train["Age"].median()
     embarked_mode = X_train["Embarked"].mode()[0]
 
     X_train["Age"] = X_train["Age"].fillna(age_median)
     X_train["Embarked"] = X_train["Embarked"].fillna(embarked_mode)
 
-    X_test["Age"] = X_test["Age"].fillna(age_median)
-    X_test["Embarked"] = X_test["Embarked"].fillna(embarked_mode)
+    if X_test is not None:
+        X_test["Age"] = X_test["Age"].fillna(age_median)
+        X_test["Embarked"] = X_test["Embarked"].fillna(embarked_mode)
 
     # scaling des variables numériques
     num_cols = ["Age", "Fare", "SibSp", "Parch", "Pclass", "Family"]
     scaler = StandardScaler()
     X_train[num_cols] = scaler.fit_transform(X_train[num_cols])
-    X_test[num_cols] = scaler.transform(X_test[num_cols])
+
+    if X_test is not None:
+        X_test[num_cols] = scaler.transform(X_test[num_cols])
 
     # encodage des variables catégorielles
     categorical_cols = ["Sex", "Embarked"]
     X_train = pd.get_dummies(X_train, columns=categorical_cols, drop_first=True)
-    X_test = pd.get_dummies(X_test, columns=categorical_cols, drop_first=True)
-    # Réindexation pour garantir le même ordre des colonnes (pas garanti apres oh encodage)
-    X_test = X_test.reindex(columns=X_train.columns, fill_value=0)
+
+    if X_test is not None:
+        X_test = pd.get_dummies(X_test, columns=categorical_cols, drop_first=True)
+        # Réindexation pour garantir le même ordre des colonnes (pas garanti apres oh encodage)
+        X_test = X_test.reindex(columns=X_train.columns, fill_value=0)
 
     return X_train, X_test, y_train, y_test
