@@ -22,11 +22,6 @@ if "pages" not in st.session_state:
         st.Page("pages/1_Accueil.py", title="Accueil", icon="⚓", default=True)
     ]
 
-# st.session_state.pages est incrémenté par les boutons en fin de chaque page
-
-pg = st.navigation(st.session_state.pages, position="top")
-pg.run()
-
 
 st.sidebar.divider()
 st.sidebar.markdown(
@@ -39,3 +34,6 @@ st.sidebar.markdown(
 """,
     unsafe_allow_html=True,
 )
+
+pg = st.navigation(st.session_state.pages, position="top")
+pg.run()
