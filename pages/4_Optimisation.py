@@ -36,7 +36,7 @@ st.write(
 set_seed()
 df = load_csv()
 
-X_train, X_test, y_train, y_test = preprocess_data(df)
+X_train, X_test, y_train, y_test = preprocess_data(df, split=True)
 
 models = {
     "Logistic Regression": LogisticRegression(),
@@ -45,6 +45,9 @@ models = {
     "Random Forest": RandomForestClassifier(),
     "Gradient Boosting": GradientBoostingClassifier(),
 }
+
+if "models" not in st.session_state:
+    st.session_state.models = models
 
 params = {
     "Logistic Regression": {
@@ -107,7 +110,7 @@ for idx, name in enumerate(models):
 
     y_pred = best_model.predict(X_test)
 
-    bal_acc = balanced_accuracy_score(y_test, y_pred)
+    bal_acc = balanced_accuracy_score(y_test, y_pred)  # type: ignore
 
     st.markdown(
         f"""
@@ -127,7 +130,7 @@ for idx, name in enumerate(models):
     with st.expander("Afficher les détails"):
         st.dataframe(pd.DataFrame(grid.cv_results_))
 
-    st.divider()
+st.divider()
 
 duration = round(time.time() - start_total_time, 1)
 
