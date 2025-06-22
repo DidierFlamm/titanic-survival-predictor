@@ -36,7 +36,7 @@ st.write(
 
 df = load_csv()
 
-X_train, X_test, y_train, y_test = preprocess_data(df)
+X_train, X_test, y_train, y_test = preprocess_data(df, split=True)
 
 # st.dataframe(X_train)
 # st.dataframe(X_test)
