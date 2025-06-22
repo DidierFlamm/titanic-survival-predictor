@@ -152,13 +152,13 @@ best_model.fit(X_train, y_train)
 y_pred = best_model.predict(X_test)
 
 # Afficher classification_report sous forme de DataFrame
-report_dict = classification_report(y_test, y_pred, output_dict=True)
+report_dict = classification_report(y_test, y_pred, output_dict=True)  # type: ignore
 df_report = pd.DataFrame(report_dict).transpose()
 st.markdown("- Classification Report")
 st.dataframe(df_report)
 
 # Afficher la matrice de confusion
-cm = confusion_matrix(y_test, y_pred)
+cm = confusion_matrix(y_test, y_pred)  # type: ignore
 df_cm = pd.DataFrame(cm, index=["Actual 0", "Actual 1"], columns=["Pred 0", "Pred 1"])
 st.markdown("- Confusion Matrix")
 st.dataframe(df_cm)
