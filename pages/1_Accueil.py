@@ -44,7 +44,7 @@ Bien que le hasard ait joué un rôle dans les chances de survie, certains group
 
 Votre capitaine Flamm Didier et la compagnie DIDS (Dive into Data Science), vous souhaitent la bienvenue à bord du projet Titanic.  
 
-Bon voyage ! 
+Bon voyage !  
 ⚓ 🚢 ⚠️ 🧊 🚨 💥 🆘 🛟 🚣 
 """
 
