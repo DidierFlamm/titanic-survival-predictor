@@ -53,12 +53,12 @@ Bon voyage !
 def stream_data():
     for word in text.split(" "):
         yield word + " "
-        time.sleep(0.2)
+        time.sleep(0.1)
 
 
 # 👇 Lancement au clic
-if st.button("🚢 Accélérer l'embarquement"): #or "go_next_1" in st.session_state:
-    st.session_state.go_next_1 = False
+#if st.button("🚢 Accélérer l'embarquement"): #or "go_next_1" in st.session_state:
+    #st.session_state.go_next_1 = False
     # 🔊 Synthèse vocale avec interaction utilisateur (voix française)
 components.html(
         f"""
@@ -144,9 +144,9 @@ st.image("https://upload.wikimedia.org/wikipedia/commons/a/af/TitanicRoute.svg")
 
 st.session_state.go_next_1 = True
 
-if st.button("Passer à l'étape suivante"):
+st.button("Passer à l'étape suivante"):
 
-    st.switch_page(st.session_state.pages[1])
+    #st.switch_page(st.session_state.pages[1])
 
 st.markdown(
     """
