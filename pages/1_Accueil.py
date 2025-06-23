@@ -40,13 +40,12 @@ st.write("")
 # Texte à lire
 text = """Le naufrage du Titanic est l’une des catastrophes maritimes les plus célèbres de l’histoire. Le 15 avril 1912, lors de son voyage inaugural, le RMS Titanic, pourtant considéré comme “insubmersible”, a coulé après une collision avec un iceberg. Malheureusement, il n’y avait pas assez de canots de sauvetage pour toutes les personnes à bord, ce qui a entraîné la mort de 1502 des 2224 passagers et membres d’équipage.  
 
-Bien que le hasard ait joué un rôle dans les chances de survie, certains groupes de personnes semblaient avoir plus de chances de survivre que d’autres (les femmes et les enfants d'abord ?).
-
-L'objectif de ce projet est de construire un modèle prédictif pour répondre à la question « Quels types de personnes avaient le plus de chances de survivre ? », en s’appuyant sur les données disponibles de 891 passagers (nom, âge, sexe, classe socio-économique, etc...)
+Bien que le hasard ait joué un rôle dans les chances de survie, certains groupes de personnes semblaient avoir plus de chances de survivre que d’autres. L'objectif de ce projet est de construire un modèle prédictif pour répondre à la question « Quels types de personnes avaient le plus de chances de survivre ? », en s’appuyant sur les données disponibles de 891 passagers (nom, âge, sexe, classe socio-économique, etc...)
 
 Votre capitaine Flamm Didier et la compagnie DIDS (Dive into Data Science), vous souhaitent la bienvenue à bord du projet Titanic.  
 
-Bon voyage ! ⚓ 🚢 ⚠️ 🧊 🚨 💥 🆘 🛟 🚣 
+Bon voyage ! 
+⚓ 🚢 ⚠️ 🧊 🚨 💥 🆘 🛟 🚣 
 """
 
 
@@ -54,7 +53,7 @@ Bon voyage ! ⚓ 🚢 ⚠️ 🧊 🚨 💥 🆘 🛟 🚣
 def stream_data():
     for word in text.split(" "):
         yield word + " "
-        time.sleep(0.4)
+        time.sleep(0.2)
 
 
 # 👇 Lancement au clic
@@ -83,7 +82,7 @@ else:
 
 st.divider()
 
-st.write("Liste des passagers (échantillon de 891 personnes) :")
+st.write("Ensemble de données (891 passagers) :")
 
 df = load_csv()
 st.dataframe(df)
