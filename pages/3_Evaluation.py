@@ -31,7 +31,7 @@ set_seed()
 all_classifiers = all_estimators(type_filter="classifier")
 
 st.write(
-    "Entraînement puis évaluation de la performance de tous les modèles de la librairie scikit-learn (avec leurs paramètres par défaut) par 'stratified KFolded Grid Search Cross Validation'"
+    "Tous les modèles de la librairie scikit-learn sont entraînés et évalués selon 3 scoring diffen(balanced accuracy, ROC AUC et f1-score) avec leurs paramètres par défaut et via 5 folds Cross Validation"
 )
 
 df = load_csv()
