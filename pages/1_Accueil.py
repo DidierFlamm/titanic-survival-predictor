@@ -144,7 +144,7 @@ st.image("https://upload.wikimedia.org/wikipedia/commons/a/af/TitanicRoute.svg")
 
 st.session_state.go_next_1 = True
 
-st.button("Passer à l'étape suivante"):
+st.button("Passer à l'étape suivante")
 
     #st.switch_page(st.session_state.pages[1])
 
