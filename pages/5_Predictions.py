@@ -14,19 +14,20 @@ st.video(video_url)
 
 set_seed()
 
-st.subheader("Comparer les chances de survie des passagers avec leur survie réelle")
+st.subheader("Comparer les chances de survie des passagers")
 
 st.write(
-    "Les chances de survie des passagers sont évaluées par prédiction de probabilité du classifieur sélectionné avec ses paramètres optimisés."
+    "Les chances de survie des passagers sont évaluées par prédiction de probabilité du classifieur optimisé :"
 )
 
-st.write("""La prédiction sera qualifiée de juste si :
-- la probabilité prédite est supérieure ou égale à 50% et que le passager a survécu,
-- la probabilité prédite est inférieure à 50% et que le passager n'a pas survécu""")
+st.write(
+    """- une probabilité supérieure ou égale à 50% prédit la survie du passager,
+- une probabilité inférieure à 50% prédit la non survie du passager"""
+)
 
 model_choisi = st.selectbox(
     label="Choix du modèle",
-    options=list(st.session_state.models.keys()),
+    options=list(st.session_state.df_results.Model),
 )
 
 if model_choisi is None:
@@ -35,6 +36,10 @@ if model_choisi is None:
 else:
     model = st.session_state[model_choisi]
 
+st.write(
+    f"Rappel : balanced accuracy du modèle {model_choisi} optimisé = **{st.session_state.df_results.loc[st.session_state.df_results.Model == model_choisi, "Balanced Accuracy"
+].values[0]} %**"
+)
 
 set_seed()
 df = load_csv()
@@ -45,9 +50,7 @@ y_proba = model.predict_proba(X)
 y_pred = model.predict(X)
 
 
-df.insert(
-    loc=0, column="Chance de survie", value=np.round(y_proba[:, 1] * 100, 2)
-)
+df.insert(loc=0, column="Chance de survie", value=np.round(y_proba[:, 1] * 100, 2))
 df = df.sort_values(by="Chance de survie", ascending=False)
 df.insert(
     loc=2,
@@ -58,6 +61,8 @@ df["Prédiction juste"] = df["Prédiction juste"].apply(lambda x: "✅" if x els
 
 st.dataframe(df)
 
+st.caption(f"seed de la session = {st.session_state.seed}")
+
 counts = df["Prédiction juste"].value_counts()
 frequencies = df["Prédiction juste"].value_counts(normalize=True)
 result = pd.DataFrame(
@@ -66,9 +71,14 @@ result = pd.DataFrame(
 
 st.dataframe(result)
 
+
 st.divider()
 
-st.subheader("Évaluer les chances de survie d'un passager fictif avec les caractéristiques de votre choix")
+st.subheader(
+    "Évaluer les chances de survie d'un passager fictif avec les caractéristiques de votre choix"
+)
+
+st.divider()
 
 if st.button("Fin du voyage"):
     if len(st.session_state.pages) == 5:
