@@ -80,7 +80,7 @@ components.html(
 
             const msgEN = new SpeechSynthesisUtterance({text_EN!r});
             msgEN.lang = 'en-US';
-            msgEN.rate = 1.2;
+            msgEN.rate = 1.0;
 
             const msgFR2 = new SpeechSynthesisUtterance({text_FR2!r});
             msgFR2.lang = 'fr-FR';
