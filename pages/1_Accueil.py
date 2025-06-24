@@ -62,7 +62,7 @@ def stream_data():
     # 🔊 Synthèse vocale avec interaction utilisateur (voix française)
 components.html(
         f"""
-        <button onclick="speak()">🔊 Écouter votre guide</button>
+        <button onclick="speak()">🔊 Audioguide</button>
         <script>
             function speak() {{
                 var msg = new SpeechSynthesisUtterance({text!r});
