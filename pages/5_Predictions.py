@@ -16,6 +16,14 @@ set_seed()
 
 st.subheader("Comparer les chances de survie des passagers avec leur survie réelle")
 
+st.write(
+    "Les chances de survie des passagers sont évaluées par prédiction de probabilité du classifieur sélectionné avec ses paramètres optimisés."
+)
+
+st.write("""La prédiction sera qualifiée de juste si :
+- la probabilité prédite est supérieure ou égale à 50% et que le passager a survécu,
+- la probabilité prédite est inférieure à 50% et que le passager n'a pas survécu""")
+
 model_choisi = st.selectbox(
     label="Choix du modèle",
     options=list(st.session_state.models.keys()),
@@ -49,9 +57,6 @@ df.insert(
 df["Prédiction juste"] = df["Prédiction juste"].apply(lambda x: "✅" if x else "❌")
 
 st.dataframe(df)
-st.caption(
-    f"Les chances de survie des passagers sont évaluées par prédiction du classifieur sélectionné ({model_choisi}) avec ses paramètres optimisés."
-)
 
 counts = df["Prédiction juste"].value_counts()
 frequencies = df["Prédiction juste"].value_counts(normalize=True)
@@ -59,10 +64,11 @@ result = pd.DataFrame(
     {"Nb": counts, "%": np.round(100 * frequencies, 2).astype(str) + " %"}
 )
 
-st.write(result)
+st.dataframe(result)
 
-st.subheader("Évaluer les chances de survie d'un passager fictif ayant les caractéristiques de votre choix")
+st.divider()
 
+st.subheader("Évaluer les chances de survie d'un passager fictif avec les caractéristiques de votre choix")
 
 if st.button("Fin du voyage"):
     if len(st.session_state.pages) == 5:
