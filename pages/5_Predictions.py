@@ -14,7 +14,7 @@ st.video(video_url)
 
 set_seed()
 
-st.subheader("Calculer les chances de survie de chaque passager")
+st.subheader("Calculer les chances de survie des passagers")
 
 model_choisi = st.selectbox(
     label="Choix du modèle",
@@ -50,7 +50,7 @@ df["Prédiction juste"] = df["Prédiction juste"].apply(lambda x: "✅" if x els
 
 st.dataframe(df)
 st.caption(
-    f"Les chances de survie des passagers sont évaluées par les prédictions du classifieur {model_choisi} optimisé."
+    f"Les chances de survie des passagers sont évaluées par prédiction du classifieur sélectionné ({model_choisi}) avec ses paramètres optimisés."
 )
 
 counts = df["Prédiction juste"].value_counts()
@@ -60,6 +60,8 @@ result = pd.DataFrame(
 )
 
 st.write(result)
+
+st.subheader("Calculer les chances de survie d'un passager ayant les caractéristiques de votre choix")
 
 
 if st.button("Fin du voyage"):
