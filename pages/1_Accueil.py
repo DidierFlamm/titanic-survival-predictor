@@ -34,7 +34,7 @@ st.image(
 )
 
 
-st.write("")
+st.subheader("Préambule")
 
 
 # Texte à lire
@@ -82,7 +82,7 @@ else:
 
 st.divider()
 
-st.write("Ensemble de données :")
+st.subheader("Données disponibles")
 
 df = load_csv()
 st.dataframe(df)
