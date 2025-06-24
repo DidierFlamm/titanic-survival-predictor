@@ -82,7 +82,7 @@ else:
 
 st.divider()
 
-st.write("Données relatives à 891 passagers :")
+st.write("Ensemble de données :")
 
 df = load_csv()
 st.dataframe(df)
@@ -101,6 +101,8 @@ with st.expander("Afficher les données manquantes"):
             missing.style.set_properties(**{"text-align": "center"}).to_html(),  # type: ignore
             unsafe_allow_html=True,
         )
+
+st.divider()
 
 st.write("Précisions concernant les variables :")
 df = pd.DataFrame(
@@ -141,6 +143,8 @@ st.image("https://upload.wikimedia.org/wikipedia/commons/a/af/TitanicRoute.svg")
 
     # ajout d'une variable d'état go_next pour éviter que l’appel à st.switch_page() soit ignoré
     # parce que le bouton a déclenché un rerun qui reset des variables.
+
+st.divider()
 
 st.session_state.go_next_1 = True
 
