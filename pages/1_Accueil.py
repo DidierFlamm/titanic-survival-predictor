@@ -44,11 +44,11 @@ text_FR1 = """Le naufrage du Titanic est l’une des catastrophes maritimes les 
 
 Bien que le hasard ait joué un rôle dans les chances de survie, certains groupes de personnes semblaient avoir plus de chances de survivre que d’autres. L'objectif de ce projet est de construire un modèle prédictif pour répondre à la question « Quels types de personnes avaient le plus de chances de survivre ? », en s’appuyant sur les données disponibles de 891 passagers (nom, âge, sexe, classe socio-économique, etc...)
 
-Votre capitaine Flamm Didier et la compagnie DIDS """
+Votre capitaine Flamm Didier vous souhaite la bienvenue à bord du projet Titanic, opéré par la compagnie DIDS ("""
 
-text_EN = """(Dive Into Data Science)"""
+text_EN = """Dive Into Data Science"""
 
-text_FR2 = """, vous souhaitent la bienvenue à bord du projet Titanic.  
+text_FR2 = """).
 
 Bon voyage !  
 ⚓ 🚢 ⚠️ 🧊 🚨 💥 🆘 🛟 🚣 
