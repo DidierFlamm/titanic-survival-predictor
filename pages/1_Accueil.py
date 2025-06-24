@@ -82,7 +82,7 @@ else:
 
 st.divider()
 
-st.write("Ensemble de données (891 passagers) :")
+st.write("Données relatives à 891 passagers :")
 
 df = load_csv()
 st.dataframe(df)
@@ -102,7 +102,7 @@ with st.expander("Afficher les données manquantes"):
             unsafe_allow_html=True,
         )
 
-st.write("Note concernant les variables :")
+st.write("Précisions concernant les variables :")
 df = pd.DataFrame(
         {
             "Variable": [
