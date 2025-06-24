@@ -14,7 +14,7 @@ st.video(video_url)
 
 set_seed()
 
-st.subheader("Comparer les chances de survie des passagers (evaluées par Machine Learning) avec leur survie réelle")
+st.subheader("Comparer les chances de survie des passagers avec leur survie réelle")
 
 model_choisi = st.selectbox(
     label="Choix du modèle",
