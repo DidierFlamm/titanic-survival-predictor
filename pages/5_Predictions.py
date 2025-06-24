@@ -7,7 +7,7 @@ st.set_page_config(page_title="Titanic - Predictions")
 st.header("Prédictions")
 
 # URL de la vidéo
-video_url = "https://www.youtube.com/watch?v=AzmdpGuIiZ4"
+video_url = "https://youtu.be/vXBY6Zu46HE"
 
 st.video(video_url, autoplay = True, muted = True)
 
