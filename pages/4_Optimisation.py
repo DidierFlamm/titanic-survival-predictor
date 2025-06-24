@@ -30,7 +30,7 @@ st.header("Optimisation")
 
 st.subheader("🔧 Fine tuning")
 st.write(
-    "Optimisation des hyperparamètres de 5 modèles par Grid Search Cross-Validation"
+    "Optimisation des hyperparamètres de 5 modèles par Grid Search Cross Validation"
 )
 
 set_seed()
@@ -77,7 +77,7 @@ params = {
 }
 
 st.write(
-    "Cliquer ci-dessous pour développer l'arborescence de la grille de recherche :"
+    "Voir les details de la grille de recherche de chaque modèle :"
 )
 st.json(params, expanded=False)
 
