@@ -50,8 +50,7 @@ text_EN = """(Dive Into Data Science)."""
 
 text_FR2 = """
 
-Bon voyage !  
-⚓ 🚢 ⚠️ 🧊 🚨 💥 🆘 🛟 🚣 
+Bon voyage ! 
 """
 
 text = text_FR1 + text_EN + text_FR2
@@ -101,6 +100,8 @@ if "go_next_1" not in st.session_state:
     st.write_stream(stream_data)
 else:
     st.write(text)
+
+st.write("⚓ 🚢 ⚠️ 🧊 🚨 💥 🆘 🛟 🚣")
 
 st.divider()
 
