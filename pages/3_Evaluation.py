@@ -11,22 +11,6 @@ from sklearn.metrics import (
     confusion_matrix,
 )
 
-# set title
-st.set_page_config(page_title="Titanic - Evaluation")
-
-# add next page
-if len(st.session_state.pages) == 3:
-    st.session_state.pages.append(
-        st.Page("pages/4_Optimisation.py", title="Optimisation", icon="📈")
-    )
-
-# manage switch
-if "go_next_3" in st.session_state:
-    if st.session_state.go_next_3:
-        st.session_state.go_next_3 = False
-        st.switch_page(st.session_state.pages[3])
-
-
 st.header("Evaluation")
 
 st.subheader("Entraînement")
@@ -175,10 +159,20 @@ df_cm = pd.DataFrame(cm, index=["Actual 0", "Actual 1"], columns=["Pred 0", "Pre
 st.write("- Confusion Matrix")
 st.dataframe(df_cm)
 
-st.session_state.go_next_3 = True
+st.divider()
 
-st.button("Passer à l'étape suivante")
+if len(st.session_state.pages) == 3:
+    st.session_state.pages.append(
+        st.Page("pages/4_Optimisation.py", title="Optimisation", icon="📈")
+    )
 
+st.page_link(
+    st.Page(
+        "pages/4_Optimisation.py",
+        title="Passer à l'étape suivante 📈",
+        icon="➡️",
+    )
+)
 
 st.markdown(
     """

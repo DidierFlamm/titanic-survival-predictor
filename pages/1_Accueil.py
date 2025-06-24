@@ -5,27 +5,8 @@ from utils import load_csv
 import pandas as pd
 import streamlit.components.v1 as components
 
-# set title
-st.set_page_config(page_title="Titanic")
 
-# add next page
-if len(st.session_state.pages) == 1:
-    st.session_state.pages.append(
-        st.Page(
-            "pages/2_Visualisation.py",
-            title="Visualisation",
-            icon="📊",
-        )
-    )
-
-# manage switch
-if "go_next_1" in st.session_state:
-    if st.session_state.go_next_1:
-        st.session_state.go_next_1 = False
-        st.switch_page(st.session_state.pages[1])
-
-
-st.title("Titanic")
+st.title("🚢 Titanic Survival Predictor")
 
 
 st.image(
@@ -41,9 +22,9 @@ st.header("Introduction")
 
 text_FR1 = """Le naufrage du Titanic est l’une des catastrophes maritimes les plus célèbres de l’histoire. Le 15 avril 1912, lors de son voyage inaugural, le RMS Titanic, pourtant considéré comme “insubmersible”, a coulé après une collision avec un iceberg. Malheureusement, il n’y avait pas assez de canots de sauvetage pour toutes les personnes à bord, ce qui a entraîné la mort de 1502 des 2224 passagers et membres d’équipage.  
 
-Bien que le hasard ait joué un rôle dans les chances de survie, certains groupes de personnes semblaient avoir plus de chances de survivre que d’autres. L'objectif de ce projet est de construire un modèle prédictif pour répondre à la question « Quels types de personnes avaient le plus de chances de survivre ? », en s’appuyant sur les données de 891 passagers telles que leur nom, âge, sexe, classe socio-économique, etc...
+Bien que le hasard ait joué un rôle dans les chances de survie, certains groupes de personnes semblaient avoir plus de chances de survivre que d’autres. L'objectif de ce projet est de construire un modèle prédictif pour répondre à la question « Quels types de personnes avaient le plus de chances de survivre ? » en s’appuyant sur certaines données de 891 passagers, telles que leur nom, âge, sexe, famille, classe, etc...
 
-Votre capitaine Flamm Didier vous souhaite la bienvenue à bord du projet Titanic, opéré par la compagnie DIDS """
+Votre capitaine Flamm Didier vous souhaite la bienvenue à bord du projet Titanic, en compagnie de DIDS """
 
 text_EN = """(Dive Into Data Science)."""
 
@@ -69,7 +50,7 @@ components.html(
         function speak() {{
             const msgFR1 = new SpeechSynthesisUtterance({text_FR1!r});
             msgFR1.lang = 'fr-FR';
-            msgFR1.rate = 1.3;
+            msgFR1.rate = 1.2;
 
             const msgEN = new SpeechSynthesisUtterance({text_EN!r});
             msgEN.lang = 'en-US';
@@ -77,7 +58,7 @@ components.html(
 
             const msgFR2 = new SpeechSynthesisUtterance({text_FR2!r});
             msgFR2.lang = 'fr-FR';
-            msgFR2.rate = 1.3;
+            msgFR2.rate = 1.2;
 
             window.speechSynthesis.cancel(); // Arrête toute lecture précédente
             window.speechSynthesis.speak(msgFR1);
@@ -90,7 +71,8 @@ components.html(
 )
 
 
-if "go_next_1" not in st.session_state:
+if "skip_stream" not in st.session_state:
+    st.session_state.skip_stream = True
     st.write_stream(stream_data)
 else:
     st.write(text)
@@ -148,34 +130,40 @@ st.write("Précisions concernant les variables :")
 df = pd.DataFrame(
     {
         "Variable": [
-            "    Survie",
-            "    Sexe",
-            "    Classe",
-            "    Fratrie & Conjoint(e)",
-            "    Parents & Enfants",
-            "    Tarif",
-            "    Cabine",
-            "    Embarquement",
+            "Survie",
+            "Sexe",
+            "Classe",
+            """Fratrie & Conjoint(e)""",
+            "Parents & Enfants",
+            "Tarif",
+            "Cabine",
+            """Embarquement""",
         ],
         "Définition": [
             "Est-ce que le passager a survécu ?",
             "Sexe du passager",
             "Classe du billet (indicateur du statut socio-économique)",
-            "Nombre de frères, sœurs, époux ou épouse à bord du Titanic",
+            "Nombre de frères, sœurs, époux(se) à bord du Titanic",
             "Nombre de parents et enfants à bord du Titanic",
             "Tarif de la cabine (pour l'ensemble des occupants de la cabine)",
             "Numéro de la cabine",
             "Port d'embarquement",
         ],
         "Valeurs": [
-            "🟢 = Oui, 🔴 = Non",
-            "F = Femme, H = Homme",
-            "1 = 1ère (classe aisée), 2 = 2ème (classe moyenne), 3 = 3ème (classe populaire))",
+            """🟢 = Oui  
+            🔴 = Non""",
+            """F = Femme  
+            H = Homme""",
+            """1 = 1ère (classe aisée)  
+            2 = 2ème (classe moyenne)  
+            3 = 3ème (classe populaire)""",
             "",
             "",
             "",
             "",
-            "C = Cherbourg 🇫🇷, Q = Queenstown 🇮🇪, S = Southampton 🇬🇧",
+            """C = Cherbourg 🇫🇷  
+            Q = Queenstown 🇮🇪  
+            S = Southampton 🇬🇧""",
         ],
     }
 )
@@ -186,9 +174,23 @@ st.image("https://upload.wikimedia.org/wikipedia/commons/a/af/TitanicRoute.svg")
 
 st.divider()
 
-st.session_state.go_next_1 = True
+# add next page
+if len(st.session_state.pages) == 1:
+    st.session_state.pages.append(
+        st.Page(
+            "pages/2_Visualisation.py",
+            title="Visualisation",
+            icon="📊",
+        )
+    )
 
-st.button("Passer à l'étape suivante")
+st.page_link(
+    st.Page(
+        "pages/2_Visualisation.py",
+        title="Passer à l'étape suivante 📊",
+        icon="➡️",
+    )
+)
 
 st.markdown(
     """

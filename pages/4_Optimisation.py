@@ -9,21 +9,6 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import balanced_accuracy_score
 import pandas as pd
 
-# set title
-st.set_page_config(page_title="Titanic - Optimisation")
-
-# add next page
-if len(st.session_state.pages) == 4:
-    st.session_state.pages.append(
-        st.Page("pages/5_Predictions.py", title="Prédictions", icon="🎯")
-    )
-
-# manage switch
-if "go_next_4" in st.session_state:
-    if st.session_state.go_next_4:
-        st.session_state.go_next_4 = False
-        st.switch_page(st.session_state.pages[4])
-
 
 st.header("Optimisation")
 
@@ -156,10 +141,20 @@ st.caption(f"seed de la session = {st.session_state.seed}")
 if "df_results" not in st.session_state:
     st.session_state.df_results = df_results
 
-st.session_state.go_next_4 = True
+st.divider()
 
-st.button("Passer à l'étape suivante")
+if len(st.session_state.pages) == 4:
+    st.session_state.pages.append(
+        st.Page("pages/5_Predictions.py", title="Prédictions", icon="🎯")
+    )
 
+st.page_link(
+    st.Page(
+        "pages/5_Predictions.py",
+        title="Passer à l'étape suivante 🎯",
+        icon="➡️",
+    )
+)
 
 st.markdown(
     """

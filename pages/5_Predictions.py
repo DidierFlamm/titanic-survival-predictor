@@ -3,13 +3,12 @@ from utils import set_seed, load_csv, preprocess_data
 import numpy as np
 import pandas as pd
 
-st.set_page_config(page_title="Titanic - Predictions")
 st.header("Prédictions")
 
 # URL de la vidéo
 video_url = "https://youtu.be/vXBY6Zu46HE"
 
-st.video(video_url, autoplay = True, muted = True)
+st.video(video_url, autoplay=True, muted=True)
 
 
 set_seed()
@@ -37,7 +36,7 @@ else:
     model = st.session_state[model_choisi]
 
 st.write(
-    f"Rappel : balanced accuracy du modèle {model_choisi} optimisé = **{st.session_state.df_results.loc[st.session_state.df_results.Model == model_choisi, "Balanced Accuracy"
+    f"📌 balanced accuracy du modèle {model_choisi} optimisé = **{st.session_state.df_results.loc[st.session_state.df_results.Model == model_choisi, "Balanced Accuracy"
 ].values[0]} %**"
 )
 
@@ -74,18 +73,24 @@ st.dataframe(result)
 
 st.divider()
 
-st.subheader(
-    "Évaluer les chances de survie d'un passager fictif avec les caractéristiques de votre choix"
-)
+st.subheader("Évaluer les chances de survie d'un passager fictif")
+
 
 st.divider()
 
-if st.button("Fin du voyage"):
-    if len(st.session_state.pages) == 5:
-        st.session_state.pages.append(
-            st.Page("pages/6_Terminus.py", title="Terminus", icon="🏁")
-        )
-    st.switch_page(st.session_state.pages[5])
+if len(st.session_state.pages) == 5:
+    st.session_state.pages.append(
+        st.Page("pages/6_Terminus.py", title="Terminus", icon="🏁")
+    )
+
+st.page_link(
+    st.Page(
+        "pages/6_Terminus.py",
+        title="Passer à l'étape suivante 🏁",
+        icon="➡️",
+    )
+)
+
 
 st.markdown(
     """

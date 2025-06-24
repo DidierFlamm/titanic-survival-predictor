@@ -1,6 +1,23 @@
 # -*- coding: utf-8 -*-
 import streamlit as st
 
+st.set_page_config(
+    menu_items={
+        "Get Help": None,
+        "Report a bug": None,
+        "About": """
+## Titanic Survival Predictor  
+Ce projet prédit les chances de survie des passagers du Titanic grâce au **machine learning**.  
+
+🔍 Code source : [GitHub](https://github.com/DidierFlamm/titanic-survival-predictor)  
+✉️ Contact : [didier.flamm@gmail.com](mailto:didier.flamm@gmail.com)  
+🔗 LinkedIn : [didier-flamm](https://www.linkedin.com/in/didier-flamm)  
+📁 Portfolio : [Streamlit Community Cloud](https://share.streamlit.io/user/didierflamm)  
+
+© 2025 Didier Flamm
+""",
+    }
+)
 
 st.logo(
     "https://img.icons8.com/?size=100&id=s5NUIabJrb4C&format=png&color=000000",
@@ -19,9 +36,11 @@ st.sidebar.audio(
 
 if "pages" not in st.session_state:
     st.session_state.pages = [
-        st.Page("pages/1_Accueil.py", title="Accueil", icon="⚓", default=True)
+        st.Page("pages/1_Accueil.py", title="Accueil", icon="⚓", default=True),
+        # st.Page("pages/2_Visualisation.py", title="Visualisation", icon="📊"),
+        # st.Page("pages/3_Evaluation.py", title="Evaluation", icon="📝"),
+        # st.Page("pages/4_Optimisation.py", title="Optimisation", icon="📈"),
     ]
-
 
 st.sidebar.divider()
 st.sidebar.markdown(
