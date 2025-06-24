@@ -2,7 +2,7 @@ import streamlit as st
 from utils import load_csv
 import seaborn as sns
 import matplotlib.pyplot as plt
-#import plotly.express as px
+import plotly.express as px
 
 # set title
 st.set_page_config(page_title="Titanic - Visualisation")
