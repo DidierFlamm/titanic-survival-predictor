@@ -10,7 +10,7 @@ st.balloons()
 st.write("merci ...")
 
 # URL de la vidéo
-video_url = "https://www.youtube.com/watch?v=RixBp7MSB2k"
+video_url = "https://youtu.be/Sj9MEwjkxE0"
 
 st.video(video_url, autoplay = True, muted = True)
 
