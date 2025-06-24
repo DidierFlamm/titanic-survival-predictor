@@ -31,7 +31,7 @@ set_seed()
 all_classifiers = all_estimators(type_filter="classifier")
 
 st.write(
-    "Tous les modèles de la librairie scikit-learn sont entraînés et évalués selon 3 scoring diffen(balanced accuracy, ROC AUC et f1-score) avec leurs paramètres par défaut et via 5 folds Cross Validation"
+    "L'ensemble des modèles de Machine Learn de la librairie scikit-learn sont entraînés et évalués selon 3 scoring diffents (balanced accuracy, ROC AUC et f1-score) avec leurs paramètres par défaut et via 5 folds Cross Validation"
 )
 
 df = load_csv()
