@@ -25,7 +25,9 @@ def load_csv():
 
 
 @st.cache_data
-def preprocess_data(df: pd.DataFrame, split: bool):
+def preprocess_data(
+    df: pd.DataFrame, split: bool
+) -> tuple[pd.DataFrame, pd.DataFrame | None, pd.Series, pd.Series | None]:
     # features
     X = df.copy()
 
