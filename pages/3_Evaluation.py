@@ -31,7 +31,7 @@ set_seed()
 all_classifiers = all_estimators(type_filter="classifier")
 
 st.write(
-    "L'ensemble des modèles de la librairie Scikit-learn (Machine Learning) sont évalués avec leurs paramètres par défaut selon 3 scoring diffents (balanced accuracy, ROC AUC et f1-score) via Cross Validation à 5 folds sur l'ensemble des données disponibles"
+    "L'ensemble des modèles de la librairie Scikit-learn (Machine Learning) sont évalués avec leurs paramètres par défaut selon 3 scoring différents (balanced accuracy, ROC AUC et f1-score) via Cross Validation à 5 folds sur l'ensemble des données disponibles"
 )
 
 df = load_csv()
@@ -126,7 +126,7 @@ container.warning(
     icon="ℹ️",
 )
 
-st.caption(f"(seed fixée aléatoirement pour chaque session = {st.session_state.seed})")
+st.caption(f"seed = {st.session_state.seed} (fixée aléatoirement pour chaque session)")
 
 with st.expander("Afficher les modèles qui n'ont pas pu être entraînés"):
     st.dataframe(errors)
