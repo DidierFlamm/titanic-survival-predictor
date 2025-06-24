@@ -12,7 +12,7 @@ st.write("merci ...")
 # URL de la vidéo
 video_url = "https://www.youtube.com/watch?v=RixBp7MSB2k"
 
-st.video(video_url)
+st.video(video_url, autoplay = True, muted = True)
 
 st.markdown(
     """
