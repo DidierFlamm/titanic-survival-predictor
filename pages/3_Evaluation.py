@@ -31,7 +31,7 @@ set_seed()
 all_classifiers = all_estimators(type_filter="classifier")
 
 st.write(
-    "L'ensemble des modèles de Machine Learn de la librairie scikit-learn sont entraînés avec leurs paramètres par defaut puis évalués selon 3 scoring diffents (balanced accuracy, ROC AUC et f1-score) via Cross Validation à 5 folds sur l'ensemble des données"
+    "L'ensemble des modèles de la librairie Scikit-learn (Machine Learning) sont évalués avec leurs paramètres par défaut selon 3 scoring diffents (balanced accuracy, ROC AUC et f1-score) via Cross Validation à 5 folds sur l'ensemble des données disponibles"
 )
 
 df = load_csv()
@@ -108,7 +108,7 @@ for i, (name, ClfClass) in enumerate(all_classifiers):
     # Afficher sous forme de DataFrame triée par Accuracy décroissante
     df_results = pd.DataFrame(results)
     df_results = df_results.sort_values(
-        by="Balanced Accuracy", ascending=False
+        by="Balanced Accuracy (%)", ascending=False
     ).reset_index(drop=True)
 
     placeholder.dataframe(df_results)
