@@ -76,7 +76,7 @@ components.html(
         function speak() {{
             const msgFR1 = new SpeechSynthesisUtterance({text_FR1!r});
             msgFR1.lang = 'fr-FR';
-            msgFR1.rate = 1.2;
+            msgFR1.rate = 1.3;
 
             const msgEN = new SpeechSynthesisUtterance({text_EN!r});
             msgEN.lang = 'en-US';
@@ -84,7 +84,7 @@ components.html(
 
             const msgFR2 = new SpeechSynthesisUtterance({text_FR2!r});
             msgFR2.lang = 'fr-FR';
-            msgFR2.rate = 1.2;
+            msgFR2.rate = 1.3;
 
             window.speechSynthesis.cancel(); // Arrête toute lecture précédente
             window.speechSynthesis.speak(msgFR1);
