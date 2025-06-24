@@ -77,7 +77,7 @@ params = {
 }
 
 st.write(
-    "Voir les details de la grille de recherche de chaque modèle :"
+    "Voir les details de la grille de recherche :"
 )
 st.json(params, expanded=False)
 
