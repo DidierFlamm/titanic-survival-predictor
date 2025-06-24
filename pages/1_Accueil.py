@@ -30,7 +30,7 @@ st.title("Titanic")
 
 st.image(
     "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Titanic_in_color.png/960px-Titanic_in_color.png",
-    caption="RMS Titanic au départ de Southampton le 10 avril 1912.",
+    caption="RMS Titanic au départ de Southampton le 10 avril 1912",
 )
 
 
@@ -142,7 +142,7 @@ with st.expander("Afficher les valeurs manquantes"):
         unsafe_allow_html=True,
     )
 
-st.markdown('Source des données : <a href="https://github.com/datasciencedojo/datasets/blob/master/titanic.csv" target="_blank">Titanic Dataset</a>', unsafe_allow_html=True)
+st.markdown('Source des données : <a href="https://github.com/datasciencedojo/datasets/blob/master/titanic.csv" target="_blank">Data Science Dojo</a>', unsafe_allow_html=True)
 
 st.divider()
 
