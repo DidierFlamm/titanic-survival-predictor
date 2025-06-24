@@ -127,7 +127,7 @@ container.warning(
 
 st.caption(f"seed = {st.session_state.seed} (fixée aléatoirement pour chaque session)")
 
-with st.expander("Afficher les modèles qui n'ont pas pu être entraînés"):
+with st.expander("Afficher les erreurs"):
     st.dataframe(errors)
 
 st.divider()
