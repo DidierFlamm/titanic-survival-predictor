@@ -14,7 +14,7 @@ st.video(video_url)
 
 set_seed()
 
-st.subheader("Calculer les chances de survie des passagers")
+st.subheader("Comparer les chances de survie des passagers (evaluées par Machine Learning) avec leur survie réelle")
 
 model_choisi = st.selectbox(
     label="Choix du modèle",
@@ -61,7 +61,7 @@ result = pd.DataFrame(
 
 st.write(result)
 
-st.subheader("Calculer les chances de survie d'un passager ayant les caractéristiques de votre choix")
+st.subheader("Évaluer les chances de survie d'un passager fictif ayant les caractéristiques de votre choix")
 
 
 if st.button("Fin du voyage"):
