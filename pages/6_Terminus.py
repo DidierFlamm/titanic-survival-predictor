@@ -5,6 +5,8 @@ st.set_page_config(page_title="Titanic - Terminus")
 
 st.header("Fin du voyage")
 
+st.balloons()
+
 st.write("merci ...")
 
 # URL de la vidéo
