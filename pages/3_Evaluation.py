@@ -117,7 +117,7 @@ duration = round(time.time() - start_total_time, 1)
 status.text("")
 
 container.success(
-    f"{len(results)} modèles ont été évalués avec succès en {duration} s", icon="✅"
+    f"{len(results)} modèles ont été évalués en {duration} s", icon="✅"
 )
 
 container.warning(
