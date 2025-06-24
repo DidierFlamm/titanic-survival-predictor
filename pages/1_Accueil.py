@@ -34,7 +34,7 @@ st.image(
 )
 
 
-st.subheader("Préambule")
+st.header("Introduction")
 
 
 # Texte à lire
@@ -104,7 +104,7 @@ else:
 
 st.divider()
 
-st.subheader("Données disponibles")
+st.header("Données")
 
 df = load_csv()
 
@@ -141,6 +141,8 @@ with st.expander("Afficher les valeurs manquantes"):
         missing.style.set_properties(**{"text-align": "center"}).to_html(),  # type: ignore
         unsafe_allow_html=True,
     )
+
+st.markdown('Source des données : <a href="https://github.com/datasciencedojo/datasets/blob/master/titanic.csv" target="_blank">Titanic Dataset</a>', unsafe_allow_html=True)
 
 st.divider()
 
