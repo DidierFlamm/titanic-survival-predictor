@@ -38,9 +38,9 @@ y_pred = model.predict(X)
 
 
 df.insert(
-    loc=0, column="chance de survie prédite", value=np.round(y_proba[:, 1] * 100, 2)
+    loc=0, column="Chance de survie", value=np.round(y_proba[:, 1] * 100, 2)
 )
-df = df.sort_values(by="chance de survie prédite", ascending=False)
+df = df.sort_values(by="Chance de survie", ascending=False)
 df.insert(
     loc=2,
     column="Prédiction juste",
