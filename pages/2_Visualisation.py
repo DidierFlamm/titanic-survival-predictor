@@ -2,7 +2,7 @@ import streamlit as st
 from utils import load_csv
 import seaborn as sns
 import matplotlib.pyplot as plt
-import plotly.express as px
+#import plotly.express as px
 
 # set title
 st.set_page_config(page_title="Titanic - Visualisation")
@@ -69,6 +69,9 @@ st.pyplot(fig)
 st.write(
     "Trois passagers présentent un tarif de 512.33, nettement supérieur à la distribution générale. Bien que ces valeurs extrêmes ne soient pas nécessairement aberrantes, elles sont considérées comme des outliers et sont exclues du jeu de données afin d'éviter qu’elles ne biaisent les analyses ultérieures. L’analyse est ainsi restreinte aux 888 passagers ayant un tarif compris entre 0 et 263."
 )
+
+st.divider()
+
 st.write("### Analyse bivariée")
 
 df_display = df_display[df_display["Fare"] < 500]
@@ -179,6 +182,8 @@ plt.title("Survie en fonction du nombre de parents")
 plt.tight_layout()
 st.pyplot(fig)
 
+st.divider()
+
 st.write("### Analyse multivariée interactive (Plotly)")
 
 hist = px.histogram(df, x="Survived", color="Sex", barmode="group")
@@ -186,6 +191,8 @@ st.plotly_chart(hist)
 
 hist_bis = px.sunburst(df, path=["Sex", "Pclass"])
 st.plotly_chart(hist_bis)
+
+st.divider()
 
 st.session_state.go_next_2 = True
 
