@@ -37,8 +37,7 @@ st.image(
 st.header("Introduction")
 
 
-# Texte à lire
-
+# Textes à lire
 
 text_FR1 = """Le naufrage du Titanic est l’une des catastrophes maritimes les plus célèbres de l’histoire. Le 15 avril 1912, lors de son voyage inaugural, le RMS Titanic, pourtant considéré comme “insubmersible”, a coulé après une collision avec un iceberg. Malheureusement, il n’y avait pas assez de canots de sauvetage pour toutes les personnes à bord, ce qui a entraîné la mort de 1502 des 2224 passagers et membres d’équipage.  
 
@@ -62,11 +61,6 @@ def stream_data():
         yield word + " "
         time.sleep(0.1)
 
-
-# 👇 Lancement au clic
-# if st.button("🚢 Accélérer l'embarquement"): #or "go_next_1" in st.session_state:
-# st.session_state.go_next_1 = False
-# 🔊 Synthèse vocale avec interaction utilisateur (voix française)
 
 components.html(
     f"""
@@ -101,7 +95,7 @@ if "go_next_1" not in st.session_state:
 else:
     st.write(text)
 
-st.write("⚓ 🚢 ⚠️ 🧊 🚨 💥 🆘 🛟 🚣")
+st.write("🚢 🧊 💥 🚣")
 
 st.divider()
 
@@ -143,7 +137,10 @@ with st.expander("Afficher les valeurs manquantes"):
         unsafe_allow_html=True,
     )
 
-st.markdown('Source des données : <a href="https://github.com/datasciencedojo/datasets/blob/master/titanic.csv" target="_blank">Data Science Dojo</a>', unsafe_allow_html=True)
+st.markdown(
+    'Source des données : <a href="https://github.com/datasciencedojo/datasets/blob/master/titanic.csv" target="_blank">Data Science Dojo</a>',
+    unsafe_allow_html=True,
+)
 
 st.divider()
 
@@ -187,16 +184,11 @@ st.table(df.set_index("Variable"))
 
 st.image("https://upload.wikimedia.org/wikipedia/commons/a/af/TitanicRoute.svg")
 
-# ajout d'une variable d'état go_next pour éviter que l’appel à st.switch_page() soit ignoré
-# parce que le bouton a déclenché un rerun qui reset des variables.
-
 st.divider()
 
 st.session_state.go_next_1 = True
 
 st.button("Passer à l'étape suivante")
-
-# st.switch_page(st.session_state.pages[1])
 
 st.markdown(
     """
