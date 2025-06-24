@@ -5,7 +5,11 @@ import pandas as pd
 import time
 from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import cross_val_score
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import (
+    balanced_accuracy_score,
+    classification_report,
+    confusion_matrix,
+)
 
 # set title
 st.set_page_config(page_title="Titanic - Evaluation")
@@ -25,13 +29,15 @@ if "go_next_3" in st.session_state:
 
 st.header("Evaluation")
 
+st.subheader("Entraînement")
+
 set_seed()
 
 # Récupérer tous les classifiers
 all_classifiers = all_estimators(type_filter="classifier")
 
 st.write(
-    "L'ensemble des modèles de la librairie Scikit-learn (Machine Learning) sont évalués avec leurs paramètres par défaut selon 3 scoring différents (balanced accuracy, ROC AUC et f1-score) via Cross Validation à 5 folds sur l'ensemble des données disponibles"
+    "Les différents modèles de Machine Learning de la librairie Scikit-learn sont entraînés avec leurs paramètres par défaut puis classés selon 3 scoring différents (balanced accuracy, ROC AUC et f1-score) calculés par Cross Validation à 5 folds sur un ensemble d’entraînement constitué de 80% des données disponibles."
 )
 
 df = load_csv()
@@ -116,28 +122,30 @@ duration = round(time.time() - start_total_time, 1)
 
 status.text("")
 
-container.success(
-    f"{len(results)} modèles ont été évalués en {duration} s", icon="✅"
-)
+container.success(f"{len(results)} modèles ont été évalués en {duration} s", icon="✅")
 
 container.warning(
     f"{len(errors)} modèles n'ont pas pu être entraînés",
     icon="ℹ️",
 )
 
-st.caption(f"seed = {st.session_state.seed} (fixée aléatoirement pour chaque session)")
+st.caption(f"seed de la session = {st.session_state.seed}")
 
 with st.expander("Afficher les erreurs"):
     st.dataframe(errors)
 
 st.divider()
 
+
 best_model_name = df_results.iloc[0, 0]
 
-st.subheader(f"🏆 {best_model_name}")
-st.markdown(f"- Balanced accuracy = {df_results.iloc[0, 1]} %")
+st.subheader("Evaluation du modèle le plus performant")
 
-best_model = None
+st.write(f"🏆 {best_model_name}")
+
+st.write(
+    f"L'évaluation du modèle {best_model_name} est réalisée sur un ensemble de test constitué de 20% des données non utilisées pendant l’entraînement."
+)
 
 for name, Clf in all_classifiers:
     if name == best_model_name:
@@ -151,16 +159,20 @@ assert best_model is not None, f"best_model_name {best_model_name} non trouvé"
 best_model.fit(X_train, y_train)
 y_pred = best_model.predict(X_test)
 
+balanced_acc = round(100 * balanced_accuracy_score(y_test, y_pred), 2)  # type: ignore
+st.write(f"- Balanced accuracy = **{balanced_acc} %**")
+
+
 # Afficher classification_report sous forme de DataFrame
 report_dict = classification_report(y_test, y_pred, output_dict=True)  # type: ignore
 df_report = pd.DataFrame(report_dict).transpose()
-st.markdown("- Classification Report")
+st.write("- Classification Report")
 st.dataframe(df_report)
 
 # Afficher la matrice de confusion
 cm = confusion_matrix(y_test, y_pred)  # type: ignore
 df_cm = pd.DataFrame(cm, index=["Actual 0", "Actual 1"], columns=["Pred 0", "Pred 1"])
-st.markdown("- Confusion Matrix")
+st.write("- Confusion Matrix")
 st.dataframe(df_cm)
 
 st.session_state.go_next_3 = True

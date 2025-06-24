@@ -30,13 +30,8 @@ st.header("Optimisation")
 
 st.subheader("🔧 Fine tuning")
 st.write(
-    "Optimisation des hyperparamètres de 5 modèles différents par Grid Search Cross Validation"
+    "Optimisation des hyperparamètres de 5 modèles par Grid Search Cross Validation sur l'ensemble d'entraînement (80% des données) :"
 )
-
-set_seed()
-df = load_csv()
-
-X_train, X_test, y_train, y_test = preprocess_data(df, split=True)
 
 models = {
     "Logistic Regression": LogisticRegression(),
@@ -46,8 +41,14 @@ models = {
     "Gradient Boosting": GradientBoostingClassifier(),
 }
 
-if "models" not in st.session_state:
-    st.session_state.models = models
+for model_name in models:
+    st.write(f"- {model_name}")
+
+set_seed()
+df = load_csv()
+
+X_train, X_test, y_train, y_test = preprocess_data(df, split=True)
+
 
 params = {
     "Logistic Regression": {
@@ -76,10 +77,8 @@ params = {
     },
 }
 
-st.write(
-    "Voir les details de la grille de recherche :"
-)
-st.json(params, expanded=False)
+with st.expander("Afficher les paramètres de la grille de recherche"):
+    st.json(params)
 
 progress_bar = st.progress(0)
 status = st.empty()
@@ -88,6 +87,10 @@ placeholder = st.empty()
 start_total_time = time.time()
 
 st.subheader("🎯 Résultats")
+
+st.write(
+    "L'évaluation de chaque modèle est réalisée sur l'ensemble de test (20% des données)."
+)
 
 best_models = {}
 results = []
@@ -110,13 +113,13 @@ for idx, name in enumerate(models):
 
     y_pred = best_model.predict(X_test)
 
-    bal_acc = balanced_accuracy_score(y_test, y_pred)  # type: ignore
+    bal_acc = round(100 * balanced_accuracy_score(y_test, y_pred), 2)  # type: ignore
 
     st.markdown(
         f"""
 - **{name}**  
     Best Params : {grid.best_params_}  
-    Balanced Accuracy : **{bal_acc:.4f}**  
+    Balanced Accuracy : **{bal_acc} %**  
 """
     )
 
@@ -127,7 +130,7 @@ for idx, name in enumerate(models):
             "Best Params": grid.best_params_,
         }
     )
-    with st.expander("Afficher les détails"):
+    with st.expander("Afficher les détails de la Grid Search CV"):
         st.dataframe(pd.DataFrame(grid.cv_results_))
 
 st.divider()
@@ -137,17 +140,21 @@ duration = round(time.time() - start_total_time, 1)
 status.text("")
 
 placeholder.success(
-    f"{len(models)} modèles ont été optimisés avec succès en {duration} s", icon="✅"
+    f"Les {len(models)} modèles ont été optimisés en {duration} s", icon="✅"
 )
 
 st.subheader("🏆 Classement")
 
-df_results = (
-    pd.DataFrame(results)
-    .sort_values(by="Balanced Accuracy", ascending=False)
-    .reset_index(drop=True)
-)
+df_results = pd.DataFrame(results).sort_values(by="Balanced Accuracy", ascending=False)
+
+df_results.index = range(1, 6)  # type: ignore
+
 st.dataframe(df_results)
+
+st.caption(f"seed de la session = {st.session_state.seed}")
+
+if "df_results" not in st.session_state:
+    st.session_state.df_results = df_results
 
 st.session_state.go_next_4 = True
 
