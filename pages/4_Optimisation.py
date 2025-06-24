@@ -30,7 +30,7 @@ st.header("Optimisation")
 
 st.subheader("🔧 Fine tuning")
 st.write(
-    "Optimisation des hyperparamètres de 5 modèles par Grid Search Cross Validation"
+    "Optimisation des hyperparamètres de 5 modèles différents par Grid Search Cross Validation"
 )
 
 set_seed()
