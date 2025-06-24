@@ -9,7 +9,7 @@ st.header("Prédictions")
 # URL de la vidéo
 video_url = "https://www.youtube.com/watch?v=AzmdpGuIiZ4"
 
-st.video(video_url, autoplay = True)
+st.video(video_url, autoplay = True, muted = True)
 
 
 set_seed()
