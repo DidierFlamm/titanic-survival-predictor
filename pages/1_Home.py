@@ -189,17 +189,15 @@ with st.expander(
     else "Display missing values"
 ):
     # Compter les valeurs manquantes et formater proprement
-    missing = df_display.isna().sum().to_frame(name="Valeurs manquantes")
-    missing["%"] = missing["Valeurs manquantes"] / len(df)
+    missing = df_display.isna().sum().to_frame(name="Nombre")
+    missing.index.name = "Valeurs manquantes"
+    missing["%"] = missing["Nombre"] / len(df)
     missing["%"] = missing["%"].map(lambda x: f"{x:.1%}")
     # filtre et trie des valeurs manquantes
-    missing = missing[missing["Valeurs manquantes"] > 0]
-    missing = missing.sort_values("Valeurs manquantes", ascending=False)
-    # affiche en markdown pour avoir style center
-    st.markdown(
-        missing.style.set_properties(**{"text-align": "center"}).to_html(),  # type: ignore
-        unsafe_allow_html=True,
-    )
+    missing = missing[missing["Nombre"] > 0]
+    missing = missing.sort_values("Nombre", ascending=False)
+    st.dataframe(missing, width=300, use_container_width=False)
+
 
 st.markdown(
     ("Source des données" if st.session_state.lang == "fr" else "Data source")
@@ -237,8 +235,8 @@ df = pd.DataFrame(
             à bord du Titanic""",
             """Nombre de parents et enfants  
             à bord du Titanic""",
-            """Tarif de la cabine  
-            (pour l'ensemble de ses occupants)""",
+            """Tarif de la cabine en livre sterling (£)  
+            pour l'ensemble de ses occupants""",
             "Numéro de la cabine",
             "Port d'embarquement",
         ],
