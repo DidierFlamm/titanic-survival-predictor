@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import streamlit as st
+import streamlit.components.v1 as components
 
 st.set_page_config(
     menu_items={
@@ -20,19 +21,19 @@ Ce projet prédit les chances de survie des passagers du Titanic grâce au **mac
 )
 
 st.logo(
-    "https://img.icons8.com/?size=100&id=s5NUIabJrb4C&format=png&color=000000",
+    "https://raw.githubusercontent.com/DidierFlamm/DidierFlamm/main/dids.webp",
+    # "https://img.icons8.com/?size=100&id=s5NUIabJrb4C&format=png&color=000000",
     size="large",
 )
+
+
 st.sidebar.subheader("Musique", divider=True)
 
-mp3_url = "https://archive.org/download/celine-dion-my-heart-will-go-on_202207/Celine%20Dion%20-%20My%20Heart%20Will%20Go%20On.mp3"
-st.sidebar.audio(
-    mp3_url,
-    format="audio/mp3",
-    loop=False,
-    autoplay=True,
-)
-st.sidebar.caption("*© Céline Dion - My Heart Will Go On*")
+iframe_code = """
+<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/97158016&color=%231a4b75&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/maymon-abdullah" title="Maymon Abdullah" target="_blank" style="color: #cccccc; text-decoration: none;">Maymon Abdullah</a> · <a href="https://soundcloud.com/maymon-abdullah/titanic-theme-song-flute-instrumental" title="Titanic Theme Song &quot;My Heart Will Go On&quot; - Flute Instrumental - Karin Leitner" target="_blank" style="color: #cccccc; text-decoration: none;">Titanic Theme Song &quot;My Heart Will Go On&quot; - Flute Instrumental - Karin Leitner</a></div>"""
+
+with st.sidebar:
+    components.html(iframe_code)
 
 if "pages" not in st.session_state:
     st.session_state.pages = [
