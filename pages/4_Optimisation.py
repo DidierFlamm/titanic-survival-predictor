@@ -16,6 +16,8 @@ st.header("📈 Optimisation")
 st.subheader("🔧 Fine tuning")
 st.write(
     "Optimisation des hyperparamètres de 5 modèles par Grid Search Cross Validation sur l'ensemble d'entraînement (80% des données) :"
+    if st.session_state.lang == "fr"
+    else "Hyperparameter tuning of 5 models using Grid Search Cross Validation on the training set (80% of the data) :"
 )
 
 models = {
@@ -71,10 +73,12 @@ placeholder = st.empty()
 
 start_total_time = time.time()
 
-st.subheader("🎯 Résultats")
+st.subheader("🎯 Résultats" if st.session_state.lang == "fr" else "🎯 Results")
 
 st.write(
     "L'évaluation de chaque modèle est réalisée sur l'ensemble de test (20% des données)."
+    if st.session_state.lang == "fr"
+    else "Each model is evaluated on the test set (20% of the data)."
 )
 
 best_models = {}
@@ -115,7 +119,11 @@ for idx, name in enumerate(models):
             "Best Params": grid.best_params_,
         }
     )
-    with st.expander("Afficher les détails de la Grid Search CV"):
+    with st.expander(
+        "Afficher les détails de la Grid Search CV"
+        if st.session_state.lang == "fr"
+        else "Display the grid search parameters"
+    ):
         st.dataframe(pd.DataFrame(grid.cv_results_))
 
 st.divider()
@@ -125,10 +133,15 @@ duration = round(time.time() - start_total_time, 1)
 status.text("")
 
 placeholder.success(
-    f"Les {len(models)} modèles ont été optimisés en {duration} s", icon="✅"
+    (
+        f"Les {len(models)} modèles ont été optimisés en {duration} s"
+        if st.session_state.lang == "fr"
+        else f"The {len(models)} models were optimized in {duration} seconds."
+    ),
+    icon="✅",
 )
 
-st.subheader("🏆 Classement")
+st.subheader("🏆 Classement" if st.session_state.lang == "fr" else "🏆 Ranking")
 
 df_results = pd.DataFrame(results).sort_values(by="Balanced Accuracy", ascending=False)
 
@@ -152,7 +165,11 @@ if len(st.session_state.pages) == 4:
 st.page_link(
     st.Page(
         "pages/5_Predictions.py",
-        title="Passer à l'étape suivante 🎯",
+        title=(
+            "Passer à l'étape suivante"
+            if st.session_state == "fr"
+            else "Go to the next step"
+        ),
         icon="➡️",
     )
 )

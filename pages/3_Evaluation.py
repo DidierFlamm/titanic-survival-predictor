@@ -20,7 +20,7 @@ if len(st.session_state.pages) == 3:
 
 st.header("📝 Evaluation")
 
-st.subheader("Entraînement")
+st.subheader("Entraînement" if st.session_state == "fr" else "Training")
 
 set_seed()
 
@@ -29,6 +29,8 @@ all_classifiers = all_estimators(type_filter="classifier")
 
 st.write(
     "Les différents modèles de Machine Learning de la librairie Scikit-learn sont entraînés avec leurs paramètres par défaut puis classés selon 3 scoring différents (balanced accuracy, ROC AUC et f1-score) calculés par Cross Validation à 5 folds sur un ensemble d’entraînement constitué de 80% des données disponibles."
+    if st.session_state.lang == "fr"
+    else "The various Machine Learning models from the Scikit-learn library are trained with their default parameters, then ranked based on three different scoring metrics (balanced accuracy, ROC AUC, and F1-score), computed using 5-fold cross-validation on a training set composed of 80% of the available data."
 )
 
 df = load_csv()
@@ -113,16 +115,35 @@ duration = round(time.time() - start_total_time, 1)
 
 status.text("")
 
-container.success(f"{len(results)} modèles ont été évalués en {duration} s", icon="✅")
+container.success(
+    f"{len(results)} "
+    + (
+        "modèles ont été évalués en"
+        if st.session_state.lang == "fr"
+        else "models were evaluated in"
+    )
+    + f" {duration} s",
+    icon="✅",
+)
 
 container.warning(
-    f"{len(errors)} modèles n'ont pas pu être entraînés",
+    f"{len(errors)} "
+    + (
+        "modèles n'ont pas pu être entraînés"
+        if st.session_state == "fr"
+        else "models could not be trained"
+    ),
     icon="ℹ️",
 )
 
-st.caption(f"seed de la session = {st.session_state.seed}")
+st.caption(
+    ("seed de la session = " if st.session_state.lang == "fr" else "session seed = ")
+    + f"{st.session_state.seed}"
+)
 
-with st.expander("Afficher les erreurs"):
+with st.expander(
+    "Afficher les erreurs" if st.session_state.lang == "fr" else "Display errors"
+):
     st.dataframe(errors)
 
 st.divider()
@@ -130,12 +151,18 @@ st.divider()
 
 best_model_name = df_results.iloc[0, 0]
 
-st.subheader("Evaluation du modèle le plus performant")
+st.subheader(
+    "Evaluation du modèle le plus performant"
+    if st.session_state == "fr"
+    else "Evaluation of the best-performing model"
+)
 
 st.write(f"🏆 {best_model_name}")
 
 st.write(
     f"L'évaluation du modèle {best_model_name} est réalisée sur un ensemble de test constitué de 20% des données non utilisées pendant l’entraînement."
+    if st.session_state.lang == "fr"
+    else f"The {best_model_name} model is evaluated on a test set made up of the 20% of data that was not used during training."
 )
 
 for name, Clf in all_classifiers:
@@ -172,7 +199,11 @@ st.divider()
 st.page_link(
     st.Page(
         "pages/4_Optimisation.py",
-        title="Passer à l'étape suivante 📈",
+        title=(
+            "Passer à l'étape suivante"
+            if st.session_state == "fr"
+            else "Go to the next step"
+        ),
         icon="➡️",
     )
 )

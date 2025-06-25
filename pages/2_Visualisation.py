@@ -58,7 +58,9 @@ st.pyplot(fig)
 ####################################################
 
 st.write(
-    "Trois passagers présentent un tarif de 512.33, nettement supérieur à la distribution générale. Bien que ces valeurs extrêmes ne soient pas nécessairement aberrantes, elles sont considérées comme des outliers et sont exclues du jeu de données afin d'éviter qu’elles ne biaisent les analyses ultérieures. L’analyse est ainsi restreinte aux 888 passagers ayant un tarif compris entre 0 et 263."
+    "Trois passagers présentent un tarif de 512.33, nettement supérieur à la distribution générale. Bien que ces valeurs extrêmes ne soient pas nécessairement aberrantes, elles sont considérées comme des outliers et seront exclues du jeu de données afin d'éviter qu’elles ne biaisent les analyses ultérieures. L’analyse est ainsi restreinte aux 888 passagers ayant un tarif compris entre 0 et 263."
+    if st.session_state.lang == "fr"
+    else "Three passengers have a fare of 512.33, which is significantly higher than the overall distribution. While these extreme values are not necessarily erroneous, they are considered outliers and will be excluded from the dataset to prevent them from skewing subsequent analyses. The analysis is thus limited to the 888 passengers whose fares range between 0 and 263."
 )
 
 st.divider()
@@ -189,7 +191,11 @@ st.divider()
 st.page_link(
     st.Page(
         "pages/3_Evaluation.py",
-        title="Passer à l'étape suivante 📝",
+        title=(
+            "Passer à l'étape suivante"
+            if st.session_state == "fr"
+            else "Go to the next step"
+        ),
         icon="➡️",
     )
 )

@@ -3,7 +3,7 @@ from utils import set_seed, load_csv, preprocess_data
 import numpy as np
 import pandas as pd
 
-st.header("🎯 Prédictions")
+st.header("🎯 Prédictions" if st.session_state.lang == "fr" else "🎯 Predictions")
 
 # URL de la vidéo
 video_url = "https://youtu.be/vXBY6Zu46HE"
@@ -13,19 +13,28 @@ st.video(video_url, autoplay=True, muted=True)
 
 set_seed()
 
-st.subheader("Comparer les chances de survie des passagers")
+st.subheader(
+    "Comparer les chances de survie des passagers"
+    if st.session_state.lang == "fr"
+    else "Compare passengers’ chances of survival"
+)
 
 st.write(
     "Les chances de survie des passagers sont évaluées par prédiction de probabilité du classifieur optimisé :"
+    if st.session_state.lang == "fr"
+    else "The chances of survival are assessed by the optimized classifier’s probability prediction:"
 )
 
 st.write(
     """- une probabilité supérieure ou égale à 50% prédit la survie du passager,
-- une probabilité inférieure à 50% prédit la non survie du passager"""
+- une probabilité inférieure à 50% prédit la non survie du passager."""
+    if st.session_state.lang == "fr"
+    else """- a probability greater than or equal to 50% predicts passenger survival,  
+- a probability less than 50% predicts passenger non-survival."""
 )
 
 model_choisi = st.selectbox(
-    label="Choix du modèle",
+    label="Choisir le modèle" if st.session_state.lang == "fr" else "Choose the model",
     options=list(st.session_state.df_results.Model),
 )
 
@@ -36,7 +45,7 @@ else:
     model = st.session_state[model_choisi]
 
 st.write(
-    f"📌 balanced accuracy du modèle {model_choisi} optimisé = **{st.session_state.df_results.loc[st.session_state.df_results.Model == model_choisi, "Balanced Accuracy"
+    f"📌 balanced accuracy = **{st.session_state.df_results.loc[st.session_state.df_results.Model == model_choisi, "Balanced Accuracy"
 ].values[0]} %**"
 )
 
@@ -73,7 +82,11 @@ st.dataframe(result)
 
 st.divider()
 
-st.subheader("Évaluer les chances de survie d'un passager fictif")
+st.subheader(
+    "Évaluer les chances de survie d'un passager personnalisé"
+    if st.session_state.lang == "fr"
+    else "Evaluate the survival chances of a custom passenger"
+)
 
 
 # il faudra activer le calcul de la proba via l'argument on_change des widgets
@@ -121,7 +134,11 @@ if len(st.session_state.pages) == 5:
 st.page_link(
     st.Page(
         "pages/6_Terminus.py",
-        title="Passer à l'étape suivante 🏁",
+        title=(
+            "Passer à l'étape suivante"
+            if st.session_state == "fr"
+            else "Go to the next step"
+        ),
         icon="➡️",
     )
 )

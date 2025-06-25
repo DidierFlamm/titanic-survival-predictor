@@ -9,7 +9,7 @@ video_url = "https://youtu.be/Sj9MEwjkxE0"
 
 st.video(video_url, autoplay=True, muted=True)
 
-st.write("merci ...")
+st.write("🚧 WIP merci ... 🚧")
 
 st.markdown(
     'Le code source est disponible sur <a href="https://github.com/DidierFlamm/titanic-survival-predictor" target="_blank">GitHub</a>',

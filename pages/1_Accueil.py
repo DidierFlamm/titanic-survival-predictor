@@ -22,7 +22,11 @@ st.title("🚢 Titanic Survival Predictor")
 
 st.image(
     "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Titanic_in_color.png/960px-Titanic_in_color.png",
-    caption="RMS Titanic au départ de Southampton le 10 avril 1912",
+    caption=(
+        "RMS Titanic au départ de Southampton le 10 avril 1912"
+        if st.session_state.lang == "fr"
+        else "RMS Titanic departing from Southampton on April 10, 1912"
+    ),
 )
 
 
@@ -40,22 +44,26 @@ Votre capitaine, Flamm Didier, et vos matelots Charlize et James vous souhaitent
 """
 
 text_FR2 = """
-Bon voyage avec DIDS 
+Embarquez pour un voyage serein et passionnant à travers le vaste océan des données avec DIDS –  
 """
 
-text_DIDS = """ (Dive Into Data Science) !"""
+text_DIDS = """Dive Into Data Science !"""
 
 text_FR = text_FR1 + text_FR2 + text_DIDS
 
-text_EN = """
+text_EN1 = """
 The sinking of the Titanic is one of the most famous maritime disasters in history. On April 15, 1912, during its maiden voyage, the RMS Titanic—considered “unsinkable”—sank after colliding with an iceberg. Unfortunately, there were not enough lifeboats for everyone on board, resulting in the deaths of 1,502 out of 2,224 passengers and crew members.  
 
 Although chance played a role in survival odds, some groups of people seemed more likely to survive than others. The goal of this project is to build a predictive model to answer the question: “What types of people were most likely to survive?” based on data from 891 passengers, such as their name, age, sex, family, class, and more.  
 
-Your captain, Flamm Didier, welcomes you aboard the Titanic project.  
-
-Have a good journey with DIDS (Dive Into Data Science) !
+Your captain, Flamm Didier, and your crewmates Charlize and James welcome you aboard the Titanic project.  
 """
+
+text_EN2 = """
+Embark on a safe and exciting journey through the vast ocean of data with DIDS – Dive Into Data Science !
+"""
+
+text_EN = text_EN1 + text_EN2
 
 
 # Fonction de stream
@@ -64,11 +72,6 @@ def stream_data(text):
         yield word + " "
         time.sleep(0.1)
 
-
-col1, col2, col3 = st.columns(
-    3,
-    gap="small",
-)
 
 script = f"""
 <script>
@@ -82,11 +85,15 @@ script = f"""
 
     var msgDIDS = new SpeechSynthesisUtterance({text_DIDS!r});
     msgDIDS.lang = 'en-US';
-    msgDIDS.rate = 1.0;
+    msgDIDS.rate = 1.1;
 
-    var msgEN = new SpeechSynthesisUtterance({text_EN!r});
-    msgEN.lang = 'en-US';
-    msgEN.rate = 1.1;
+    var msgEN1 = new SpeechSynthesisUtterance({text_EN1!r});
+    msgEN1.lang = 'en-US';
+    msgEN1.rate = 1.1;
+
+    var msgEN2 = new SpeechSynthesisUtterance({text_EN2!r});
+    msgEN2.lang = 'en-US';
+    msgEN2.rate = 1.1;
 
     function speakFR() {{
         window.speechSynthesis.cancel();
@@ -97,7 +104,8 @@ script = f"""
 
     function speakEN() {{
         window.speechSynthesis.cancel();
-        window.speechSynthesis.speak(msgEN);
+        window.speechSynthesis.speak(msgEN1);
+        window.speechSynthesis.speak(msgEN2);
     }}
 
     function stop() {{
@@ -106,37 +114,48 @@ script = f"""
 </script>
 """
 
-# Affichage dans les colonnes
+col1, col2 = st.columns(
+    2,
+    gap="small",
+)
+
 with col1:
-    components.html(
-        script + """<button onclick="speakFR()">🎧 Audioguide 🇫🇷</button>""",
-        height=40,
-    )
+    if st.session_state.lang == "fr":
+        components.html(
+            script + """<button onclick="speakFR()">🎧 Audio guide 🇫🇷</button>""",
+            height=40,
+        )
+    else:
+        components.html(
+            script + """<button onclick="speakEN()">🎧 Audio guide 🇬🇧</button>""",
+            height=40,
+        )
+
 
 with col2:
     components.html(
-        script + """<button onclick="speakEN()">🎧 Audioguide 🇬🇧</button>""",
-        height=40,
-    )
-
-with col3:
-    components.html(
-        script + """<button onclick="stop()">🔇 Stop audioguide</button>""",
+        script + """<button onclick="stop()">🔇 Stop</button>""",
         height=40,
     )
 
 
 if "skip_stream" not in st.session_state:
     st.session_state.skip_stream = True
-    st.write_stream(stream_data(text_FR))
+    if st.session_state.lang == "fr":
+        st.write_stream(stream_data(text_FR))
+    else:
+        st.write_stream(stream_data(text_EN))
+
+
 else:
-    st.write(text_FR)
+    st.write(text_FR if st.session_state.lang == "fr" else text_EN)
+
 
 st.write("🚢 🧊 💥 🚣")
 
 st.divider()
 
-st.header("Données")
+st.header("Données" if st.session_state.lang == "fr" else "Data")
 
 df = load_csv()
 
@@ -158,9 +177,17 @@ df_display["Survie"].replace({1: "🟢", 0: "🔴"}, inplace=True)
 df_display["Sexe"].replace({"male": "H", "female": "F"}, inplace=True)
 
 st.dataframe(df_display)
-st.caption("Les valeurs 'None' grises indiquent des valeurs manquantes")
+st.caption(
+    "Les valeurs 'None' grises indiquent des valeurs manquantes"
+    if st.session_state.lang == "fr"
+    else "The gray 'None' values indicate missing data"
+)
 
-with st.expander("Afficher les valeurs manquantes"):
+with st.expander(
+    "Afficher les valeurs manquantes"
+    if st.session_state.lang == "fr"
+    else "Display missing values"
+):
     # Compter les valeurs manquantes et formater proprement
     missing = df_display.isna().sum().to_frame(name="Valeurs manquantes")
     missing["%"] = missing["Valeurs manquantes"] / len(df)
@@ -175,13 +202,18 @@ with st.expander("Afficher les valeurs manquantes"):
     )
 
 st.markdown(
-    'Source des données : <a href="https://github.com/datasciencedojo/datasets/blob/master/titanic.csv" target="_blank">Data Science Dojo</a>',
+    ("Source des données" if st.session_state.lang == "fr" else "Data source")
+    + ' : <a href="https://github.com/datasciencedojo/datasets/blob/master/titanic.csv" target="_blank">Data Science Dojo</a>',
     unsafe_allow_html=True,
 )
 
 st.divider()
 
-st.write("Précisions concernant les variables :")
+st.write(
+    "Précisions concernant les variables:"
+    if st.session_state.lang == "fr"
+    else "Details about the variables:"
+)
 df = pd.DataFrame(
     {
         "Variable": [
@@ -233,7 +265,11 @@ st.divider()
 st.page_link(
     st.Page(
         "pages/2_Visualisation.py",
-        title="Passer à l'étape suivante 📊",
+        title=(
+            "Passer à l'étape suivante"
+            if st.session_state == "fr"
+            else "Go to the next step"
+        ),
         icon="➡️",
     )
 )
