@@ -3,7 +3,7 @@ from utils import set_seed, load_csv, preprocess_data
 import numpy as np
 import pandas as pd
 
-st.header("Prédictions")
+st.header("🎯 Prédictions")
 
 # URL de la vidéo
 video_url = "https://youtu.be/vXBY6Zu46HE"
@@ -76,6 +76,40 @@ st.divider()
 st.subheader("Évaluer les chances de survie d'un passager fictif")
 
 
+# il faudra activer le calcul de la proba via l'argument on_change des widgets
+
+col1, col2 = st.columns(2, border=True)
+
+with col1:
+    sexe = st.radio("**Sexe**", ("Femme", "Homme"), horizontal=True)
+
+    age = st.slider("**Age**", 0, 100)
+
+    pclass = st.selectbox("**Classe**", options=[1, 2, 3], index=2)
+
+    fare = st.slider("**Tarif**", 0, 100)
+
+    embarked = st.selectbox(
+        "**Port d'embarquement**",
+        options=["🇫🇷 Cherbourg", "🇮🇪 Queenstown", "🇬🇧 Southampton"],
+        index=0,
+    )
+
+
+with col2:
+    st.write("*Famille du passager à bord :*")
+
+    nb_siblings = st.selectbox("**• Frères et sœurs**", options=range(11), index=0)
+
+    has_spouse = st.radio("**• Époux(se)**", ("Oui", "Non"), horizontal=True)
+
+    nb_parents = st.selectbox("**• Parents**", options=[0, 1, 2], index=0)
+
+    nb_children = st.selectbox("**• Enfants**", options=range(11), index=0)
+
+st.write("🎯 Prédiction du modèle : 🟢 ou 🔴 (probabilité de survie = #)")
+
+
 st.divider()
 
 if len(st.session_state.pages) == 5:
@@ -90,7 +124,6 @@ st.page_link(
         icon="➡️",
     )
 )
-
 
 st.markdown(
     """
