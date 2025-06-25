@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.header("Fin du voyage")
+st.header("🏁 Terminus")
 
 st.balloons()
 

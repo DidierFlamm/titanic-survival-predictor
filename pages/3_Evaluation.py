@@ -11,7 +11,7 @@ from sklearn.metrics import (
     confusion_matrix,
 )
 
-st.header("Evaluation")
+st.header("📝 Evaluation")
 
 st.subheader("Entraînement")
 
