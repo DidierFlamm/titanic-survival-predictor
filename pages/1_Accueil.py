@@ -134,7 +134,7 @@ with col1:
 
 with col2:
     components.html(
-        script + """<button onclick="stop()">🔇 Stop</button>""",
+        script + """<button onclick="stop()">🔇 Stop audio guide</button>""",
         height=40,
     )
 
