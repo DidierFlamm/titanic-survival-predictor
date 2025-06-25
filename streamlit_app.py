@@ -27,7 +27,7 @@ iframe_code = """<iframe width="100%" height="130" scrolling="no" frameborder="n
 with st.sidebar:
     components.html(iframe_code, height=120)
 
-st.sidebar.subheader("More apps", divider=True)
+st.sidebar.subheader("View all apps", divider=True)
 st.sidebar.markdown(
     """
 <div style='text-align: center'>
