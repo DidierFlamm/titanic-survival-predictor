@@ -167,7 +167,7 @@ st.page_link(
         "pages/5_Predictions.py",
         title=(
             "Passer à l'étape suivante"
-            if st.session_state == "fr"
+            if st.session_state.lang == "fr"
             else "Go to the next step"
         ),
         icon="➡️",

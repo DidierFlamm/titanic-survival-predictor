@@ -267,7 +267,7 @@ st.page_link(
         "pages/2_Visualisation.py",
         title=(
             "Passer à l'étape suivante"
-            if st.session_state == "fr"
+            if st.session_state.lang == "fr"
             else "Go to the next step"
         ),
         icon="➡️",
