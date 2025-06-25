@@ -23,8 +23,8 @@ st.logo(
     "https://img.icons8.com/?size=100&id=s5NUIabJrb4C&format=png&color=000000",
     size="large",
 )
-st.sidebar.header("Settings", divider=True)
-st.sidebar.subheader("Musique")
+st.sidebar.subheader("Musique", divider=True)
+
 mp3_url = "https://archive.org/download/celine-dion-my-heart-will-go-on_202207/Celine%20Dion%20-%20My%20Heart%20Will%20Go%20On.mp3"
 st.sidebar.audio(
     mp3_url,
@@ -32,7 +32,7 @@ st.sidebar.audio(
     loop=False,
     autoplay=True,
 )
-
+st.sidebar.caption("*© Céline Dion - My Heart Will Go On*")
 
 if "pages" not in st.session_state:
     st.session_state.pages = [
@@ -45,7 +45,7 @@ if "pages" not in st.session_state:
 st.sidebar.divider()
 st.sidebar.markdown(
     """
-<div style='text-align: center;margin-top: 150px;'>
+<div style='text-align: center'>
   <a href="https://share.streamlit.io/user/didierflamm" target="_blank">
     <img src="https://raw.githubusercontent.com/DidierFlamm/DidierFlamm/main/dids.webp" style="max-width: 100%; height: auto;" width="150"/>
   </a>
