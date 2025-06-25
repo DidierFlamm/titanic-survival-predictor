@@ -94,11 +94,19 @@ st.subheader(
 col1, col2 = st.columns(2, border=True)
 
 with col1:
+
+    st.markdown(
+        """<div style="text-align: center;"><em>Caractéristiques du passager</em></div>""",
+        unsafe_allow_html=True,
+    )
+
+    st.divider()
+
     sexe = st.radio("**Sexe**", ("Femme", "Homme"), horizontal=True)
 
     age = st.slider("**Age**", 0, 100, 50)
 
-    pclass = st.selectbox("**Classe**", options=[1, 2, 3], index=2)
+    pclass = st.radio("**Classe**", (1, 2, 3), horizontal=True)
 
     fare = st.slider("**Tarif**", 0, 100, 50)
 
@@ -110,15 +118,19 @@ with col1:
 
 
 with col2:
-    st.write("*Famille du passager à bord :*")
+    st.markdown(
+        """<div style="text-align: center;"><em>Famille du passager à bord du Titanic</em></div>""",
+        unsafe_allow_html=True,
+    )
+    st.divider()
 
-    nb_siblings = st.selectbox("**• Frères et sœurs**", options=range(11), index=0)
+    spouse = st.checkbox("**Époux(se)**")
 
-    has_spouse = st.radio("**• Époux(se)**", ("Oui", "Non"), horizontal=True)
+    nb_siblings = st.slider("**Frères et sœurs**", 0, 10, 0)
 
-    nb_parents = st.selectbox("**• Parents**", options=[0, 1, 2], index=0)
+    nb_parents = st.slider("**Parents**", 0, 2, 0)
 
-    nb_children = st.selectbox("**• Enfants**", options=range(11), index=0)
+    nb_children = st.slider("**Enfants**", 0, 10, 0)
 
 st.write("🚧 WIP 🎯 Prédiction du modèle : 🟢 ou 🔴 (probabilité de survie = ### %) 🚧")
 
@@ -136,7 +148,7 @@ st.page_link(
         "pages/6_Terminus.py",
         title=(
             "Passer à l'étape suivante"
-            if st.session_state == "fr"
+            if st.session_state.lang == "fr"
             else "Go to the next step"
         ),
         icon="➡️",
