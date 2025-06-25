@@ -6,6 +6,16 @@ import pandas as pd
 import streamlit.components.v1 as components
 
 
+# add next page at top of script to skip it if wished
+if len(st.session_state.pages) == 1:
+    st.session_state.pages.append(
+        st.Page(
+            "pages/2_Visualisation.py",
+            title="Visualisation",
+            icon="📊",
+        )
+    )
+
 st.title("🚢 Titanic Survival Predictor")
 
 
@@ -174,15 +184,6 @@ st.image("https://upload.wikimedia.org/wikipedia/commons/a/af/TitanicRoute.svg")
 
 st.divider()
 
-# add next page
-if len(st.session_state.pages) == 1:
-    st.session_state.pages.append(
-        st.Page(
-            "pages/2_Visualisation.py",
-            title="Visualisation",
-            icon="📊",
-        )
-    )
 
 st.page_link(
     st.Page(

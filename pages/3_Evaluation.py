@@ -11,6 +11,12 @@ from sklearn.metrics import (
     confusion_matrix,
 )
 
+# add page on top of the screen to skip page if lagging
+if len(st.session_state.pages) == 3:
+    st.session_state.pages.append(
+        st.Page("pages/4_Optimisation.py", title="Optimisation", icon="📈")
+    )
+
 st.header("📝 Evaluation")
 
 st.subheader("Entraînement")
@@ -161,10 +167,6 @@ st.dataframe(df_cm)
 
 st.divider()
 
-if len(st.session_state.pages) == 3:
-    st.session_state.pages.append(
-        st.Page("pages/4_Optimisation.py", title="Optimisation", icon="📈")
-    )
 
 st.page_link(
     st.Page(
