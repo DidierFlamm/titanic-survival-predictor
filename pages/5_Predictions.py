@@ -83,11 +83,11 @@ col1, col2 = st.columns(2, border=True)
 with col1:
     sexe = st.radio("**Sexe**", ("Femme", "Homme"), horizontal=True)
 
-    age = st.slider("**Age**", 0, 100)
+    age = st.slider("**Age**", 0, 100, 50)
 
     pclass = st.selectbox("**Classe**", options=[1, 2, 3], index=2)
 
-    fare = st.slider("**Tarif**", 0, 100)
+    fare = st.slider("**Tarif**", 0, 100, 50)
 
     embarked = st.selectbox(
         "**Port d'embarquement**",
