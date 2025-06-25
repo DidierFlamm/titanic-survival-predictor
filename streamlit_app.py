@@ -62,7 +62,7 @@ This project predicts the survival chances of Titanic passengers using machine l
 if "pages" not in st.session_state:
     st.session_state.pages = [
         st.Page(
-            "pages/1_Accueil.py",
+            "pages/1_Home.py",
             title="Home",
             icon="⚓",
             default=True,
