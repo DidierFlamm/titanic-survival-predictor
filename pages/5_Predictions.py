@@ -120,7 +120,7 @@ with col2:
 
     nb_children = st.selectbox("**• Enfants**", options=range(11), index=0)
 
-st.write("🎯 Prédiction du modèle : 🟢 ou 🔴 (probabilité de survie = #)")
+st.write("🚧 WIP 🎯 Prédiction du modèle : 🟢 ou 🔴 (probabilité de survie = ### %) 🚧")
 
 
 st.divider()
