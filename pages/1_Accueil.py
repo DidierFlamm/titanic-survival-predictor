@@ -15,6 +15,7 @@ if len(st.session_state.pages) == 1:
             icon="📊",
         )
     )
+    st.navigation(st.session_state.pages, position="top")
 
 st.title("🚢 Titanic Survival Predictor")
 

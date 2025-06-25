@@ -116,6 +116,7 @@ if len(st.session_state.pages) == 5:
     st.session_state.pages.append(
         st.Page("pages/6_Terminus.py", title="Terminus", icon="🏁")
     )
+    st.navigation(st.session_state.pages, position="top")
 
 st.page_link(
     st.Page(

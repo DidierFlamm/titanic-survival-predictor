@@ -147,6 +147,7 @@ if len(st.session_state.pages) == 4:
     st.session_state.pages.append(
         st.Page("pages/5_Predictions.py", title="Prédictions", icon="🎯")
     )
+    st.navigation(st.session_state.pages, position="top")
 
 st.page_link(
     st.Page(

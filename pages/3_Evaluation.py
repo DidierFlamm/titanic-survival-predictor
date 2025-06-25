@@ -16,6 +16,7 @@ if len(st.session_state.pages) == 3:
     st.session_state.pages.append(
         st.Page("pages/4_Optimisation.py", title="Optimisation", icon="📈")
     )
+    st.navigation(st.session_state.pages, position="top")
 
 st.header("📝 Evaluation")
 
