@@ -220,8 +220,10 @@ df = pd.DataFrame(
             "Survie",
             "Sexe",
             "Classe",
-            """Fratrie & Conjoint(e)""",
-            "Parents & Enfants",
+            """Fratrie  
+            & Époux(se)""",
+            """Parents  
+            & Enfants""",
             "Tarif",
             "Cabine",
             """Embarquement""",
@@ -229,10 +231,14 @@ df = pd.DataFrame(
         "Définition": [
             "Est-ce que le passager a survécu ?",
             "Sexe du passager",
-            "Classe du billet (indicateur du statut socio-économique)",
-            "Nombre de frères, sœurs, époux(se) à bord du Titanic",
-            "Nombre de parents et enfants à bord du Titanic",
-            "Tarif de la cabine (pour l'ensemble des occupants de la cabine)",
+            """Classe du billet  
+            (indicateur du statut socio-économique)""",
+            """Nombre de frères, sœurs, époux(se)  
+            à bord du Titanic""",
+            """Nombre de parents et enfants  
+            à bord du Titanic""",
+            """Tarif de la cabine  
+            (pour l'ensemble de ses occupants)""",
             "Numéro de la cabine",
             "Port d'embarquement",
         ],
