@@ -52,9 +52,9 @@ text_DIDS = """Dive Into Data Science !"""
 text_FR = text_FR1 + text_FR2 + text_DIDS
 
 text_EN1 = """
-The sinking of the Titanic is one of the most famous maritime disasters in history. On April 15, 1912, during its maiden voyage, the RMS Titanic—considered “unsinkable”—sank after colliding with an iceberg. Unfortunately, there were not enough lifeboats for everyone on board, resulting in the deaths of 1,502 out of 2,224 passengers and crew members.  
+The sinking of the Titanic is one of the most famous maritime disasters in history. On April 15, 1912, during its maiden voyage, the RMS Titanic, considered “unsinkable”, sank after colliding with an iceberg. Unfortunately, there were not enough lifeboats for everyone on board, resulting in the deaths of 1,502 out of 2,224 passengers and crew members.  
 
-Although chance played a role in survival odds, some groups of people seemed more likely to survive than others. The goal of this project is to build a predictive model to answer the question: “What types of people were most likely to survive?” based on data from 891 passengers, such as their name, age, sex, family, class, and more.  
+Although chance played a role in survival odds, some groups of people seemed more likely to survive than others. The goal of this project is to build a predictive model to answer the question: “What types of people were most likely to survive?” based on data from 891 passengers, such as their name, age, sex, family, class, etc.  
 
 Your captain, Flamm Didier, and your crewmates Charlize and James welcome you aboard the Titanic project.  
 """
