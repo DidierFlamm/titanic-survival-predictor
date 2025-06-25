@@ -31,62 +31,106 @@ st.header("Introduction")
 
 # Textes à lire
 
-text_FR1 = """Le naufrage du Titanic est l’une des catastrophes maritimes les plus célèbres de l’histoire. Le 15 avril 1912, lors de son voyage inaugural, le RMS Titanic, pourtant considéré comme “insubmersible”, a coulé après une collision avec un iceberg. Malheureusement, il n’y avait pas assez de canots de sauvetage pour toutes les personnes à bord, ce qui a entraîné la mort de 1502 des 2224 passagers et membres d’équipage.  
+text_FR1 = """
+Le naufrage du Titanic est l’une des catastrophes maritimes les plus célèbres de l’histoire. Le 15 avril 1912, lors de son voyage inaugural, le RMS Titanic, pourtant considéré comme “insubmersible”, a coulé après une collision avec un iceberg. Malheureusement, il n’y avait pas assez de canots de sauvetage pour toutes les personnes à bord, ce qui a entraîné la mort de 1502 des 2224 passagers et membres d’équipage.  
 
 Bien que le hasard ait joué un rôle dans les chances de survie, certains groupes de personnes semblaient avoir plus de chances de survivre que d’autres. L'objectif de ce projet est de construire un modèle prédictif pour répondre à la question « Quels types de personnes avaient le plus de chances de survivre ? » en s’appuyant sur certaines données de 891 passagers, telles que leur nom, âge, sexe, famille, classe, etc...
 
-Votre capitaine Flamm Didier vous souhaite la bienvenue à bord du projet Titanic, en compagnie de DIDS """
-
-text_EN = """(Dive Into Data Science)."""
-
-text_FR2 = """
-
-Bon voyage ! 
+Votre capitaine, Flamm Didier, et vos matelots Charlize et James vous souhaitent la bienvenue à bord du projet Titanic.  
 """
 
-text = text_FR1 + text_EN + text_FR2
+text_FR2 = """
+Bon voyage avec DIDS 
+"""
+
+text_DIDS = """ (Dive Into Data Science) !"""
+
+text_FR = text_FR1 + text_FR2 + text_DIDS
+
+text_EN = """
+The sinking of the Titanic is one of the most famous maritime disasters in history. On April 15, 1912, during its maiden voyage, the RMS Titanic—considered “unsinkable”—sank after colliding with an iceberg. Unfortunately, there were not enough lifeboats for everyone on board, resulting in the deaths of 1,502 out of 2,224 passengers and crew members.  
+
+Although chance played a role in survival odds, some groups of people seemed more likely to survive than others. The goal of this project is to build a predictive model to answer the question: “What types of people were most likely to survive?” based on data from 891 passengers, such as their name, age, sex, family, class, and more.  
+
+Your captain, Flamm Didier, welcomes you aboard the Titanic project.  
+
+Have a good journey with DIDS (Dive Into Data Science) !
+"""
 
 
 # Fonction de stream
-def stream_data():
+def stream_data(text):
     for word in text.split(" "):
         yield word + " "
         time.sleep(0.1)
 
 
-components.html(
-    f"""
-    <button onclick="speak()">🎧 Audioguide</button>
-    <script>
-        function speak() {{
-            const msgFR1 = new SpeechSynthesisUtterance({text_FR1!r});
-            msgFR1.lang = 'fr-FR';
-            msgFR1.rate = 1.2;
-
-            const msgEN = new SpeechSynthesisUtterance({text_EN!r});
-            msgEN.lang = 'en-US';
-            msgEN.rate = 1.0;
-
-            const msgFR2 = new SpeechSynthesisUtterance({text_FR2!r});
-            msgFR2.lang = 'fr-FR';
-            msgFR2.rate = 1.2;
-
-            window.speechSynthesis.cancel(); // Arrête toute lecture précédente
-            window.speechSynthesis.speak(msgFR1);
-            window.speechSynthesis.speak(msgEN);
-            window.speechSynthesis.speak(msgFR2);
-        }}
-    </script>
-    """,
-    height=40,
+col1, col2, col3 = st.columns(
+    3,
+    gap="small",
 )
+
+script = f"""
+<script>
+    var msgFR1 = new SpeechSynthesisUtterance({text_FR1!r});
+    msgFR1.lang = 'fr-FR';
+    msgFR1.rate = 1.1;
+    
+    var msgFR2 = new SpeechSynthesisUtterance({text_FR2!r});
+    msgFR2.lang = 'fr-FR';
+    msgFR2.rate = 1.1;
+
+    var msgDIDS = new SpeechSynthesisUtterance({text_DIDS!r});
+    msgDIDS.lang = 'en-US';
+    msgDIDS.rate = 1.0;
+
+    var msgEN = new SpeechSynthesisUtterance({text_EN!r});
+    msgEN.lang = 'en-US';
+    msgEN.rate = 1.1;
+
+    function speakFR() {{
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(msgFR1);
+        window.speechSynthesis.speak(msgFR2);
+        window.speechSynthesis.speak(msgDIDS);
+    }}
+
+    function speakEN() {{
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(msgEN);
+    }}
+
+    function stop() {{
+        window.speechSynthesis.cancel();
+    }}
+</script>
+"""
+
+# Affichage dans les colonnes
+with col1:
+    components.html(
+        script + """<button onclick="speakFR()">🎧 Audioguide 🇫🇷</button>""",
+        height=40,
+    )
+
+with col2:
+    components.html(
+        script + """<button onclick="speakEN()">🎧 Audioguide 🇬🇧</button>""",
+        height=40,
+    )
+
+with col3:
+    components.html(
+        script + """<button onclick="stop()">🔇 Stop audioguide</button>""",
+        height=40,
+    )
 
 
 if "skip_stream" not in st.session_state:
     st.session_state.skip_stream = True
-    st.write_stream(stream_data)
+    st.write_stream(stream_data(text_FR))
 else:
-    st.write(text)
+    st.write(text_FR)
 
 st.write("🚢 🧊 💥 🚣")
 
