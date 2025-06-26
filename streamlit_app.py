@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import streamlit as st
 import streamlit.components.v1 as components
+import pandas as pd
 
 st.logo(
     # "https://raw.githubusercontent.com/DidierFlamm/DidierFlamm/main/dids.webp",
@@ -11,11 +12,17 @@ st.logo(
 
 st.sidebar.subheader("Language", divider=True)
 
+iso_639_1_url = "https://raw.githubusercontent.com/DidierFlamm/titanic-survival-predictor/refs/heads/main/data/iso_639_1.csv"
+languages = pd.read_csv(iso_639_1_url)
+
+default_lang = "fr"
+default_index = languages[languages.loc[:, "iso"] == default_lang].index[0]
 language = st.sidebar.selectbox(
-    "Select language", options=["🇫🇷 Français", "🇬🇧 English"], index=0
+    "Select language", options=languages, index=int(default_index)
 )
 
-lang = "fr" if language.startswith("🇫🇷") else "en"
+lang = languages.loc[languages["language"] == language, "iso"].values[0]
+
 st.session_state.lang = lang
 
 st.sidebar.subheader("Ambiance", divider=True)
