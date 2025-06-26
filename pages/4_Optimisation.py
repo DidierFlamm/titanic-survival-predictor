@@ -158,7 +158,7 @@ st.divider()
 
 if len(st.session_state.pages) == 4:
     st.session_state.pages.append(
-        st.Page("pages/5_Predictions.py", title="Prédictions", icon="🎯")
+        st.Page("pages/5_Predictions.py", title="Predictions", icon="🎯")
     )
     st.navigation(st.session_state.pages, position="top")
 
