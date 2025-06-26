@@ -27,6 +27,7 @@ st.sidebar.selectbox(
     options=languages.lang,
     key="lang",
     format_func=lambda x: languages.loc[languages["lang"] == x, "language"].values[0],
+    label_visibility="collapsed",
 )
 
 flag = languages.loc[languages.lang == st.session_state.lang, "flag"].values[0]
@@ -34,13 +35,17 @@ st.session_state.flag = flag
 
 st.sidebar.subheader("Ambiance", divider=True)
 
-ambiance = st.sidebar.radio("Select ambiance", ("🎛️ Trance remix", "💿 Titanic OST"))
+ambiance = st.sidebar.radio(
+    "Select ambiance",
+    ("🔇 Silent mode", "🎛️ Trance remix", "💿 Titanic OST"),
+    label_visibility="collapsed",
+)
 
 if ambiance.startswith("🎛️"):
     iframe_code = """<iframe width="100%" height="130" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1851039789&color=%231a4b75&auto_play=true&hide_related=True&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>"""
     with st.sidebar:
         components.html(iframe_code, height=120)
-else:
+elif ambiance.startswith("💿"):
     tracks = {
         "1. Never an Absolution": "https://archive.org/download/TitanicMusicfromtheMotionPicture/01%20Never%20an%20Absolution.mp3",
         "2. Distant Memories": "https://archive.org/download/TitanicMusicfromtheMotionPicture/02%20Distant%20Memories.mp3",
