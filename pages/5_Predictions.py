@@ -3,7 +3,10 @@ from utils import set_seed, load_csv, preprocess_data
 import numpy as np
 import pandas as pd
 
-st.header("🎯 Prédictions" if st.session_state.lang == "fr-FR" else "🎯 Predictions")
+st.markdown(
+    "<h2 style='text-align: center; color: #0366d6;'>🎯 Predictions</h2>",
+    unsafe_allow_html=True,
+)
 
 if "df_results" not in st.session_state:
     st.warning(
@@ -29,21 +32,24 @@ st.video(video_url, autoplay=True, muted=True)
 set_seed()
 
 st.subheader(
-    "Comparer les chances de survie des passagers"
-    if st.session_state.lang == "fr-FR"
-    else "Compare passengers’ chances of survival"
+    (
+        ":blue[Chances de survie des passagers]"
+        if st.session_state.lang.startswith("fr")
+        else ":blue[Passengers’ chances of survival]"
+    ),
+    divider=True,
 )
 
 st.write(
     "Les chances de survie des passagers sont prédites par un modèle optimisé avec :"
-    if st.session_state.lang == "fr-FR"
+    if st.session_state.lang.startswith("fr")
     else "The chances of survival are predicted by an optimized model with :"
 )
 
 st.write(
     """🟢 probabilité ≥ 50% : le passager survit  
 🔴 probabilité < 50% : le passager ne survit pas"""
-    if st.session_state.lang == "fr-FR"
+    if st.session_state.lang.startswith("fr")
     else """🟢 probability ≥ 50%: the passenger survives  
 🔴 probability < 50%: the passenger does not survive"""
 )
@@ -51,7 +57,9 @@ st.write(
 
 model_choisi = st.selectbox(
     label=(
-        "Choisir le modèle" if st.session_state.lang == "fr-FR" else "Choose the model"
+        "Choisir le modèle"
+        if st.session_state.lang.startswith("fr")
+        else "Choose the model"
     ),
     options=list(st.session_state.df_results.Model),
 )
@@ -98,12 +106,13 @@ result = pd.DataFrame(
 st.dataframe(result)
 
 
-st.divider()
-
 st.subheader(
-    "Évaluer les chances de survie d'un passager personnalisé"
-    if st.session_state.lang == "fr-FR"
-    else "Evaluate the survival chances of a custom passenger"
+    (
+        ":blue[Chance de survie d'un passager 'personnalisé']"
+        if st.session_state.lang.startswith("fr")
+        else ":blue[Survival chance of a custom passenger]"
+    ),
+    divider=True,
 )
 
 
@@ -146,36 +155,34 @@ with col2:
 
     nb_siblings = st.slider("**Frères et sœurs**", 0, 10, 0)
 
-    nb_parents = st.slider("**Parents**", 0, 2, 0)
+    nb_parents = st.radio("**Parents**", (0, 1, 2), horizontal=True)
 
     nb_children = st.slider("**Enfants**", 0, 10, 0)
 
 st.write("🚧 WIP 🎯 Prédiction du modèle : 🟢 ou 🔴 (probabilité de survie = ### %) 🚧")
 
 
+_, col, _ = st.columns(3)
+with col:
+    st.write("")
+    st.write("")
+    st.page_link(
+        st.Page(
+            "pages/6_Terminus.py",
+            title=(
+                "Passer à l'étape suivante"
+                if st.session_state.lang.startswith("fr")
+                else "Go to the next step"
+            ),
+            icon="➡️",
+        )
+    )
+
 st.divider()
-
-if len(st.session_state.pages) == 5:
-    st.session_state.pages.append(
-        st.Page("pages/6_Terminus.py", title="Terminus", icon="🏁")
-    )
-    st.navigation(st.session_state.pages, position="top")
-
-st.page_link(
-    st.Page(
-        "pages/6_Terminus.py",
-        title=(
-            "Passer à l'étape suivante"
-            if st.session_state.lang == "fr-FR"
-            else "Go to the next step"
-        ),
-        icon="➡️",
-    )
-)
 
 st.markdown(
     """
-    <div style='text-align: center; font-size: small; color: gray; margin-top: 50px;'>
+    <div style='text-align: center; font-size: small; color: gray;'>
     © 2025 Didier Flamm
     </div>
     """,

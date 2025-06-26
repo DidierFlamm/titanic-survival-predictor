@@ -9,14 +9,16 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import balanced_accuracy_score
 import pandas as pd
 
+st.markdown(
+    "<h2 style='text-align: center; color: #0366d6;'>📈 Optimisation</h2>",
+    unsafe_allow_html=True,
+)
 
-st.header("📈 Optimisation")
 
-
-st.subheader("🔧 Fine tuning")
+st.subheader("🔧 :blue[Fine tuning]", divider=True)
 st.write(
     "Optimisation des hyperparamètres de 5 modèles par Grid Search Cross Validation sur l'ensemble d'entraînement (80% des données) :"
-    if st.session_state.lang == "fr-FR"
+    if st.session_state.lang.startswith("fr")
     else "Hyperparameter tuning of 5 models using Grid Search Cross Validation on the training set (80% of the data) :"
 )
 
@@ -73,11 +75,18 @@ placeholder = st.empty()
 
 start_total_time = time.time()
 
-st.subheader("🎯 Résultats" if st.session_state.lang == "fr-FR" else "🎯 Results")
+st.subheader(
+    (
+        "🎯 :blue[Résultats]"
+        if st.session_state.lang.startswith("fr")
+        else "🎯 :blue[Results]"
+    ),
+    divider=True,
+)
 
 st.write(
     "L'évaluation de chaque modèle est réalisée sur l'ensemble de test (20% des données)."
-    if st.session_state.lang == "fr-FR"
+    if st.session_state.lang.startswith("fr")
     else "Each model is evaluated on the test set (20% of the data)."
 )
 
@@ -121,12 +130,10 @@ for idx, name in enumerate(models):
     )
     with st.expander(
         "Afficher les détails de la Grid Search CV"
-        if st.session_state.lang == "fr-FR"
+        if st.session_state.lang.startswith("fr")
         else "Display the grid search parameters"
     ):
         st.dataframe(pd.DataFrame(grid.cv_results_))
-
-st.divider()
 
 duration = round(time.time() - start_total_time, 1)
 
@@ -135,13 +142,20 @@ status.text("")
 placeholder.success(
     (
         f"Les {len(models)} modèles ont été optimisés en {duration} s"
-        if st.session_state.lang == "fr-FR"
+        if st.session_state.lang.startswith("fr")
         else f"The {len(models)} models were optimized in {duration} seconds."
     ),
     icon="✅",
 )
 
-st.subheader("🏆 Classement" if st.session_state.lang == "fr-FR" else "🏆 Ranking")
+st.subheader(
+    (
+        "🏆 :blue[Classement]"
+        if st.session_state.lang.startswith("fr")
+        else "🏆 :blue[Ranking]"
+    ),
+    divider=True,
+)
 
 df_results = pd.DataFrame(results).sort_values(by="Balanced Accuracy", ascending=False)
 
@@ -154,29 +168,26 @@ st.caption(f"seed de la session = {st.session_state.seed}")
 if "df_results" not in st.session_state:
     st.session_state.df_results = df_results
 
+
+_, col, _ = st.columns(3)
+with col:
+    st.write("")
+    st.write("")
+    st.page_link(
+        st.Page(
+            "pages/5_Predictions.py",
+            title=(
+                "Passer à l'étape suivante"
+                if st.session_state.lang.startswith("fr")
+                else "Go to the next step"
+            ),
+            icon="➡️",
+        )
+    )
 st.divider()
-
-if len(st.session_state.pages) == 4:
-    st.session_state.pages.append(
-        st.Page("pages/5_Predictions.py", title="Predictions", icon="🎯")
-    )
-    st.navigation(st.session_state.pages, position="top")
-
-st.page_link(
-    st.Page(
-        "pages/5_Predictions.py",
-        title=(
-            "Passer à l'étape suivante"
-            if st.session_state.lang == "fr-FR"
-            else "Go to the next step"
-        ),
-        icon="➡️",
-    )
-)
-
 st.markdown(
     """
-    <div style='text-align: center; font-size: small; color: gray; margin-top: 50px;'>
+    <div style='text-align: center; font-size: small; color: gray;'>
     © 2025 Didier Flamm
     </div>
     """,

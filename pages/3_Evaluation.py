@@ -11,16 +11,20 @@ from sklearn.metrics import (
     confusion_matrix,
 )
 
-# add page on top of the screen to skip page if lagging
-# if len(st.session_state.pages) == 3:
-#    st.session_state.pages.append(
-#        st.Page("pages/4_Optimisation.py", title="Optimisation", icon="📈")
-#    )
-#    st.navigation(st.session_state.pages, position="top")
+st.markdown(
+    "<h2 style='text-align: center; color: #0366d6;'>📝 Evaluation</h2>",
+    unsafe_allow_html=True,
+)
 
-st.header("📝 Evaluation")
 
-st.subheader("Entraînement" if st.session_state == "fr-FR" else "Training")
+st.subheader(
+    (
+        ":blue[Entraînement]"
+        if st.session_state.lang.startswith("fr")
+        else ":blue[Training]"
+    ),
+    divider=True,
+)
 
 set_seed()
 
@@ -29,7 +33,7 @@ all_classifiers = all_estimators(type_filter="classifier")
 
 st.write(
     "Les différents modèles de Machine Learning de la librairie Scikit-learn sont entraînés avec leurs paramètres par défaut puis classés selon 3 scoring différents (balanced accuracy, ROC AUC et f1-score) calculés par Cross Validation à 5 folds sur un ensemble d’entraînement constitué de 80% des données disponibles."
-    if st.session_state.lang == "fr-FR"
+    if st.session_state.lang.startswith("fr")
     else "The various Machine Learning models from the Scikit-learn library are trained with their default parameters, then ranked based on three different scoring metrics (balanced accuracy, ROC AUC, and F1-score), computed using 5-fold cross-validation on a training set composed of 80% of the available data."
 )
 
@@ -119,7 +123,7 @@ container.success(
     f"{len(results)} "
     + (
         "modèles ont été évalués en"
-        if st.session_state.lang == "fr-FR"
+        if st.session_state.lang.startswith("fr")
         else "models were evaluated in"
     )
     + f" {duration} s",
@@ -130,39 +134,39 @@ container.warning(
     f"{len(errors)} "
     + (
         "modèles n'ont pas pu être entraînés"
-        if st.session_state == "fr-FR"
+        if st.session_state.lang.startswith("fr")
         else "models could not be trained"
     ),
     icon="ℹ️",
 )
 
 st.caption(
-    ("seed de la session = " if st.session_state.lang == "fr-FR" else "session seed = ")
+    (
+        "seed de la session = "
+        if st.session_state.lang.startswith("fr")
+        else "session seed = "
+    )
     + f"{st.session_state.seed}"
 )
 
 with st.expander(
-    "Afficher les erreurs" if st.session_state.lang == "fr-FR" else "Display errors"
+    "Afficher les erreurs"
+    if st.session_state.lang.startswith("fr")
+    else "Display errors"
 ):
     st.dataframe(errors)
-
-st.divider()
 
 
 best_model_name = df_results.iloc[0, 0]
 
-st.subheader(
-    "Evaluation du modèle le plus performant"
-    if st.session_state == "fr-FR"
-    else "Evaluation of the best-performing model"
-)
+st.subheader(":blue[Evaluation]", divider=True)
 
 st.write(f"🏆 {best_model_name}")
 
 st.write(
-    f"L'évaluation du modèle {best_model_name} est réalisée sur un ensemble de test constitué de 20% des données non utilisées pendant l’entraînement."
-    if st.session_state.lang == "fr-FR"
-    else f"The {best_model_name} model is evaluated on a test set made up of the 20% of data that was not used during training."
+    f"Le modèle ayant obtenu les meilleures performances durant l'entraînement est {best_model_name}. Son évaluation est réalisée sur un ensemble de test de type hold-out, constitué de 20 % des données non utilisées lors de l'ajustement du modèle."
+    if st.session_state.lang.startswith("fr")
+    else f"The best-performing model during training was {best_model_name}. Its performance is evaluated on a hold-out test set comprising 20% of the data that was not used during model fitting."
 )
 
 for name, Clf in all_classifiers:
@@ -193,24 +197,26 @@ df_cm = pd.DataFrame(cm, index=["Actual 0", "Actual 1"], columns=["Pred 0", "Pre
 st.write("- Confusion Matrix")
 st.dataframe(df_cm)
 
-st.divider()
 
-
-st.page_link(
-    st.Page(
-        "pages/4_Optimisation.py",
-        title=(
-            "Passer à l'étape suivante"
-            if st.session_state.lang == "fr-FR"
-            else "Go to the next step"
-        ),
-        icon="➡️",
+_, col, _ = st.columns(3)
+with col:
+    st.write("")
+    st.write("")
+    st.page_link(
+        st.Page(
+            "pages/4_Optimisation.py",
+            title=(
+                "Passer à l'étape suivante"
+                if st.session_state.lang.startswith("fr")
+                else "Go to the next step"
+            ),
+            icon="➡️",
+        )
     )
-)
-
+st.divider()
 st.markdown(
     """
-    <div style='text-align: center; font-size: small; color: gray; margin-top: 50px;'>
+    <div style='text-align: center; font-size: small; color: gray;'>
     © 2025 Didier Flamm
     </div>
     """,

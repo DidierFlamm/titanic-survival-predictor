@@ -4,15 +4,11 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 
-# add next page
-# if len(st.session_state.pages) == 2:
-#    st.session_state.pages.append(
-#        st.Page("pages/3_Evaluation.py", title="Evaluation", icon="📝")
-#    )
-#    st.navigation(st.session_state.pages, position="top")
 
-st.header("📊 Visualisation")
-
+st.markdown(
+    "<h2 style='text-align: center; color: #0366d6;'>📊 Visualisation</h2>",
+    unsafe_allow_html=True,
+)
 
 df = load_csv()
 
@@ -24,7 +20,7 @@ df_display["Survived"] = df_display["Survived"].replace({0: "Non", 1: "Oui"})
 palette = sns.color_palette("RdYlGn", n_colors=3)  # rouge - jaune - vert
 palette = [palette[2], palette[0]]  # vert et rouge
 
-st.write("### Analyse univariée")
+st.subheader(":blue[Analyse univariée]", divider=True)
 fig, axs = plt.subplots(1, 3, figsize=(12, 4))
 sns.countplot(
     x="Survived", data=df_display, order=["Oui", "Non"], palette=palette, ax=axs[0]
@@ -59,13 +55,12 @@ st.pyplot(fig)
 
 st.write(
     "Trois passagers présentent un tarif de 512.33, nettement supérieur à la distribution générale. Bien que ces valeurs extrêmes ne soient pas nécessairement aberrantes, elles sont considérées comme des outliers et seront exclues du jeu de données afin d'éviter qu’elles ne biaisent les résultats ultérieurs. L’analyse est ainsi restreinte aux 888 passagers ayant un tarif compris entre 0 et 263."
-    if st.session_state.lang == "fr-FR"
+    if st.session_state.lang.startswith("fr")
     else "Three passengers have a fare of 512.33, which is significantly higher than the overall distribution. While these extreme values are not necessarily erroneous, they are considered outliers and will be excluded from the dataset to prevent them from skewing subsequent results. The analysis is thus limited to the 888 passengers whose fares range between 0 and 263."
 )
 
-st.divider()
 
-st.write("### Analyse bivariée")
+st.subheader(":blue[Analyse bivariée]", divider=True)
 
 df_display = df_display[df_display["Fare"] < 500]
 
@@ -175,9 +170,8 @@ plt.title("Survie en fonction du nombre de parents")
 plt.tight_layout()
 st.pyplot(fig)
 
-st.divider()
 
-st.write("### Analyse multivariée interactive (Plotly)")
+st.subheader(":blue[Analyse interactive]", divider=True)
 
 hist = px.histogram(df, x="Survived", color="Sex", barmode="group")
 st.plotly_chart(hist)
@@ -185,25 +179,25 @@ st.plotly_chart(hist)
 hist_bis = px.sunburst(df, path=["Sex", "Pclass"])
 st.plotly_chart(hist_bis)
 
-st.divider()
 
-
-st.page_link(
-    st.Page(
-        "pages/3_Evaluation.py",
-        title=(
-            "Passer à l'étape suivante"
-            if st.session_state.lang == "fr-FR"
-            else "Go to the next step"
-        ),
-        icon="➡️",
+_, col, _ = st.columns(3)
+with col:
+    st.page_link(
+        st.Page(
+            "pages/3_Evaluation.py",
+            title=(
+                "Passer à l'étape suivante"
+                if st.session_state.lang.startswith("fr")
+                else "Go to the next step"
+            ),
+            icon="➡️",
+        )
     )
-)
-
+st.divider()
 
 st.markdown(
     """
-    <div style='text-align: center; font-size: small; color: gray; margin-top: 50px;'>
+    <div style='text-align: center; font-size: small; color: gray;'>
     © 2025 Didier Flamm
     </div>
     """,

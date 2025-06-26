@@ -1,6 +1,11 @@
 import streamlit as st
 
-st.header("🏁 Terminus")
+
+st.markdown(
+    "<h2 style='text-align: center; color: #0366d6;'>🏁 Terminus</h2>",
+    unsafe_allow_html=True,
+)
+
 
 st.balloons()
 
@@ -25,10 +30,10 @@ st.markdown(
 
 st.write("WIP 🚧")
 
-
+st.divider()
 st.markdown(
     """
-    <div style='text-align: center; font-size: small; color: gray; margin-top: 50px;'>
+    <div style='text-align: center; font-size: small; color: gray;'>
     © 2025 Didier Flamm
     </div>
     """,

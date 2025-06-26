@@ -6,31 +6,22 @@ import pandas as pd
 import streamlit.components.v1 as components
 
 
-# add next page at top of script to skip it if wished
-# if len(st.session_state.pages) == 1:
-#    st.session_state.pages.append(
-#        st.Page(
-#            "pages/2_Visualisation.py",
-#            title="Visualisation",
-#            icon="📊",
-#        )
-#    )
-#    st.navigation(st.session_state.pages, position="top")
-#
-# st.title("🚢 Titanic Survival Predictor")
-
+st.markdown(
+    "<h1 style='text-align: center; color: #0366d6;'>🚢 Titanic Survival Predictor</h1>",
+    unsafe_allow_html=True,
+)
 
 st.image(
     "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Titanic_in_color.png/960px-Titanic_in_color.png",
     caption=(
         "RMS Titanic au départ de Southampton le 10 avril 1912"
-        if st.session_state.lang == "fr-FR"
+        if st.session_state.lang.startswith("fr")
         else "RMS Titanic departing from Southampton on April 10, 1912"
     ),
 )
 
 
-st.header("Introduction")
+st.header(":blue[Introduction]", divider=True)
 
 
 # Textes à lire
@@ -40,9 +31,7 @@ Le naufrage du Titanic est l’une des catastrophes maritimes les plus célèbre
 
 Bien que le hasard ait joué un rôle dans les chances de survie, certains groupes de personnes semblaient avoir plus de chances de survivre que d’autres. L'objectif de ce projet est de construire un modèle prédictif pour répondre à la question « Quels types de personnes avaient le plus de chances de survivre ? » en s’appuyant sur certaines données de 891 passagers, telles que leur nom, âge, sexe, famille, classe, etc...
 
-Votre capitaine, Flamm Didier, et vos matelots Charlize et James vous souhaitent la bienvenue à bord du projet Titanic.  
-
-Embarquez pour un voyage serein et passionnant à travers le vaste océan des données avec DIDS  
+Votre capitaine, Flamm Didier, et vos matelots Charlize et James vous souhaitent la bienvenue à bord du projet Titanic. Embarquez pour un voyage serein et passionnant à travers le vaste océan des données !
 """
 
 text_EN = """
@@ -50,14 +39,12 @@ The sinking of the Titanic is one of the most famous maritime disasters in histo
 
 Although chance played a role in survival odds, some groups of people seemed more likely to survive than others. The goal of this project is to build a predictive model to answer the question: “What types of people were most likely to survive?” based on data from 891 passengers, such as their name, age, sex, family, class, and more.  
 
-Your captain, Flamm Didier, and your crewmates Charlize and James welcome you aboard the Titanic project.  
-
-Embark on a safe and exciting journey through the vast ocean of data with DIDS  
+Your captain, Flamm Didier, and your crewmates Charlize and James welcome you aboard the Titanic project. Embark on a safe and exciting journey through the vast ocean of data !
 """
 
-text_DIDS = """Dive Into Data Science !"""
+text_DIDS = """DIDS — Dive Into Data Science"""
 
-text_INTRO = text_FR if st.session_state.lang == "fr-FR" else text_EN
+text_INTRO = text_FR if st.session_state.lang.startswith("fr") else text_EN
 
 text = text_INTRO + text_DIDS
 
@@ -91,34 +78,38 @@ script = f"""
 </script>
 """
 
-col1, col2 = st.columns(2)
+(col1, col2, *_) = st.columns(4, vertical_alignment="center")
 
 with col1:
     components.html(
         script
-        + f"""<button onclick="speak()">🎧 Audio Guide {st.session_state.flag}</button>""",
-        height=40,
+        + f"""<button onclick="speak()">🎧<br>Audio Guide {st.session_state.flag}</button>""",
+        height=45,
     )
 
 with col2:
     components.html(
-        script + """<button onclick="stop()">🔇 Stop Audio Guide</button>""",
-        height=40,
+        script + """<button onclick="stop()">🔇<br>Stop</button>""",
+        height=45,
     )
 
 
 if "skip_stream" not in st.session_state:
     st.session_state.skip_stream = True
-    st.write_stream(stream_data(text))
+    st.write_stream(stream_data(text_INTRO))
+    st.write_stream(stream_data(text_DIDS))
 else:
-    st.write(text)
+    st.write(text_INTRO)
+    st.write(text_DIDS)
 
 
 st.write("🤿 📊 🌊")
 
-st.divider()
 
-st.header("Données" if st.session_state.lang == "fr-FR" else "Data")
+st.header(
+    ":blue[Données]" if st.session_state.lang.startswith("fr") else ":blue[Data]",
+    divider=True,
+)
 
 df = load_csv()
 
@@ -142,13 +133,13 @@ df_display["Sexe"].replace({"male": "H", "female": "F"}, inplace=True)
 st.dataframe(df_display)
 st.caption(
     "Les valeurs 'None' grises indiquent des valeurs manquantes"
-    if st.session_state.lang == "fr-FR"
+    if st.session_state.lang.startswith("fr")
     else "The gray 'None' values indicate missing data"
 )
 
 with st.expander(
     "Afficher les valeurs manquantes"
-    if st.session_state.lang == "fr-FR"
+    if st.session_state.lang.startswith("fr")
     else "Display missing values"
 ):
     # Compter les valeurs manquantes et formater proprement
@@ -163,17 +154,18 @@ with st.expander(
 
 
 st.markdown(
-    ("Source des données" if st.session_state.lang == "fr-FR" else "Data source")
+    ("Source des données" if st.session_state.lang.startswith("fr") else "Data source")
     + ' : <a href="https://github.com/datasciencedojo/datasets/blob/master/titanic.csv" target="_blank">Data Science Dojo</a>',
     unsafe_allow_html=True,
 )
 
-st.divider()
 
-st.write(
-    "Précisions concernant les variables:"
-    if st.session_state.lang == "fr-FR"
-    else "Details about the variables:"
+st.subheader(
+    (
+        ":blue[Précisions]"
+        if st.session_state.lang.startswith("fr")
+        else ":blue[Details]"
+    ),
 )
 df = pd.DataFrame(
     {
@@ -208,16 +200,16 @@ df = pd.DataFrame(
             🔴 = Non""",
             """F = Femme  
             H = Homme""",
-            """1 = 1ère (classe aisée)  
-            2 = 2ème (classe moyenne)  
-            3 = 3ème (classe populaire)""",
+            """1 = 1ère classe (aisée)  
+            2 = 2ème classe (moyenne)  
+            3 = 3ème classe (populaire)""",
             "",
             "",
             "",
             "",
-            """C = Cherbourg 🇫🇷  
-            Q = Queenstown 🇮🇪  
-            S = Southampton 🇬🇧""",
+            """C = 🇫🇷 Cherbourg  
+            Q = 🇮🇪 Queenstown  
+            S = 🇬🇧 Southampton""",
         ],
     }
 )
@@ -226,24 +218,28 @@ st.table(df.set_index("Variable"))
 
 st.image("https://upload.wikimedia.org/wikipedia/commons/a/af/TitanicRoute.svg")
 
-st.divider()
 
-
-st.page_link(
-    st.Page(
-        "pages/2_Visualisation.py",
-        title=(
-            "Passer à l'étape suivante"
-            if st.session_state.lang == "fr-FR"
-            else "Go to the next step"
-        ),
-        icon="➡️",
+_, col, _ = st.columns(3)
+with col:
+    st.write("")
+    st.write("")
+    st.page_link(
+        st.Page(
+            "pages/2_Visualisation.py",
+            title=(
+                "Passer à l'étape suivante"
+                if st.session_state.lang.startswith("fr")
+                else "Go to the next step"
+            ),
+            icon="➡️",
+        )
     )
-)
+
+st.divider()
 
 st.markdown(
     """
-    <div style='text-align: center; font-size: small; color: gray; margin-top: 50px;'>
+    <div style='text-align: center; font-size: small; color: gray;'>
     © 2025 Didier Flamm
     </div>
     """,
