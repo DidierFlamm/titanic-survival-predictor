@@ -53,9 +53,15 @@ if ambiance.startswith("😎"):
         autoplay=True,
     )
 
-    # iframe_code = """<iframe width="100%" height="130" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1851039789&color=%231a4b75&auto_play=true&hide_related=True&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>"""
-    # with st.sidebar:
-    #    components.html(iframe_code, height=120)
+    st.sidebar.markdown(
+        """
+    <div style='text-align: center; font-size: small; color: gray;'>
+    © 2025 Laback feat. Alexis Carlier
+    </div>
+    """,
+        unsafe_allow_html=True,
+    )
+
 elif ambiance.startswith("💿"):
     tracks = {
         "1. Never an Absolution": "https://archive.org/download/TitanicMusicfromtheMotionPicture/01%20Never%20an%20Absolution.mp3",
@@ -90,6 +96,15 @@ elif ambiance.startswith("💿"):
         tracks[track],
         format="audio/mpeg",  # = mp3
         autoplay=True,
+    )
+
+    st.sidebar.markdown(
+        """
+    <div style='text-align: center; font-size: small; color: gray;'>
+    © 1997 James Horner
+    </div>
+    """,
+        unsafe_allow_html=True,
     )
 
 
