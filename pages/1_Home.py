@@ -63,7 +63,7 @@ script = f"""
     msgINTRO.rate = 1.1;
 
     var msgDIDS = new SpeechSynthesisUtterance({text_DIDS!r});
-    msgDIDS.lang = 'en-US';
+    msgDIDS.lang = 'en-GB';
     msgDIDS.rate = 1.1;
 
     function speak() {{
