@@ -1,36 +1,39 @@
 # -*- coding: utf-8 -*-
 import streamlit as st
-import streamlit.components.v1 as components
+
+# import streamlit.components.v1 as components
 import pandas as pd
 
 ###
-default_lang = "fr-FR"
+# if "lang" not in st.session_state:
+#    st.session_state.lang = "fr-FR"
+
 
 st.logo(
     # "https://raw.githubusercontent.com/DidierFlamm/DidierFlamm/main/dids.webp",
     "https://img.icons8.com/?size=100&id=s5NUIabJrb4C&format=png&color=000000",
     size="large",
 )
-###
+
 
 st.sidebar.subheader("Language", divider=True)
 
-iso_639_1_url = "https://raw.githubusercontent.com/DidierFlamm/titanic-survival-predictor/refs/heads/main/data/languages.csv"
-languages = pd.read_csv(iso_639_1_url)
+languages_csv = "https://raw.githubusercontent.com/DidierFlamm/titanic-survival-predictor/refs/heads/main/data/languages.csv"
+languages = pd.read_csv(languages_csv)
 
-
-if "lang" not in st.session_state:
-    st.session_state.lang = default_lang
+default_lang = "fr-FR"
+default_index = languages[languages["lang"] == default_lang].index[0]
 
 st.sidebar.selectbox(
     "Select language",
     options=languages.lang,
     key="lang",
-    format_func=lambda x: languages.loc[languages["lang"] == x, "language"].values[0],
+    format_func=lambda x: languages.loc[languages["lang"] == x, "language"].values[0],  # type: ignore
     label_visibility="collapsed",
+    index=int(default_index),
 )
 
-flag = languages.loc[languages.lang == st.session_state.lang, "flag"].values[0]
+flag = languages.loc[languages.lang == st.session_state.lang, "flag"].values[0]  # type: ignore
 st.session_state.flag = flag
 
 st.sidebar.subheader("Ambiance", divider=True)
