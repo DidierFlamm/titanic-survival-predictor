@@ -45,9 +45,19 @@ Votre capitaine, Flamm Didier, et vos matelots Charlize et James vous souhaitent
 Embarquez pour un voyage serein et passionnant à travers le vaste océan des données avec DIDS  
 """
 
+text_EN = """
+The sinking of the Titanic is one of the most famous maritime disasters in history. On April 15, 1912, during its maiden voyage, the RMS Titanic—considered “unsinkable”—sank after colliding with an iceberg. Unfortunately, there were not enough lifeboats for everyone on board, resulting in the deaths of 1,502 out of 2,224 passengers and crew members.  
+
+Although chance played a role in survival odds, some groups of people seemed more likely to survive than others. The goal of this project is to build a predictive model to answer the question: “What types of people were most likely to survive?” based on data from 891 passengers, such as their name, age, sex, family, class, and more.  
+
+Your captain, Flamm Didier, and your crewmates Charlize and James welcome you aboard the Titanic project.  
+
+Embark on a safe and exciting journey through the vast ocean of data with DIDS  
+"""
+
 text_DIDS = """Dive Into Data Science !"""
 
-text_INTRO = text_FR
+text_INTRO = text_FR if st.session_state.lang == "fr-FR" else text_EN
 
 text = text_INTRO + text_DIDS
 
@@ -61,7 +71,7 @@ def stream_data(text):
 
 script = f"""
 <script>
-    var msgINTRO = new SpeechSynthesisUtterance({text_FR!r});
+    var msgINTRO = new SpeechSynthesisUtterance({text_INTRO!r});
     msgINTRO.lang = {st.session_state.lang!r};
     msgINTRO.rate = 1.1;
 
