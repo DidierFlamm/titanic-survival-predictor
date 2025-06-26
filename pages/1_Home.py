@@ -104,7 +104,7 @@ else:
     st.write(text)
 
 
-st.write("🚢 🧊 💥 🚣")
+st.write("🤿 📊 🌊")
 
 st.divider()
 
