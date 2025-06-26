@@ -5,11 +5,11 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 
 # add next page
-if len(st.session_state.pages) == 2:
-    st.session_state.pages.append(
-        st.Page("pages/3_Evaluation.py", title="Evaluation", icon="📝")
-    )
-    st.navigation(st.session_state.pages, position="top")
+# if len(st.session_state.pages) == 2:
+#    st.session_state.pages.append(
+#        st.Page("pages/3_Evaluation.py", title="Evaluation", icon="📝")
+#    )
+#    st.navigation(st.session_state.pages, position="top")
 
 st.header("📊 Visualisation")
 
