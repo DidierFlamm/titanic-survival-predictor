@@ -41,10 +41,18 @@ ambiance = st.sidebar.radio(
     label_visibility="collapsed",
 )
 
+trance_url = "https://mstore.pics/download?data=Q0t5My9HMkFCU0pQZnZpWk1MTXJISEo2V20vMTVkNiszWVRLTkIxVERaczlSUk1LYi9Jb2Q5cHRsR05NcVhhL2ozUUF3dElnUG5oNXVKSWtrZ0MvRnBuWDRJS3J6VG4vRDREOThHSUF5RG9ITlU1NkxWS2dlZHMrblJ1Q2NkOTlSYVNGaGhtcWR3aXRWeGtTekVUa2pPSzhhNHJ4YTVSYVNhQkRzczNTYkRKNWhpNjl3TDJmK1RVb3UwU1Y2WEt6aGNTU0ZLL214dlM2Y3YveE9wT1NnY2R1bDBXekN2VjZPVWc4UitQUHdwRlRTd3k4UFJOQ0NJa25iYWJzbFRDZy9tdDk2a3FMc2NLNjIxdkcrRUZsYmpZZTlld2c5dXVqVmxyVk05dldrRGVHTE1FS0pHbkVNclZtY25mYTNJVi8vRUxUQlJpUXFHWW1lOFQxTms0aWxsV2RvWk85MHd5clVrdGxWN1FINGVpbHFmdEpLNCtEZy95cUlSSnN4cmZtckNsYWZRaWtsRHNuZU1PWWJkWG5rbjBKVHVYMVovQ0JBUDQzL1R1T2tpRUwwMjIxQXI2NEowalU3QnR4OWpXWFhVL1NmblNDc2E4WmlSckV0cm9KVE9hMzkyTjdXYi9TS25YMDFYMGkzMG8zRkZzY3RHTmxDcGlETllNQUJrRm9HSktoaHdnVjRPb3F0Z3Y3RU83b0h2QkdDQXUzQTdTY29ua05YK3NoNGFDdE1WbnFzUkRxVmc1Q1QvVGdSL1lzZHVTb1U0Tk9nZG1QbTlxcFowVGpqNkdpV3V2L0dtbWpHQWQ0Z291NXJYZHg1QWh6d2ZSd1A2L2FZRHNEVUExWA"
+
 if ambiance.startswith("🎛️"):
-    iframe_code = """<iframe width="100%" height="130" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1851039789&color=%231a4b75&auto_play=true&hide_related=True&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>"""
-    with st.sidebar:
-        components.html(iframe_code, height=120)
+    st.sidebar.audio(
+        trance_url,
+        format="audio/mpeg",  # = mp3
+        autoplay=True,
+    )
+
+    # iframe_code = """<iframe width="100%" height="130" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1851039789&color=%231a4b75&auto_play=true&hide_related=True&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>"""
+    # with st.sidebar:
+    #    components.html(iframe_code, height=120)
 elif ambiance.startswith("💿"):
     tracks = {
         "1. Never an Absolution": "https://archive.org/download/TitanicMusicfromtheMotionPicture/01%20Never%20an%20Absolution.mp3",
