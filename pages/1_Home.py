@@ -83,7 +83,7 @@ script = f"""
 with col1:
     components.html(
         script
-        + f"""<button onclick="speak()">🎧<br>Audio Guide {st.session_state.flag}</button>""",
+        + f"""<button onclick="speak()">🎧 {st.session_state.flag}<br>Audio Guide</button>""",
         height=45,
     )
 
