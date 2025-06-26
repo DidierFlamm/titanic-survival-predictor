@@ -5,6 +5,21 @@ import pandas as pd
 
 st.header("🎯 Prédictions" if st.session_state.lang == "fr" else "🎯 Predictions")
 
+if "df_results" not in st.session_state:
+    st.warning(
+        """Les modèles doivent être optimisés avant de pouvoir réaliser des prédictions fiables.  
+        Veuillez vous rendre à l'étape 📈 Optimisation en cliquant sur le bouton ci-dessous :""",
+        icon="ℹ️",
+    )
+    st.page_link(
+        st.Page(
+            "pages/4_Optimisation.py",
+            title="Optimisation",
+            icon="📈",
+        )
+    )
+    st.stop()
+
 # URL de la vidéo
 video_url = "https://youtu.be/vXBY6Zu46HE"
 
@@ -32,6 +47,7 @@ st.write(
     else """🟢 probability ≥ 50%: the passenger survives  
 🔴 probability < 50%: the passenger does not survive"""
 )
+
 
 model_choisi = st.selectbox(
     label="Choisir le modèle" if st.session_state.lang == "fr" else "Choose the model",
