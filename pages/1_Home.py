@@ -35,35 +35,21 @@ st.header("Introduction")
 
 # Textes à lire
 
-text_FR1 = """
-Le naufrage du Titanic est l’une des catastrophes maritimes les plus célèbres de l’histoire. Le 15 avril 1912, lors de son voyage inaugural, le RMS Titanic, pourtant considéré comme “insubmersible”, a coulé après une collision avec un iceberg. Malheureusement, il n’y avait pas assez de canots de sauvetage pour toutes les personnes à bord, ce qui a entraîné la mort de 1502 des 2224 passagers et membres d’équipage.  
+text_FR = """
+Le naufrage du Titanic est l’une des catastrophes maritimes les plus célèbres de l’histoire. Le 15 avril 1912, lors de son voyage inaugural, le RMS Titanic, pourtant considéré comme insubmersible, a coulé après une collision avec un iceberg. Malheureusement, il n’y avait pas assez de canots de sauvetage pour toutes les personnes à bord, ce qui a entraîné la mort de 1502 des 2224 passagers et membres d’équipage.  
 
 Bien que le hasard ait joué un rôle dans les chances de survie, certains groupes de personnes semblaient avoir plus de chances de survivre que d’autres. L'objectif de ce projet est de construire un modèle prédictif pour répondre à la question « Quels types de personnes avaient le plus de chances de survivre ? » en s’appuyant sur certaines données de 891 passagers, telles que leur nom, âge, sexe, famille, classe, etc...
 
 Votre capitaine, Flamm Didier, et vos matelots Charlize et James vous souhaitent la bienvenue à bord du projet Titanic.  
-"""
 
-text_FR2 = """
-Embarquez pour un voyage serein et passionnant à travers le vaste océan des données avec DIDS –  
+Embarquez pour un voyage serein et passionnant à travers le vaste océan des données avec DIDS  
 """
 
 text_DIDS = """Dive Into Data Science !"""
 
-text_FR = text_FR1 + text_FR2 + text_DIDS
+text_INTRO = text_FR
 
-text_EN1 = """
-The sinking of the Titanic is one of the most famous maritime disasters in history. On April 15, 1912, during its maiden voyage, the RMS Titanic, considered “unsinkable”, sank after colliding with an iceberg. Unfortunately, there were not enough lifeboats for everyone on board, resulting in the deaths of 1,502 out of 2,224 passengers and crew members.  
-
-Although chance played a role in survival odds, some groups of people seemed more likely to survive than others. The goal of this project is to build a predictive model to answer the question: “What types of people were most likely to survive?” based on data from 891 passengers, such as their name, age, sex, family, class, etc.  
-
-Your captain, Flamm Didier, and your crewmates Charlize and James welcome you aboard the Titanic project.  
-"""
-
-text_EN2 = """
-Embark on a safe and exciting journey through the vast ocean of data with DIDS – Dive Into Data Science !
-"""
-
-text_EN = text_EN1 + text_EN2
+text = text_INTRO + text_DIDS
 
 
 # Fonction de stream
@@ -75,37 +61,18 @@ def stream_data(text):
 
 script = f"""
 <script>
-    var msgFR1 = new SpeechSynthesisUtterance({text_FR1!r});
-    msgFR1.lang = 'fr-FR';
-    msgFR1.rate = 1.1;
-    
-    var msgFR2 = new SpeechSynthesisUtterance({text_FR2!r});
-    msgFR2.lang = 'fr-FR';
-    msgFR2.rate = 1.1;
+    var msgINTRO = new SpeechSynthesisUtterance({text_FR!r});
+    msgINTRO.lang = {st.session_state.lang!r};
+    msgINTRO.rate = 1.1;
 
     var msgDIDS = new SpeechSynthesisUtterance({text_DIDS!r});
     msgDIDS.lang = 'en-US';
     msgDIDS.rate = 1.1;
 
-    var msgEN1 = new SpeechSynthesisUtterance({text_EN1!r});
-    msgEN1.lang = 'en-US';
-    msgEN1.rate = 1.1;
-
-    var msgEN2 = new SpeechSynthesisUtterance({text_EN2!r});
-    msgEN2.lang = 'en-US';
-    msgEN2.rate = 1.1;
-
-    function speakFR() {{
+    function speak() {{
         window.speechSynthesis.cancel();
-        window.speechSynthesis.speak(msgFR1);
-        window.speechSynthesis.speak(msgFR2);
+        window.speechSynthesis.speak(msgINTRO);
         window.speechSynthesis.speak(msgDIDS);
-    }}
-
-    function speakEN() {{
-        window.speechSynthesis.cancel();
-        window.speechSynthesis.speak(msgEN1);
-        window.speechSynthesis.speak(msgEN2);
     }}
 
     function stop() {{
@@ -114,41 +81,27 @@ script = f"""
 </script>
 """
 
-col1, col2 = st.columns(
-    2,
-    gap="small",
-)
+col1, col2 = st.columns(2)
 
 with col1:
-    if st.session_state.lang == "fr":
-        components.html(
-            script + """<button onclick="speakFR()">🎧 Audio guide 🇫🇷</button>""",
-            height=40,
-        )
-    else:
-        components.html(
-            script + """<button onclick="speakEN()">🎧 Audio guide 🇬🇧</button>""",
-            height=40,
-        )
-
+    components.html(
+        script
+        + f"""<button onclick="speak()">🎧 Audio Guide {st.session_state.flag}</button>""",
+        height=40,
+    )
 
 with col2:
     components.html(
-        script + """<button onclick="stop()">🔇 Stop audio guide</button>""",
+        script + """<button onclick="stop()">🔇 Stop Audio Guide</button>""",
         height=40,
     )
 
 
 if "skip_stream" not in st.session_state:
     st.session_state.skip_stream = True
-    if st.session_state.lang == "fr":
-        st.write_stream(stream_data(text_FR))
-    else:
-        st.write_stream(stream_data(text_EN))
-
-
+    st.write_stream(stream_data(text))
 else:
-    st.write(text_FR if st.session_state.lang == "fr" else text_EN)
+    st.write(text)
 
 
 st.write("🚢 🧊 💥 🚣")
