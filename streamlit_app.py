@@ -1,20 +1,11 @@
 # -*- coding: utf-8 -*-
 import streamlit as st
-
-# import streamlit.components.v1 as components
 import pandas as pd
 
-###
-# if "lang" not in st.session_state:
-#    st.session_state.lang = "fr-FR"
-
-
 st.logo(
-    # "https://raw.githubusercontent.com/DidierFlamm/DidierFlamm/main/dids.webp",
     "https://img.icons8.com/?size=100&id=s5NUIabJrb4C&format=png&color=000000",
     size="large",
 )
-
 
 st.sidebar.subheader("Language", divider=True)
 
@@ -94,7 +85,7 @@ elif ambiance.startswith("💿"):
 
     st.sidebar.audio(
         tracks[track],
-        format="audio/mpeg",  # = mp3
+        format="audio/mpeg",
         autoplay=True,
     )
 
