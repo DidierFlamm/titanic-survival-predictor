@@ -12,16 +12,16 @@ st.logo(
 
 st.sidebar.subheader("Language", divider=True)
 
-iso_639_1_url = "https://raw.githubusercontent.com/DidierFlamm/titanic-survival-predictor/refs/heads/main/data/iso_639_1.csv"
+iso_639_1_url = "https://raw.githubusercontent.com/DidierFlamm/titanic-survival-predictor/refs/heads/main/data/languages.csv"
 languages = pd.read_csv(iso_639_1_url)
 
-default_lang = "fr"
-default_index = languages[languages.loc[:, "iso"] == default_lang].index[0]
+default_lang = "fr-FR"
+default_index = languages[languages.loc[:, "lang"] == default_lang].index[0]
 language = st.sidebar.selectbox(
     "Select language", options=languages, index=int(default_index)
 )
 
-lang = languages.loc[languages["language"] == language, "iso"].values[0]
+lang = languages.loc[languages["language"] == language, "lang"].values[0]
 
 st.session_state.lang = lang
 
