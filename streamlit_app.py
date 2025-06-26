@@ -3,27 +3,34 @@ import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
 
+###
+default_lang = "fr-FR"
+
 st.logo(
     # "https://raw.githubusercontent.com/DidierFlamm/DidierFlamm/main/dids.webp",
     "https://img.icons8.com/?size=100&id=s5NUIabJrb4C&format=png&color=000000",
     size="large",
 )
-
+###
 
 st.sidebar.subheader("Language", divider=True)
 
 iso_639_1_url = "https://raw.githubusercontent.com/DidierFlamm/titanic-survival-predictor/refs/heads/main/data/languages.csv"
 languages = pd.read_csv(iso_639_1_url)
 
-default_lang = "fr-FR"
-default_index = languages[languages.loc[:, "lang"] == default_lang].index[0]
-language = st.sidebar.selectbox(
-    "Select language", options=languages, index=int(default_index)
+
+if "lang" not in st.session_state:
+    st.session_state.lang = default_lang
+
+st.sidebar.selectbox(
+    "Select language",
+    options=languages.lang,
+    key="lang",
+    format_func=lambda x: languages.loc[languages["lang"] == x, "language"].values[0],
 )
 
-lang = languages.loc[languages["language"] == language, "lang"].values[0]
-
-st.session_state.lang = lang
+flag = languages.loc[languages.lang == st.session_state.lang, "flag"].values[0]
+st.session_state.flag = flag
 
 st.sidebar.subheader("Ambiance", divider=True)
 
@@ -31,7 +38,6 @@ ambiance = st.sidebar.radio("Select ambiance", ("🎛️ Trance remix", "💿 Ti
 
 if ambiance.startswith("🎛️"):
     iframe_code = """<iframe width="100%" height="130" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1851039789&color=%231a4b75&auto_play=true&hide_related=True&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>"""
-    # """<iframe width="100%" height="130" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/97158016&color=%231a4b75&auto_play=true&hide_related=false&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>"""
     with st.sidebar:
         components.html(iframe_code, height=120)
 else:
@@ -72,16 +78,7 @@ else:
 
 
 st.sidebar.subheader("View all apps", divider=True)
-# st.sidebar.markdown(
-#    """
-# <div style='text-align: center'>
-#  <a href="https://share.streamlit.io/user/didierflamm" target="_blank">
-#    <img src="https://raw.githubusercontent.com/DidierFlamm/DidierFlamm/main/dids.webp" style="max-width: 100%; height: auto;" width="150"/>
-#  </a>
-# </div>
-# """,
-#    unsafe_allow_html=True,
-# )
+
 
 st.sidebar.image(
     "https://raw.githubusercontent.com/DidierFlamm/DidierFlamm/main/dids.webp"
