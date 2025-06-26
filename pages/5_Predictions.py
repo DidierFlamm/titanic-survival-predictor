@@ -20,17 +20,17 @@ st.subheader(
 )
 
 st.write(
-    "Les chances de survie des passagers sont évaluées par prédiction de probabilité du classifieur optimisé :"
+    "Les chances de survie des passagers sont prédites par un modèle optimisé avec :"
     if st.session_state.lang == "fr"
-    else "The chances of survival are assessed by the optimized classifier’s probability prediction:"
+    else "The chances of survival are predicted by an optimized model with :"
 )
 
 st.write(
-    """- une probabilité supérieure ou égale à 50% prédit la survie du passager,
-- une probabilité inférieure à 50% prédit la non survie du passager."""
+    """🟢 probabilité ≥ 50% : le passager survit  
+🔴 probabilité < 50% : le passager ne survit pas"""
     if st.session_state.lang == "fr"
-    else """- a probability greater than or equal to 50% predicts passenger survival,  
-- a probability less than 50% predicts passenger non-survival."""
+    else """🟢 probability ≥ 50%: the passenger survives  
+🔴 probability < 50%: the passenger does not survive"""
 )
 
 model_choisi = st.selectbox(
