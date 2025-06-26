@@ -3,7 +3,7 @@ from utils import set_seed, load_csv, preprocess_data
 import numpy as np
 import pandas as pd
 
-st.header("🎯 Prédictions" if st.session_state.lang == "fr" else "🎯 Predictions")
+st.header("🎯 Prédictions" if st.session_state.lang == "fr-FR" else "🎯 Predictions")
 
 if "df_results" not in st.session_state:
     st.warning(
@@ -30,27 +30,29 @@ set_seed()
 
 st.subheader(
     "Comparer les chances de survie des passagers"
-    if st.session_state.lang == "fr"
+    if st.session_state.lang == "fr-FR"
     else "Compare passengers’ chances of survival"
 )
 
 st.write(
     "Les chances de survie des passagers sont prédites par un modèle optimisé avec :"
-    if st.session_state.lang == "fr"
+    if st.session_state.lang == "fr-FR"
     else "The chances of survival are predicted by an optimized model with :"
 )
 
 st.write(
     """🟢 probabilité ≥ 50% : le passager survit  
 🔴 probabilité < 50% : le passager ne survit pas"""
-    if st.session_state.lang == "fr"
+    if st.session_state.lang == "fr-FR"
     else """🟢 probability ≥ 50%: the passenger survives  
 🔴 probability < 50%: the passenger does not survive"""
 )
 
 
 model_choisi = st.selectbox(
-    label="Choisir le modèle" if st.session_state.lang == "fr" else "Choose the model",
+    label=(
+        "Choisir le modèle" if st.session_state.lang == "fr-FR" else "Choose the model"
+    ),
     options=list(st.session_state.df_results.Model),
 )
 
@@ -100,7 +102,7 @@ st.divider()
 
 st.subheader(
     "Évaluer les chances de survie d'un passager personnalisé"
-    if st.session_state.lang == "fr"
+    if st.session_state.lang == "fr-FR"
     else "Evaluate the survival chances of a custom passenger"
 )
 
@@ -164,7 +166,7 @@ st.page_link(
         "pages/6_Terminus.py",
         title=(
             "Passer à l'étape suivante"
-            if st.session_state.lang == "fr"
+            if st.session_state.lang == "fr-FR"
             else "Go to the next step"
         ),
         icon="➡️",

@@ -20,7 +20,7 @@ from sklearn.metrics import (
 
 st.header("📝 Evaluation")
 
-st.subheader("Entraînement" if st.session_state == "fr" else "Training")
+st.subheader("Entraînement" if st.session_state == "fr-FR" else "Training")
 
 set_seed()
 
@@ -29,7 +29,7 @@ all_classifiers = all_estimators(type_filter="classifier")
 
 st.write(
     "Les différents modèles de Machine Learning de la librairie Scikit-learn sont entraînés avec leurs paramètres par défaut puis classés selon 3 scoring différents (balanced accuracy, ROC AUC et f1-score) calculés par Cross Validation à 5 folds sur un ensemble d’entraînement constitué de 80% des données disponibles."
-    if st.session_state.lang == "fr"
+    if st.session_state.lang == "fr-FR"
     else "The various Machine Learning models from the Scikit-learn library are trained with their default parameters, then ranked based on three different scoring metrics (balanced accuracy, ROC AUC, and F1-score), computed using 5-fold cross-validation on a training set composed of 80% of the available data."
 )
 
@@ -119,7 +119,7 @@ container.success(
     f"{len(results)} "
     + (
         "modèles ont été évalués en"
-        if st.session_state.lang == "fr"
+        if st.session_state.lang == "fr-FR"
         else "models were evaluated in"
     )
     + f" {duration} s",
@@ -130,19 +130,19 @@ container.warning(
     f"{len(errors)} "
     + (
         "modèles n'ont pas pu être entraînés"
-        if st.session_state == "fr"
+        if st.session_state == "fr-FR"
         else "models could not be trained"
     ),
     icon="ℹ️",
 )
 
 st.caption(
-    ("seed de la session = " if st.session_state.lang == "fr" else "session seed = ")
+    ("seed de la session = " if st.session_state.lang == "fr-FR" else "session seed = ")
     + f"{st.session_state.seed}"
 )
 
 with st.expander(
-    "Afficher les erreurs" if st.session_state.lang == "fr" else "Display errors"
+    "Afficher les erreurs" if st.session_state.lang == "fr-FR" else "Display errors"
 ):
     st.dataframe(errors)
 
@@ -153,7 +153,7 @@ best_model_name = df_results.iloc[0, 0]
 
 st.subheader(
     "Evaluation du modèle le plus performant"
-    if st.session_state == "fr"
+    if st.session_state == "fr-FR"
     else "Evaluation of the best-performing model"
 )
 
@@ -161,7 +161,7 @@ st.write(f"🏆 {best_model_name}")
 
 st.write(
     f"L'évaluation du modèle {best_model_name} est réalisée sur un ensemble de test constitué de 20% des données non utilisées pendant l’entraînement."
-    if st.session_state.lang == "fr"
+    if st.session_state.lang == "fr-FR"
     else f"The {best_model_name} model is evaluated on a test set made up of the 20% of data that was not used during training."
 )
 
@@ -201,7 +201,7 @@ st.page_link(
         "pages/4_Optimisation.py",
         title=(
             "Passer à l'étape suivante"
-            if st.session_state.lang == "fr"
+            if st.session_state.lang == "fr-FR"
             else "Go to the next step"
         ),
         icon="➡️",

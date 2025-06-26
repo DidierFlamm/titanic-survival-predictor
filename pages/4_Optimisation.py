@@ -16,7 +16,7 @@ st.header("📈 Optimisation")
 st.subheader("🔧 Fine tuning")
 st.write(
     "Optimisation des hyperparamètres de 5 modèles par Grid Search Cross Validation sur l'ensemble d'entraînement (80% des données) :"
-    if st.session_state.lang == "fr"
+    if st.session_state.lang == "fr-FR"
     else "Hyperparameter tuning of 5 models using Grid Search Cross Validation on the training set (80% of the data) :"
 )
 
@@ -73,11 +73,11 @@ placeholder = st.empty()
 
 start_total_time = time.time()
 
-st.subheader("🎯 Résultats" if st.session_state.lang == "fr" else "🎯 Results")
+st.subheader("🎯 Résultats" if st.session_state.lang == "fr-FR" else "🎯 Results")
 
 st.write(
     "L'évaluation de chaque modèle est réalisée sur l'ensemble de test (20% des données)."
-    if st.session_state.lang == "fr"
+    if st.session_state.lang == "fr-FR"
     else "Each model is evaluated on the test set (20% of the data)."
 )
 
@@ -121,7 +121,7 @@ for idx, name in enumerate(models):
     )
     with st.expander(
         "Afficher les détails de la Grid Search CV"
-        if st.session_state.lang == "fr"
+        if st.session_state.lang == "fr-FR"
         else "Display the grid search parameters"
     ):
         st.dataframe(pd.DataFrame(grid.cv_results_))
@@ -135,13 +135,13 @@ status.text("")
 placeholder.success(
     (
         f"Les {len(models)} modèles ont été optimisés en {duration} s"
-        if st.session_state.lang == "fr"
+        if st.session_state.lang == "fr-FR"
         else f"The {len(models)} models were optimized in {duration} seconds."
     ),
     icon="✅",
 )
 
-st.subheader("🏆 Classement" if st.session_state.lang == "fr" else "🏆 Ranking")
+st.subheader("🏆 Classement" if st.session_state.lang == "fr-FR" else "🏆 Ranking")
 
 df_results = pd.DataFrame(results).sort_values(by="Balanced Accuracy", ascending=False)
 
@@ -167,7 +167,7 @@ st.page_link(
         "pages/5_Predictions.py",
         title=(
             "Passer à l'étape suivante"
-            if st.session_state.lang == "fr"
+            if st.session_state.lang == "fr-FR"
             else "Go to the next step"
         ),
         icon="➡️",

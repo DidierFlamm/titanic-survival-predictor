@@ -59,7 +59,7 @@ st.pyplot(fig)
 
 st.write(
     "Trois passagers présentent un tarif de 512.33, nettement supérieur à la distribution générale. Bien que ces valeurs extrêmes ne soient pas nécessairement aberrantes, elles sont considérées comme des outliers et seront exclues du jeu de données afin d'éviter qu’elles ne biaisent les résultats ultérieurs. L’analyse est ainsi restreinte aux 888 passagers ayant un tarif compris entre 0 et 263."
-    if st.session_state.lang == "fr"
+    if st.session_state.lang == "fr-FR"
     else "Three passengers have a fare of 512.33, which is significantly higher than the overall distribution. While these extreme values are not necessarily erroneous, they are considered outliers and will be excluded from the dataset to prevent them from skewing subsequent results. The analysis is thus limited to the 888 passengers whose fares range between 0 and 263."
 )
 
@@ -193,7 +193,7 @@ st.page_link(
         "pages/3_Evaluation.py",
         title=(
             "Passer à l'étape suivante"
-            if st.session_state.lang == "fr"
+            if st.session_state.lang == "fr-FR"
             else "Go to the next step"
         ),
         icon="➡️",

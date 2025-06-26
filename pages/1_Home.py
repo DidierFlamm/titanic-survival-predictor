@@ -24,7 +24,7 @@ st.image(
     "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Titanic_in_color.png/960px-Titanic_in_color.png",
     caption=(
         "RMS Titanic au départ de Southampton le 10 avril 1912"
-        if st.session_state.lang == "fr"
+        if st.session_state.lang == "fr-FR"
         else "RMS Titanic departing from Southampton on April 10, 1912"
     ),
 )
@@ -108,7 +108,7 @@ st.write("🤿 📊 🌊")
 
 st.divider()
 
-st.header("Données" if st.session_state.lang == "fr" else "Data")
+st.header("Données" if st.session_state.lang == "fr-FR" else "Data")
 
 df = load_csv()
 
@@ -132,13 +132,13 @@ df_display["Sexe"].replace({"male": "H", "female": "F"}, inplace=True)
 st.dataframe(df_display)
 st.caption(
     "Les valeurs 'None' grises indiquent des valeurs manquantes"
-    if st.session_state.lang == "fr"
+    if st.session_state.lang == "fr-FR"
     else "The gray 'None' values indicate missing data"
 )
 
 with st.expander(
     "Afficher les valeurs manquantes"
-    if st.session_state.lang == "fr"
+    if st.session_state.lang == "fr-FR"
     else "Display missing values"
 ):
     # Compter les valeurs manquantes et formater proprement
@@ -153,7 +153,7 @@ with st.expander(
 
 
 st.markdown(
-    ("Source des données" if st.session_state.lang == "fr" else "Data source")
+    ("Source des données" if st.session_state.lang == "fr-FR" else "Data source")
     + ' : <a href="https://github.com/datasciencedojo/datasets/blob/master/titanic.csv" target="_blank">Data Science Dojo</a>',
     unsafe_allow_html=True,
 )
@@ -162,7 +162,7 @@ st.divider()
 
 st.write(
     "Précisions concernant les variables:"
-    if st.session_state.lang == "fr"
+    if st.session_state.lang == "fr-FR"
     else "Details about the variables:"
 )
 df = pd.DataFrame(
@@ -224,7 +224,7 @@ st.page_link(
         "pages/2_Visualisation.py",
         title=(
             "Passer à l'étape suivante"
-            if st.session_state.lang == "fr"
+            if st.session_state.lang == "fr-FR"
             else "Go to the next step"
         ),
         icon="➡️",
