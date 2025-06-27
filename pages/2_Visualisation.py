@@ -60,7 +60,7 @@ st.write(
 )
 
 
-st.subheader(":blue[Analyse bivariée]", divider=True)
+st.subheader(":blue[Analyse multivariée]", divider=True)
 
 df_display = df_display[df_display["Fare"] < 500]
 

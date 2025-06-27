@@ -168,7 +168,7 @@ with col:
     st.write("")
     st.page_link(
         st.Page(
-            "pages/6_Terminus.py",
+            "pages/6_Arrival.py",
             title=(
                 "Passer à l'étape suivante"
                 if st.session_state.lang.startswith("fr")
