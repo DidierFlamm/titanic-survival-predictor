@@ -2,7 +2,7 @@ import streamlit as st
 
 
 st.markdown(
-    "<h2 style='text-align: center; color: #0366d6;'>🏁 Terminus</h2>",
+    "<h2 style='text-align: center; color: #0366d6;'>🏁 Port of arrival</h2>",
     unsafe_allow_html=True,
 )
 
