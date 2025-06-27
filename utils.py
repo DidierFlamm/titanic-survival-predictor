@@ -27,21 +27,26 @@ def load_csv():
 @st.cache_data
 def preprocess_data(
     df: pd.DataFrame, split: bool
-) -> tuple[pd.DataFrame, pd.DataFrame | None, pd.Series, pd.Series | None]:
+) -> tuple[pd.DataFrame, pd.DataFrame | None, pd.Series | None, pd.Series | None]:
     # features
     X = df.copy()
 
-    X = X.drop(
-        ["Name", "Ticket", "Cabin"],
-        axis=1,
-    )
+    # drop outliers
+    X = X[X["Fare"] < 500]
+
+    # drop "Name", "Ticket" and Cabin except for custom passenger who doesn't have
+    cols_to_drop = set(["Name", "Ticket", "Cabin"]).intersection(X.columns)
+    X = X.drop(list(cols_to_drop), axis=1)
 
     # feature engineering
     X["Family"] = X["SibSp"] + X["Parch"] + 1
     X["IsAlone"] = (X["Family"] == 1).astype(int)
 
     # target
-    y = X.pop("Survived")
+    if "Survived" in X.columns:
+        y = X.pop("Survived")
+    else:  # custom passenger doesn't have "survived"
+        y = None
 
     # Train/test split
     if split:
@@ -64,19 +69,37 @@ def preprocess_data(
 
     # scaling des variables numériques
     num_cols = ["Age", "Fare", "SibSp", "Parch", "Pclass", "Family"]
-    scaler = StandardScaler()
-    X_train[num_cols] = scaler.fit_transform(X_train[num_cols])
+
+    # memorize le scaler
+    if "scaler" not in st.session_state:
+        scaler = StandardScaler()
+        X_train[num_cols] = scaler.fit_transform(X_train[num_cols])
+        st.session_state.scaler = scaler
+    else:
+        X_train[num_cols] = st.session_state.scaler.transform(X_train[num_cols])
 
     if X_test is not None:
-        X_test[num_cols] = scaler.transform(X_test[num_cols])
+        X_test[num_cols] = st.session_state.scaler.transform(X_test[num_cols])
 
     # encodage des variables catégorielles
     categorical_cols = ["Sex", "Embarked"]
-    X_train = pd.get_dummies(X_train, columns=categorical_cols, drop_first=True)
+    X_train = pd.get_dummies(X_train, columns=categorical_cols, drop_first=False)
+
+    # memorize les colonnes pour pouvoir réindexer le X custom qui n'aura pas toutes les colones OH
+    if "columns" not in st.session_state:
+        st.session_state.columns = X_train.columns
+    else:
+        X_train = X_train.reindex(columns=st.session_state.columns, fill_value=0)
+
+    # on a choisi drop_first = False car sinon les colonnes OH de la prediction du custom sont droped car unique
+    # donc on supprime manuellement 1 colonne de Sex et Embarked
+    cols_to_drop = ["Sex_female", "Embarked_C"]
+    X_train = X_train.drop(columns=cols_to_drop)
 
     if X_test is not None:
-        X_test = pd.get_dummies(X_test, columns=categorical_cols, drop_first=True)
+        X_test = pd.get_dummies(X_test, columns=categorical_cols, drop_first=False)
         # Réindexation pour garantir le même ordre des colonnes (pas garanti apres oh encodage)
-        X_test = X_test.reindex(columns=X_train.columns, fill_value=0)
+        X_test = X_test.reindex(columns=st.session_state.columns, fill_value=0)
+        X_test = X_test.drop(columns=cols_to_drop)
 
     return X_train, X_test, y_train, y_test
