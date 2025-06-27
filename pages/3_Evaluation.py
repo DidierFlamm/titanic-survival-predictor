@@ -32,9 +32,9 @@ set_seed()
 all_classifiers = all_estimators(type_filter="classifier")
 
 st.write(
-    "Les différents modèles de Machine Learning de la librairie Scikit-learn sont entraînés avec leurs paramètres par défaut puis classés selon 3 scoring différents (balanced accuracy, ROC AUC et f1-score) calculés par Cross Validation à 5 folds sur un ensemble d’entraînement constitué de 80% des données disponibles."
+    "Les différents modèles de Machine Learning de la librairie Scikit-learn sont entraînés avec leurs paramètres par défaut puis classés selon 3 scoring différents (balanced accuracy, ROC AUC et f1-score). L'évaluation est réalisée par Cross Validation à 5 folds sur un ensemble d’entraînement constitué de 80% des données disponibles."
     if st.session_state.lang.startswith("fr")
-    else "The various Machine Learning models from the Scikit-learn library are trained with their default parameters, then ranked based on three different scoring metrics (balanced accuracy, ROC AUC, and F1-score), computed using 5-fold cross-validation on a training set composed of 80% of the available data."
+    else "The various Machine Learning models from the Scikit-learn library are trained with their default parameters, then ranked based on three different scoring metrics (balanced accuracy, ROC AUC, and F1-score). Their evaluation is computed using 5-fold cross-validation on a training set composed of 80% of the available data."
 )
 
 df = load_csv()
@@ -55,11 +55,12 @@ df_results = pd.DataFrame()
 
 progress_bar = st.progress(0)
 status = st.empty()
+results_placeholder = st.empty()
+spinner_placeholder = st.empty()
+
 container = st.container()
 
 total = len(all_classifiers)
-
-placeholder = st.empty()
 
 
 start_total_time = time.time()
@@ -68,52 +69,55 @@ skf = StratifiedKFold(n_splits=5, shuffle=True)
 
 for i, (name, ClfClass) in enumerate(all_classifiers):
 
-    progress_bar.progress((i + 1) / total)
-    status.text(f"{i+1}/{total} - {name}")
+    with spinner_placeholder:
+        with st.spinner(f"Training {name}", show_time=True):
 
-    try:
-        clf = ClfClass()
-        start_time = time.time()
+            progress_bar.progress((i + 1) / total)
+            status.text(f"{i+1}/{total} - {name}")
 
-        bal_acc_scores = cross_val_score(
-            clf, X_train, y_train, cv=skf, scoring="balanced_accuracy"
-        )
+            try:
+                clf = ClfClass()
+                start_time = time.time()
 
-        roc_auc_scores = f1_scores = cross_val_score(
-            clf, X_train, y_train, cv=skf, scoring="roc_auc"
-        )
+                bal_acc_scores = cross_val_score(
+                    clf, X_train, y_train, cv=skf, scoring="balanced_accuracy"
+                )
 
-        f1_scores = cross_val_score(clf, X_train, y_train, cv=skf, scoring="f1")
+                roc_auc_scores = f1_scores = cross_val_score(
+                    clf, X_train, y_train, cv=skf, scoring="roc_auc"
+                )
 
-        bal_acc_mean = bal_acc_scores.mean()
-        roc_auc_mean = roc_auc_scores.mean()
-        f1_mean = f1_scores.mean()
+                f1_scores = cross_val_score(clf, X_train, y_train, cv=skf, scoring="f1")
 
-        end_time = time.time()
-        duration = int((end_time - start_time) * 1000)
+                bal_acc_mean = bal_acc_scores.mean()
+                roc_auc_mean = roc_auc_scores.mean()
+                f1_mean = f1_scores.mean()
 
-        if pd.isna(bal_acc_mean) or pd.isna(roc_auc_mean) or pd.isna(f1_mean):
-            raise ValueError("Scores invalides (nan)")
+                end_time = time.time()
+                duration = int((end_time - start_time) * 1000)
 
-        results.append(
-            {
-                "Model": name,
-                "Balanced Accuracy (%)": round(100 * bal_acc_mean, 2),
-                "ROC AUC": roc_auc_mean,
-                "f1-score": f1_mean,
-                "Time (ms)": duration,
-            }
-        )
-    except Exception as e:
-        errors.append({"Model": name, "Error": e})
+                if pd.isna(bal_acc_mean) or pd.isna(roc_auc_mean) or pd.isna(f1_mean):
+                    raise ValueError("Scores invalides (nan)")
 
-    # Afficher sous forme de DataFrame triée par Accuracy décroissante
-    df_results = pd.DataFrame(results)
-    df_results = df_results.sort_values(
-        by="Balanced Accuracy (%)", ascending=False
-    ).reset_index(drop=True)
+                results.append(
+                    {
+                        "Model": name,
+                        "Balanced Accuracy (%)": round(100 * bal_acc_mean, 2),
+                        "ROC AUC": roc_auc_mean,
+                        "f1-score": f1_mean,
+                        "Time (ms)": duration,
+                    }
+                )
+            except Exception as e:
+                errors.append({"Model": name, "Error": e})
 
-    placeholder.dataframe(df_results)
+            # Afficher sous forme de DataFrame triée par Accuracy décroissante
+            df_results = pd.DataFrame(results)
+            df_results = df_results.sort_values(
+                by="Balanced Accuracy (%)", ascending=False
+            ).reset_index(drop=True)
+
+            results_placeholder.dataframe(df_results)
 
 duration = round(time.time() - start_total_time, 1)
 
@@ -164,9 +168,9 @@ st.subheader(":blue[Evaluation]", divider=True)
 st.write(f"🏆 {best_model_name}")
 
 st.write(
-    f"Le modèle ayant obtenu les meilleures performances durant l'entraînement est {best_model_name}. Son évaluation est réalisée sur un ensemble de test de type hold-out, constitué de 20 % des données non utilisées lors de l'ajustement du modèle."
+    f"Le modèle ayant obtenu les meilleures performances durant l'entraînement (phase d'ajustement des paramètres) est {best_model_name}. Son évaluation finale est réalisée sur un ensemble de test constitué des 20 % de données non utilisées lors de l'ajustement du modèle (hold-out)."
     if st.session_state.lang.startswith("fr")
-    else f"The best-performing model during training was {best_model_name}. Its performance is evaluated on a hold-out test set comprising 20% of the data that was not used during model fitting."
+    else f"The best-performing model during training (parameters fitting phase) was {best_model_name}. Its performance is evaluated on a hold-out test set comprising 20% of the data that was not used during model fitting."
 )
 
 for name, Clf in all_classifiers:
