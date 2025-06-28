@@ -99,15 +99,22 @@ for idx, name in enumerate(models):
 
         y_pred = best_model.predict(X_test)
 
-        bal_acc = round(100 * balanced_accuracy_score(y_test, y_pred), 2)  # type: ignore
+        # On récupère les résultats de la GridSearch sous forme de DataFrame
+        cv_results = pd.DataFrame(grid.cv_results_)
+        # Sélection de la ligne avec le meilleur rang (1)
+        best_result = cv_results[cv_results["rank_test_score"] == 1]
+        # Récupération du score moyen de test (balanced accuracy ici)
+        best_mean_score = best_result["mean_test_score"].values[0]
 
         st.markdown(
             f"""
         - **{name}**  
             Best Params : {grid.best_params_}  
-            Balanced Accuracy : **{bal_acc} %**  
+            Best Mean Balanced Accuracy : **{round(100*best_mean_score,2)} %**  
         """
         )
+
+        bal_acc = round(100 * balanced_accuracy_score(y_test, y_pred), 2)  # type: ignore
 
         results.append(
             {
