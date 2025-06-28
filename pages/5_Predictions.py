@@ -41,19 +41,22 @@ st.subheader(
 )
 
 st.write(
-    "Les chances de survie des passagers sont prédites par un modèle optimisé avec :"
+    "Les chances de survie des passagers sont prédites par un modèle optimisé, sachant que :"
     if st.session_state.lang.startswith("fr")
-    else "The chances of survival are predicted by an optimized model with :"
+    else "The chances of survival are predicted by an optimized model, knowing :"
 )
 
 st.write(
-    """🟢 probabilité ≥ 50% : le passager survit  
-🔴 probabilité < 50% : le passager ne survit pas"""
+    """le modèle prédit que le passager survit si sa chance de survie ≥ 50%  
+le modèle prédit que le passager ne survit pas si sa chance de survie < 50%"""
     if st.session_state.lang.startswith("fr")
-    else """🟢 probability ≥ 50%: the passenger survives  
-🔴 probability < 50%: the passenger does not survive"""
+    else """probability ≥ 50%: the passenger survives  
+probability < 50%: the passenger does not survive"""
 )
 
+st.write(
+    "La prédiction est qualifiée de correcte ✔️ si la prédiction de survie du passager est conforme à la réalité. Sinon, elle est qualifiée incorrecte ❌."
+)
 
 model_choisi = st.selectbox(
     label=(
@@ -88,18 +91,20 @@ df.insert(loc=0, column="Chance de survie", value=np.round(y_proba[:, 1] * 100, 
 df = df.sort_values(by="Chance de survie", ascending=False)
 df.insert(
     loc=2,
-    column="Prédiction juste",
+    column="Prédiction correcte ?",
     value=y_pred == y,
 )
 df["Survived"] = df["Survived"].apply(lambda x: "🟢" if x else "🔴")
-df["Prédiction juste"] = df["Prédiction juste"].apply(lambda x: "✔️" if x else "❌")
+df["Prédiction correcte ?"] = df["Prédiction correcte ?"].apply(
+    lambda x: "✔️" if x else "❌"
+)
 
 st.dataframe(df)
 
 st.caption(f"seed de la session = {st.session_state.seed}")
 
-counts = df["Prédiction juste"].value_counts()
-frequencies = df["Prédiction juste"].value_counts(normalize=True)
+counts = df["Prédiction correcte ?"].value_counts()
+frequencies = df["Prédiction correcte ?"].value_counts(normalize=True)
 result = pd.DataFrame(
     {"Nb": counts, "%": np.round(100 * frequencies, 2).astype(str) + " %"}
 )
