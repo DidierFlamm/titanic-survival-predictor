@@ -37,7 +37,7 @@ st.write(
     else "The various Machine Learning models from the Scikit-learn library are trained with their default parameters, then ranked based on three different scoring metrics (balanced accuracy, ROC AUC, and F1-score). Their evaluation is computed using 5-fold cross-validation on a training set composed of 80% of the available data."
 )
 
-df = load_csv()
+df = load_csv(drop_outliers=True)
 
 X_train, X_test, y_train, y_test = preprocess_data(df, split=True)
 

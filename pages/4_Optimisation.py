@@ -34,7 +34,7 @@ for model_name in models:
     st.write(f"- {model_name}")
 
 set_seed()
-df = load_csv()
+df = load_csv(drop_outliers=True)
 
 X_train, X_test, y_train, y_test = preprocess_data(df, split=True)
 
@@ -71,6 +71,7 @@ with st.expander("Afficher les paramètres de la grille de recherche"):
 
 progress_bar = st.progress(0)
 status = st.empty()
+status.text(f"0/{len(models)}")
 placeholder = st.empty()
 
 start_total_time = time.time()
@@ -85,11 +86,9 @@ for idx, name in enumerate(models):
     with st.empty():
 
         with st.spinner(f"Optimizing {name}", show_time=True):
-            time.sleep(5)
 
             progress_bar.progress((idx + 1) / len(models))
             status.text(f"{idx+1}/{len(models)} - {name}")
-
             grid = GridSearchCV(
                 models[name], params[name], cv=5, n_jobs=-1, scoring="balanced_accuracy"
             )

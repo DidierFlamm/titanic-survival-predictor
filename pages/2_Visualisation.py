@@ -10,7 +10,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-df = load_csv()
+df = load_csv(drop_outliers=False)
 
 df_display = df.copy()
 

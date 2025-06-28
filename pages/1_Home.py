@@ -111,7 +111,7 @@ st.header(
     divider=True,
 )
 
-df = load_csv()
+df = load_csv(drop_outliers=False)
 
 df_display = df.copy()
 df_display.columns = [
