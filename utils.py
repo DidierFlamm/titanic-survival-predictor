@@ -18,10 +18,34 @@ def set_seed():
 
 
 @st.cache_data
-def load_csv():
+def load_csv(drop_outliers: bool):
     df = pd.read_csv(url, index_col="PassengerId")
     df.index.name = "#"
+    if drop_outliers:
+        df = df[df.Fare < 500]
     return df
+
+
+@st.cache_data
+def get_fare_bounds(df):
+    """returns a dict with min, median and max fare from each class"""
+    return {
+        1: {
+            "min": df[df.Pclass == 1]["Fare"].min(),
+            "median": df[df.Pclass == 1]["Fare"].median(),
+            "max": df[df.Pclass == 1]["Fare"].max(),
+        },
+        2: {
+            "min": df[df.Pclass == 2]["Fare"].min(),
+            "median": df[df.Pclass == 2]["Fare"].median(),
+            "max": df[df.Pclass == 2]["Fare"].max(),
+        },
+        3: {
+            "min": df[df.Pclass == 3]["Fare"].min(),
+            "median": df[df.Pclass == 3]["Fare"].median(),
+            "max": df[df.Pclass == 3]["Fare"].max(),
+        },
+    }
 
 
 @st.cache_data
