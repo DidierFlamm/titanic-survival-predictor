@@ -70,9 +70,9 @@ with st.expander("Afficher les paramètres de la grille de recherche"):
     st.json(params)
 
 progress_bar = st.progress(0)
-status = st.empty()
-status.text(f"0/{len(models)}")
-placeholder = st.empty()
+status_placeholder = st.empty()
+status_placeholder.text(f"0/{len(models)}")
+
 
 start_total_time = time.time()
 
@@ -83,52 +83,51 @@ results = []
 
 for idx, name in enumerate(models):
 
-    with st.empty():
+    with st.spinner(f"Optimizing {name}", show_time=True):
 
-        with st.spinner(f"Optimizing {name}", show_time=True):
+        progress_bar.progress((idx + 1) / len(models))
+        status_placeholder.text(f"{idx+1}/{len(models)} - {name}")
 
-            progress_bar.progress((idx + 1) / len(models))
-            status.text(f"{idx+1}/{len(models)} - {name}")
-            grid = GridSearchCV(
-                models[name], params[name], cv=5, n_jobs=-1, scoring="balanced_accuracy"
-            )
-            grid.fit(X_train, y_train)
+        grid = GridSearchCV(
+            models[name], params[name], cv=5, n_jobs=-1, scoring="balanced_accuracy"
+        )
+        grid.fit(X_train, y_train)
 
-            best_model = grid.best_estimator_
+        best_model = grid.best_estimator_
 
-            st.session_state[name] = best_model
+        st.session_state[name] = best_model
 
-            y_pred = best_model.predict(X_test)
+        y_pred = best_model.predict(X_test)
 
-            bal_acc = round(100 * balanced_accuracy_score(y_test, y_pred), 2)  # type: ignore
+        bal_acc = round(100 * balanced_accuracy_score(y_test, y_pred), 2)  # type: ignore
 
-            st.markdown(
-                f"""
+        st.markdown(
+            f"""
         - **{name}**  
             Best Params : {grid.best_params_}  
             Balanced Accuracy : **{bal_acc} %**  
         """
-            )
+        )
 
-            results.append(
-                {
-                    "Model": name,
-                    "Balanced Accuracy": bal_acc,
-                    "Best Params": grid.best_params_,
-                }
-            )
-            with st.expander(
-                "Afficher les détails de la Grid Search CV"
-                if st.session_state.lang.startswith("fr")
-                else "Display the grid search parameters"
-            ):
-                st.dataframe(pd.DataFrame(grid.cv_results_))
+        results.append(
+            {
+                "Model": name,
+                "Balanced Accuracy": bal_acc,
+                "Best Params": grid.best_params_,
+            }
+        )
+        with st.expander(
+            "Afficher les résultats de la Grid Search CV"
+            if st.session_state.lang.startswith("fr")
+            else "Display grid search results"
+        ):
+            st.dataframe(pd.DataFrame(grid.cv_results_))
 
 duration = round(time.time() - start_total_time, 1)
 
-status.text("")
+status_placeholder.text("")
 
-placeholder.success(
+st.success(
     (
         f"Les {len(models)} modèles ont été optimisés en {duration} s"
         if st.session_state.lang.startswith("fr")
