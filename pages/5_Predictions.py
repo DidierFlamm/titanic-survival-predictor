@@ -55,7 +55,8 @@ probability < 50%: the passenger does not survive"""
 )
 
 st.write(
-    "La prédiction est qualifiée de correcte ✔️ si la prédiction de survie du passager est conforme à la réalité. Sinon, elle est qualifiée incorrecte ❌."
+    """La prédiction est qualifiée de correcte ✔️ si la prédiction de survie du passager est conforme à la réalité.  
+    Sinon, la prédiction est qualifiée incorrecte ❌."""
 )
 
 model_choisi = st.selectbox(
@@ -212,7 +213,7 @@ X, _, _, _ = preprocess_data(custom, split=False)
 model = st.session_state[model_choisi]
 y_prob = model.predict_proba(X)
 
-chance = round(100 * y_prob[0, 1], 2)
+chance = round(100 * y_prob[0, 1])
 
 st.metric(
     "Survival chance predicted",
