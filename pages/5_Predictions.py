@@ -11,7 +11,7 @@ st.markdown(
 if "df_results" not in st.session_state:
     st.info(
         """Les modèles doivent être optimisés avant de pouvoir réaliser des prédictions fiables.  
-        Veuillez vous rendre à l'étape 📈 Optimisation en cliquant sur le bouton ci-dessous :""",
+        Veuillez vous rendre à l'étape 📈 Optimisation en cliquant sur le bouton ci-dessous.""",
         icon="ℹ️",
     )
     st.page_link(
