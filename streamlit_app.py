@@ -101,9 +101,13 @@ elif ambiance.startswith("💿"):
 
 st.sidebar.subheader("View all apps", divider=True)
 
-
-st.sidebar.image(
-    "https://raw.githubusercontent.com/DidierFlamm/DidierFlamm/main/dids.webp"
+st.sidebar.markdown(
+    """
+    <a href="https://share.streamlit.io/user/didierflamm" target="_blank">
+        <img src="https://raw.githubusercontent.com/DidierFlamm/DidierFlamm/main/dids.webp" width="100%"; />
+    </a>
+    """,
+    unsafe_allow_html=True,
 )
 
 st.set_page_config(
