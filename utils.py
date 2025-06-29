@@ -127,3 +127,28 @@ def preprocess_data(
         X_test = X_test.drop(columns=cols_to_drop)
 
     return X_train, X_test, y_train, y_test
+
+
+@st.cache_data
+def to_display(df) -> pd.DataFrame:
+    df_display = df.copy()
+    df_display.columns = [
+        "Survie",
+        "Classe",
+        "Nom",
+        "Sexe",
+        "Age",
+        "Fratrie & Conjoint(e)",
+        "Parents & Enfants",
+        "Ticket",
+        "Tarif",
+        "Cabine",
+        "Embarquement",
+    ]
+    df_display["Survie"].replace({1: "🟢 Oui", 0: "🔴 Non"}, inplace=True)
+    df_display["Sexe"].replace({"male": "♂️ Homme", "female": "♀️ Femme"}, inplace=True)
+    df_display["Embarquement"].replace(
+        {"C": "🇫🇷 Cherbourg", "Q": "🇮🇪 Queenstown", "S": "🇬🇧 Southampton"}, inplace=True
+    )
+    df_display["Classe"].replace({1: "1ère", 2: "2ème", 3: "3ème"}, inplace=True)
+    return df_display
