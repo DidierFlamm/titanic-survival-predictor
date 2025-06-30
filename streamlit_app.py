@@ -18,22 +18,16 @@ This project predicts the survival chances of Titanic passengers using machine l
     }
 )
 
-if "windows" not in st_javascript("navigator.userAgent").lower():
 
-    def format_language(x):
-        return languages.loc[languages["lang"] == x, "language"].values[0]
-
-else:
-
-    def format_language(x):
-        return (
-            languages.loc[languages["lang"] == x, "flag"].values[0]
-            + " "
-            + languages.loc[languages["lang"] == x, "local"].values[0]
-            + " ("
-            + languages.loc[languages["lang"] == x, "region"].values[0]
-            + ")"
-        )
+def format_language(x):
+    return (
+        languages.loc[languages["lang"] == x, "flag"].values[0]
+        + " "
+        + languages.loc[languages["lang"] == x, "local"].values[0]
+        + " ("
+        + languages.loc[languages["lang"] == x, "region"].values[0]
+        + ")"
+    )
 
 
 st.logo(
