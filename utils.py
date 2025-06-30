@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 from google.cloud import translate_v2 as translate
 import random
 import numpy as np
