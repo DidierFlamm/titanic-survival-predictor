@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 import streamlit as st
 import pandas as pd
+from dotenv import load_dotenv
+
+load_dotenv()
 
 st.logo(
     "https://img.icons8.com/?size=100&id=s5NUIabJrb4C&format=png&color=000000",
