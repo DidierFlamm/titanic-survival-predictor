@@ -15,23 +15,27 @@ csv_url = (
 
 
 # Récupère le dict des credentials depuis st.secrets
-creds_attrdict = st.secrets["google_credentials"]
-creds_dict = dict(creds_attrdict)
+if "google_credentials" in st.secrets:
+    creds_attrdict = st.secrets["google_credentials"]
+    creds_dict = dict(creds_attrdict)
+    # Crée un JSON string à partir du dict
+    creds_json = json.dumps(creds_dict)
+    # Charge les credentials Google depuis cette JSON string
+    credentials = service_account.Credentials.from_service_account_info(
+        json.loads(creds_json)
+    )
+    translate_client = translate.Client(credentials=credentials)
+else:
 
-# Crée un JSON string à partir du dict
-creds_json = json.dumps(creds_dict)
-
-# Charge les credentials Google depuis cette JSON string
-credentials = service_account.Credentials.from_service_account_info(
-    json.loads(creds_json)
-)
-
-translate_client = translate.Client(credentials=credentials)
+    st.warning(
+        "Traduction won't work because google_credentials was not found in st.secrets. Please add it to your .streamlit/secrets.toml or app settings.",
+        icon="🔒",
+    )
 
 
 @st.cache_data
 def translate_text(text, language):
-    if "GOOGLE_APPLICATION_CREDENTIALS" in os.environ:
+    if "google_credentials" in st.secrets:
         return translate_client.translate(text, target_language=language)[
             "translatedText"
         ]

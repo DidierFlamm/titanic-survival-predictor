@@ -14,17 +14,17 @@ st.sidebar.subheader("Language", divider=True)
 # récupération auto de la langue par défaut du navigateur en JS avec navigator.language
 
 default_language_js = st_javascript("navigator.language")
-disabled = False
+disabled = True
 
 if "default_language" not in st.session_state:
-    if "GOOGLE_APPLICATION_CREDENTIALS" not in os.environ:
-        st.session_state.default_language = (
+    if "google_credentials" not in st.secrets:
+        st.session_state.lang = (
             "fr-FR"  # fallback si pas de clé Google Traduction et disable selectbox
         )
-        disabled = True
     elif default_language_js != 0:
         # cas où le language par défaut n'est pas encore récupéré par JS (valeur par défaut = 0)
         st.session_state.default_language = default_language_js
+        disabled = False
 
 # Initialisation du selectbox en sync avec default_language
 if "lang" not in st.session_state:
