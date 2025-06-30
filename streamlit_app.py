@@ -2,6 +2,7 @@
 import streamlit as st
 from streamlit_javascript import st_javascript
 import pandas as pd
+import time
 
 
 st.logo(
@@ -32,7 +33,9 @@ if "lang" not in st.session_state:
     try:
         st.session_state.lang = st.session_state.default_language
     except AttributeError:
-        pass
+        # attend que navigator.language récupère le langage par défaut
+        time.sleep(0.1)
+        st.rerun()
 
 languages_csv = "https://raw.githubusercontent.com/DidierFlamm/titanic-survival-predictor/refs/heads/main/data/languages.csv"
 languages = pd.read_csv(languages_csv)
@@ -46,7 +49,6 @@ st.sidebar.selectbox(
     disabled=disabled,
 )
 
-st.sidebar.write(st.session_state.lang)
 
 flag = languages.loc[languages.lang == st.session_state.lang, "flag"].values[0]  # type: ignore
 st.session_state.flag = flag
