@@ -22,7 +22,7 @@ st.write(
 )
 
 st.markdown(
-    """Vous pouvez consulter le code source de Titanic Survival Predictor sur <a href="https://github.com/DidierFlamm/titanic-survival-predictor" target="_blank">GitHub</a>, ainsi que découvrir toutes mes applications interactives sur <a href="https://share.streamlit.io/user/didierflamm" target="_blank">Streamlit Community Cloud</a>. N’hésitez pas à y faire un tour et à me faire part de vos retours par mail ✉️ [didier.flamm@gmail.com](mailto:didier.flamm@gmail.com) ou sur 🔗 [LinkedIn](https://www.linkedin.com/in/didier-flamm)""",
+    """Vous pouvez consulter le code source de Titanic Survival Predictor sur <a href="https://github.com/DidierFlamm/titanic-survival-predictor" target="_blank">GitHub</a>, ainsi que découvrir toutes mes applications interactives sur <a href="https://share.streamlit.io/user/didierflamm" target="_blank">Streamlit Community Cloud</a>. N’hésitez pas à y faire un tour et à me faire part de vos retours par ✉️ [didier.flamm@gmail.com](mailto:didier.flamm@gmail.com) ou sur [LinkedIn](https://www.linkedin.com/in/didier-flamm).""",
     unsafe_allow_html=True,
 )
 
