@@ -1,7 +1,5 @@
 import streamlit as st
-from utils import load_csv
-import seaborn as sns
-import matplotlib.pyplot as plt
+from utils import load_csv, to_display
 import plotly.express as px
 
 
@@ -11,16 +9,24 @@ st.markdown(
 )
 
 df = load_csv(drop_outliers=False)
+df_display = to_display(df)
 
-df_display = df.copy()
-
-df_display["Sex"] = df_display["Sex"].map({"female": "Femme", "male": "Homme"})
-df_display["Survived"] = df_display["Survived"].map({0: "Non", 1: "Oui"})
-
-palette = sns.color_palette("RdYlGn", n_colors=3)  # rouge - jaune - vert
-palette = [palette[2], palette[0]]  # vert et rouge
 
 st.subheader(":blue[Analyse univariée]", divider=True)
+
+st.write(
+    """
+    L’analyse univariée consiste à examiner **chaque variable séparément**, sans tenir compte des autres. 
+    Elle permet de comprendre la **répartition** des données, de détecter d’éventuels **déséquilibres**, 
+    ou encore d’identifier des **outliers**, c'est à dire des valeurs extrêmes (statistiquement éloignées) ou aberrantes (souvent erronées).
+
+    👉 Chaque onglet onglet ci-dessous présente une **visualisation unique** de la répartition de la **variable cible** (survie),
+    ainsi que des **différentes caractéristiques** (âge, sexe, classe, tarif, etc.).
+
+    Cette étape est essentielle pour avoir une première idée de la **structure des données** avant de passer 
+    à des analyses plus complexes (bivariées ou multivariées) et enfin à la modélisation prédictive.
+    """
+)
 
 (
     tab_survived,
@@ -33,57 +39,80 @@ st.subheader(":blue[Analyse univariée]", divider=True)
     tab_embark,
 ) = st.tabs(
     [
-        "Survie (cible)",
-        "Sexe",
-        "Age",
-        "Classe",
-        "Tarif",
-        "Fratrie & conjoint(e)",
-        "Parents & enfants",
-        "Embarquement",
+        "🛟 Survie",
+        "♀️♂️ Sexe",
+        "👶🧓 Age",
+        "🎟️ Classe",
+        "💰 Tarif",
+        """🧑‍🤝‍🧑 Fratrie  
+        & conjoint(e)""",
+        """👨‍👩‍👦‍👦 Parents  
+        & enfants""",
+        "⚓ Embarquement",
     ]
 )
 
 with tab_survived:
     fig = px.pie(
         df_display,
-        names="Survived",
-        category_orders={"Survived": ["Oui", "Non"]},
+        names="Survie",
+        category_orders={"Survie": ["🟢 Oui", "🔴 Non"]},
         title="Répartition des survivants",
     )
+    fig.update_traces(textposition="inside", textinfo="value+percent+label")
     st.plotly_chart(fig)
+
+    st.write(
+        """La variable cible indique si un passager a survécu (`Oui`) ou pas (`Non`).   
+        On observe que moins de 39% des passages ont survécu."""
+    )
 
 with tab_sex:
     fig = px.pie(
         df_display,
-        names="Sex",
-        category_orders={"Sex": ["Femme", "Homme"]},
+        names="Sexe",
+        category_orders={"Sexe": ["♀️ Femme", "♂️ Homme"]},
         title="Répartition des genres",
     )
+    fig.update_traces(textposition="inside", textinfo="value+percent+label")
     st.plotly_chart(fig)
+    st.write("Il y avait presque 2 fois plus d'hommes que de femmes à bord du Titanic")
 
 with tab_age:
     fig = px.histogram(
-        df_display,
-        x="Age",
-        title="Distribution des âges",
+        df_display, x="Age", title="Distribution des âges", marginal="box"
+    )
+
+    # Ajout du trait vertical pour la médiane
+    median_age = df_display["Age"].median()
+    fig.add_vline(
+        x=median_age,
+        line_dash="dash",
+        line_color="red",
+        annotation_text=f"{int(median_age)} ans",
+        annotation_position="right",
     )
     st.plotly_chart(fig)
+    st.write(
+        """Les passagers du Titanic étaient âgés de 5 mois à 80 ans, avec une forte représentation d'adultes entre 18 et 50 ans. 
+        Comme vu sur la page précédente, l'âge de 177 passagers (soit 19.9%) n'est pas renseigné dans le jeu de données. 
+        La valeur médiane de la distribution (28 ans) leur sera arbitrairement attribuée."""
+    )
 
 with tab_class:
     fig = px.pie(
         df_display,
-        names="Pclass",
-        category_orders={"Pclass": [1, 2, 3]},
+        names="Classe",
+        category_orders={"Classe": ["1ère", "2ème", "3ème"]},
         title="Répartition des classes",
     )
+    fig.update_traces(textposition="inside", textinfo="value+percent+label")
     st.plotly_chart(fig)
+    st.write("La 3ème classe (populaire) est la plus représentée")
 
 with tab_fare:
     fig = px.histogram(
-        df_display,
-        x="Fare",
-        title="Distribution des tarifs",
+        df_display, x="Tarif", title="Distribution des tarifs", marginal="box"
     )
     st.plotly_chart(fig)
     st.write(
@@ -93,190 +122,77 @@ with tab_fare:
 with tab_sibsp:
     fig = px.pie(
         df_display,
-        names="SibSp",
-        category_orders={"SibSp": sorted(df_display.SibSp.unique())},
-        title="Répartition du nombre de frères, sœurs et conjoint(e)",
+        names="Fratrie & Conjoint(e)",
+        category_orders={
+            "Fratrie & Conjoint(e)": sorted(
+                df_display["Fratrie & Conjoint(e)"].unique()
+            )
+        },
+        title="""Répartition du nombre de frères, sœurs et conjoint(e)""",
     )
+    fig.update_traces(
+        textposition="inside",
+        textinfo="value+percent+label",
+        insidetextorientation="radial",
+    )
+
     st.plotly_chart(fig)
+    st.write("Plus de 2/3 des passagers voyagent sans frère ni sœur ni conjoint(e).")
 
 with tab_parch:
     fig = px.pie(
         df_display,
-        names="Parch",
-        category_orders={"Parch": sorted(df_display.Parch.unique())},
+        names="Parents & Enfants",
+        category_orders={
+            "Parents & Enfants": sorted(df_display["Parents & Enfants"].unique())
+        },
         title="Répartition du nombre de parents et enfants",
     )
+    fig.update_traces(
+        textposition="inside",
+        textinfo="value+percent+label",
+        insidetextorientation="radial",
+    )
     st.plotly_chart(fig)
+    st.write("Plus de 3/4 des passagers voyagent sans parent ni enfant.")
 
 with tab_embark:
     fig = px.pie(
         df_display,
-        names="Embarked",
-        # category_orders={"Parch": sorted(df_display.Parch.unique())},
+        names="Embarquement",
         title="Répartition des ports d'embarquement",
     )
+    fig.update_traces(textposition="auto", textinfo="value+percent+label")
     st.plotly_chart(fig)
+    st.write(
+        """Près de 3/4 des passagers ont embarqués à Southampton (Angleterre).  
+             Comme vu sur la page précédente, le port d'embarquement de 2 passagers n'est pas renseigné dans le jeu de données. 
+             La valeur majoritaire ('Southampton') leur sera arbitrairement attribuée."""
+    )
 
 
-fig, axs = plt.subplots(1, 3, figsize=(12, 4))
-sns.countplot(
-    x="Survived", data=df_display, order=["Oui", "Non"], palette=palette, ax=axs[0]
-)
+st.subheader(":blue[Analyse bivariée]", divider=True)
 
+df_display = df_display[df_display["Tarif"] < 500]
+median_age = df_display["Age"].median()
+embarked_mode = df_display["Embarquement"].mode()[0]
+df_display["Age"] = df_display["Age"].fillna(median_age)
+df_display["Embarquement"] = df_display["Embarquement"].fillna(embarked_mode)
 
-axs[0].set_xlabel("Survie")
-for ax in axs:
-    ax.set_ylabel("Nombre de passagers")
-axs[0].set_title("Survie des passagers (cible de l'étude)")
-
-sns.histplot(
-    data=df_display,
-    x="Age",
-    # rug=True,
-    bins=[0, 10, 20, 30, 40, 50, 60, 70, 81],
-    ax=axs[1],
-)
-axs[1].set_title("Distribution de l'âge des passagers")
-
-sns.histplot(
-    data=df_display,
-    x="Fare",
-    # bins=[0, 100, 200, 30, 40, 50, 60, 70, 80],
-    ax=axs[2],
-)
-axs[2].set_xlabel("Tarif")
-axs[2].set_title("Distribution des tarifs")
-
-plt.tight_layout()
-
-st.pyplot(fig)
-####################################################
-
-st.write(
-    "Trois passagers présentent un tarif de 512.33, nettement supérieur à la distribution générale. Bien que ces valeurs extrêmes ne soient pas nécessairement aberrantes, elles sont considérées comme des outliers et seront exclues du jeu de données afin d'éviter qu’elles ne biaisent les résultats ultérieurs. L’analyse est ainsi restreinte aux 888 passagers ayant un tarif compris entre 0 et 263."
-    if st.session_state.lang.startswith("fr")
-    else "Three passengers have a fare of 512.33, which is significantly higher than the overall distribution. While these extreme values are not necessarily erroneous, they are considered outliers and will be excluded from the dataset to prevent them from skewing subsequent results. The analysis is thus limited to the 888 passengers whose fares range between 0 and 263."
-)
-
+hist = px.histogram(df_display, x="Survie", color="Sexe", barmode="group")
+st.plotly_chart(hist)
 
 st.subheader(":blue[Analyse multivariée]", divider=True)
 
-df_display = df_display[df_display["Fare"] < 500]
 
-fig, axs = plt.subplots(3, 2, figsize=(12, 12))  # 3 lignes, 2 colonnes
+fig = px.sunburst(df_display, path=["Sexe", "Survie", "Classe"])
+st.plotly_chart(fig)
 
-sns.kdeplot(
-    data=df_display,
-    x="Age",
-    hue="Survived",
-    hue_order=["Oui", "Non"],
-    palette=palette,
-    cut=0,
-    fill=True,
-    alpha=0.6,
-    ax=axs[0, 0],
+st.write(
+    """Ce graphique met en évidence 2 tendances:  
+        • Les femmes n'ayant pas survécu voyageaient très majoritairement en 3ème classe (parmi les 81 femmes n'ayant pas survécu, 72 voyageaient en 3ème classe).  
+        • Les hommes n'ayant pas survécu sont répartis sur les 3 classes mais un déséquilibre important est observée sur la classe 3 (parmi les 347 hommes voyageant en 3ème classe, 300 n'ont pas survécu)"""
 )
-axs[0, 0].set_xlabel("Âge")
-axs[0, 0].set_ylabel("Densité")
-axs[0, 0].set_title("Survie en fonction de l'âge")
-
-sns.histplot(
-    data=df_display,
-    x="Age",
-    bins=17,
-    hue="Survived",
-    hue_order=["Non", "Oui"],
-    multiple="fill",
-    cumulative=False,
-    palette=palette[::-1],
-    fill=True,
-    alpha=0.6,
-    ax=axs[1, 0],
-)
-axs[1, 0].set_xlabel("Âge")
-axs[1, 0].set_ylabel("Densité")
-axs[1, 0].set_title("Survie en fonction de l'âge")
-
-sns.histplot(
-    data=df_display,
-    x="Fare",
-    bins=20,
-    hue="Survived",
-    hue_order=["Oui", "Non"],
-    multiple="fill",
-    cumulative=False,
-    palette=palette,
-    fill=True,
-    alpha=0.6,
-    ax=axs[1, 1],
-)
-# axs[1, 0].set_xlim(0, 300)
-# axs[1, 1].set_ylim(0, 150)
-
-###################################################
-
-sns.kdeplot(
-    data=df_display,
-    x="Fare",
-    hue="Survived",
-    hue_order=["Oui", "Non"],
-    palette=palette,
-    cut=0,
-    fill=True,
-    alpha=0.6,
-    ax=axs[0, 1],
-)
-# axs[0, 1].set_xlim(0, 150)
-axs[0, 1].set_xlabel("Tarif")
-axs[0, 1].set_ylabel("Densité")
-axs[0, 1].set_title("Survie en fonction du tarif")
-
-sns.countplot(
-    x="Sex",
-    data=df_display,
-    hue="Survived",
-    order=["Femme", "Homme"],
-    hue_order=["Oui", "Non"],
-    palette=palette,
-    # stat="count",
-    # saturation=0.75,
-)
-
-sns.countplot(
-    x="Pclass",
-    data=df_display,
-    hue="Survived",
-    hue_order=["Oui", "Non"],
-    palette=palette,
-)
-
-sns.countplot(
-    x="SibSp",
-    data=df_display,
-    hue="Survived",
-    hue_order=["Oui", "Non"],
-    palette=palette,
-)
-
-sns.countplot(
-    x="Parch",
-    data=df_display,
-    hue="Survived",
-    hue_order=["Oui", "Non"],
-    palette=palette,
-)
-plt.title("Survie en fonction du nombre de parents")
-plt.tight_layout()
-st.pyplot(fig)
-
-
-st.subheader(":blue[Analyse interactive]", divider=True)
-
-hist = px.histogram(df, x="Survived", color="Sex", barmode="group")
-st.plotly_chart(hist)
-
-hist_bis = px.sunburst(df, path=["Sex", "Pclass"])
-st.plotly_chart(hist_bis)
 
 
 _, col, _ = st.columns(3)
