@@ -1,5 +1,4 @@
 import streamlit as st
-import os
 from google.cloud import translate_v2 as translate
 import random
 import numpy as np
@@ -34,8 +33,8 @@ else:
 
 
 @st.cache_data
-def translate_text(text, language):
-    if "google_credentials" in st.secrets:
+def translate_text(text: str, language: str):
+    if "google_credentials" in st.secrets and not language.startswith("fr"):
         return translate_client.translate(text, target_language=language)[
             "translatedText"
         ]

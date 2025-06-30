@@ -33,11 +33,7 @@ Bien que le hasard ait joué un rôle dans les chances de survie, certains group
 Votre capitaine, Flamm Didier, et vos matelots Charlize et James vous souhaitent la bienvenue à bord du projet Titanic. Embarquez pour un voyage serein et passionnant à travers le vaste océan des données !
 """
 
-intro_translated = (
-    intro_FR
-    if st.session_state.lang.startswith("fr")
-    else translate_text(intro_FR, st.session_state.lang.split("-")[0])
-)
+intro_translated = translate_text(intro_FR, st.session_state.lang.split("-")[0])
 
 text_DIDS = """DIDS — Dive Into Data Science"""
 
