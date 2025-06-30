@@ -29,7 +29,27 @@ cd titanic-survival-predictor
 pip install -r requirements.txt
 ```
 
-### 3. Launch the Streamlit app
+### 3. Set up Google Cloud Credentials for Translation API
+To use the Google Cloud Translation API, you need to configure a service account key:
+
+1. **Create a Google Cloud project** and enable the Cloud Translation API.
+
+2. **Create a Service Account Key** in JSON format.
+
+3. **Locally:**
+   - Copy `.env.example` to `.env` at the root of the project.
+   - Fill in the variable `GOOGLE_APPLICATION_CREDENTIALS` with the path to your JSON key file.
+
+   Example `.env`:
+
+   ```env
+   GOOGLE_APPLICATION_CREDENTIALS=/path/to/your/google-key.json
+   ```
+
+**Note:** The free tier of the Google Cloud Translation API allows up to **500,000 characters** translated per month.  
+See [Google Cloud Translation Pricing](https://cloud.google.com/translate/pricing) for details.
+
+### 4. Launch the Streamlit app
 You can launch the app either by running main.py or with streamlit run streamlit_app.py :  
 ```bash
 python main.py
