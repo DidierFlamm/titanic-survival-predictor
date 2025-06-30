@@ -34,12 +34,12 @@ Votre capitaine, Flamm Didier, et vos matelots Charlize et James vous souhaitent
 """
 
 intro_translated = (
-    intro_FR if st.session_state.lang.startswith("fr") else translate_text(intro_FR)
+    intro_FR
+    if st.session_state.lang.startswith("fr")
+    else translate_text(intro_FR, st.session_state.lang.split("-")[0])
 )
 
 text_DIDS = """DIDS — Dive Into Data Science"""
-
-# text = intro_translated + text_DIDS
 
 
 # Fonction de stream
@@ -94,10 +94,6 @@ if "skip_stream" not in st.session_state:
 else:
     st.write(intro_translated)
     st.write(text_DIDS)
-
-
-st.write("🤿 📊 🌊")
-
 
 st.header(
     ":blue[Données]" if st.session_state.lang.startswith("fr") else ":blue[Data]",

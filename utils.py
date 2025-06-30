@@ -15,10 +15,8 @@ translate_client = translate.Client()
 
 
 @st.cache_data
-def translate_text(text):
-    return translate_client.translate(
-        text, target_language=st.session_state.lang.split("-")[0]
-    )["translatedText"]
+def translate_text(text, language):
+    return translate_client.translate(text, target_language=language)["translatedText"]
 
 
 def set_seed():
