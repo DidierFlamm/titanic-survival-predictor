@@ -18,18 +18,6 @@ This project predicts the survival chances of Titanic passengers using machine l
     }
 )
 
-
-def format_language(x):
-    return (
-        languages.loc[languages["lang"] == x, "flag"].values[0]
-        + " "
-        + languages.loc[languages["lang"] == x, "local"].values[0]
-        + " ("
-        + languages.loc[languages["lang"] == x, "region"].values[0]
-        + ")"
-    )
-
-
 st.logo(
     "https://img.icons8.com/?size=100&id=s5NUIabJrb4C&format=png&color=000000",
     size="large",
@@ -64,6 +52,13 @@ if "lang" not in st.session_state:
 
 languages_csv = "https://raw.githubusercontent.com/DidierFlamm/titanic-survival-predictor/refs/heads/main/data/languages.csv"
 languages = pd.read_csv(languages_csv)
+
+
+def format_language(x):
+    row = languages.loc[languages["lang"] == x]
+    row = row.iloc[0]
+    return f"{row["flag"]} {row["local"]} ({row["region"]})"
+
 
 st.sidebar.selectbox(
     "Select language",
