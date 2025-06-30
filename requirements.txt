@@ -1,6 +1,6 @@
-matplotlib
-pandas 
+google-cloud-translate
+numpy
+pandas
 plotly
-seaborn
 scikit_learn
 streamlit
