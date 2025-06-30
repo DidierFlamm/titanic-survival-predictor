@@ -16,7 +16,12 @@ translate_client = translate.Client()
 
 @st.cache_data
 def translate_text(text, language):
-    return translate_client.translate(text, target_language=language)["translatedText"]
+    if "GOOGLE_APPLICATION_CREDENTIALS" in os.environ:
+        return translate_client.translate(text, target_language=language)[
+            "translatedText"
+        ]
+    else:
+        return text
 
 
 def set_seed():
