@@ -4,6 +4,7 @@ import time
 from utils import load_csv, to_display
 import pandas as pd
 import streamlit.components.v1 as components
+from google.cloud import translate_v2 as translate
 
 
 st.markdown(
@@ -34,17 +35,20 @@ Bien que le hasard ait joué un rôle dans les chances de survie, certains group
 Votre capitaine, Flamm Didier, et vos matelots Charlize et James vous souhaitent la bienvenue à bord du projet Titanic. Embarquez pour un voyage serein et passionnant à travers le vaste océan des données !
 """
 
-text_EN = """
-The sinking of the Titanic is one of the most famous maritime disasters in history. On April 15, 1912, during its maiden voyage, the RMS Titanic—considered “unsinkable”—sank after colliding with an iceberg. Unfortunately, there were not enough lifeboats for everyone on board, resulting in the deaths of 1,502 out of 2,224 passengers and crew members.  
+translate_client = translate.Client()
 
-Although chance played a role in survival odds, some groups of people seemed more likely to survive than others. The goal of this project is to build a predictive model to answer the question: “What types of people were most likely to survive?” based on data from 891 passengers, such as their name, age, sex, family, class, and more.  
-
-Your captain, Flamm Didier, and your crewmates Charlize and James welcome you aboard the Titanic project. Embark on a safe and exciting journey through the vast ocean of data !
-"""
+if not st.session_state.lang.startswith("fr"):
+    text_translated = translate_client.translate(
+        text_FR, target_language=st.session_state.lang.split("-")[0]
+    )
 
 text_DIDS = """DIDS — Dive Into Data Science"""
 
-text_INTRO = text_FR if st.session_state.lang.startswith("fr") else text_EN
+text_INTRO = (
+    text_FR
+    if st.session_state.lang.startswith("fr")
+    else text_translated["translatedText"]
+)
 
 text = text_INTRO + text_DIDS
 
