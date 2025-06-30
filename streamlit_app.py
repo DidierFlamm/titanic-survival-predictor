@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import streamlit as st
 from streamlit_javascript import st_javascript
-import os
 import pandas as pd
+
 
 st.logo(
     "https://img.icons8.com/?size=100&id=s5NUIabJrb4C&format=png&color=000000",
@@ -14,21 +14,25 @@ st.sidebar.subheader("Language", divider=True)
 # récupération auto de la langue par défaut du navigateur en JS avec navigator.language
 
 default_language_js = st_javascript("navigator.language")
-disabled = True
+
+disabled = False
 
 if "default_language" not in st.session_state:
     if "google_credentials" not in st.secrets:
-        st.session_state.lang = (
+        st.session_state.default_language = (
             "fr-FR"  # fallback si pas de clé Google Traduction et disable selectbox
         )
+        disabled = True
     elif default_language_js != 0:
-        # cas où le language par défaut n'est pas encore récupéré par JS (valeur par défaut = 0)
+        # cas où le language par défaut est récupéré par JS (valeur par défaut = 0 au 1er run)
         st.session_state.default_language = default_language_js
-        disabled = False
 
 # Initialisation du selectbox en sync avec default_language
 if "lang" not in st.session_state:
-    st.session_state.lang = st.session_state.default_language
+    try:
+        st.session_state.lang = st.session_state.default_language
+    except AttributeError:
+        pass
 
 languages_csv = "https://raw.githubusercontent.com/DidierFlamm/titanic-survival-predictor/refs/heads/main/data/languages.csv"
 languages = pd.read_csv(languages_csv)
@@ -41,6 +45,8 @@ st.sidebar.selectbox(
     label_visibility="collapsed",
     disabled=disabled,
 )
+
+st.sidebar.write(st.session_state.lang)
 
 flag = languages.loc[languages.lang == st.session_state.lang, "flag"].values[0]  # type: ignore
 st.session_state.flag = flag
