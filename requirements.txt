@@ -5,3 +5,4 @@ plotly
 python-dotenv
 scikit_learn
 streamlit
+streamlit-javascript
