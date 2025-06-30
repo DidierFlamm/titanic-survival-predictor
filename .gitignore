@@ -32,4 +32,5 @@ catboost_info/
 .vscode/
 
 # Credentials
+.env
 credentials/
