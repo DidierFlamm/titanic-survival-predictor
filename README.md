@@ -37,13 +37,27 @@ To use the Google Cloud Translation API, you need to configure a service account
 2. **Create a Service Account Key** in JSON format.
 
 3. **Locally:**
-   - Copy `.env.example` to `.env` at the root of the project.
-   - Fill in the variable `GOOGLE_APPLICATION_CREDENTIALS` with the path to your JSON key file.
+   - Create a `.streamlit/secrets.toml` file at the root of your project (same level as streamlit_app.py).
+   - Add your service account credentials in TOML format under a [google_credentials] section.  
+   
+   Example:
 
-   Example `.env`:
-
-   ```env
-   GOOGLE_APPLICATION_CREDENTIALS=/path/to/your/google-key.json
+   ```toml
+   [google_credentials]
+   type = "service_account"
+   project_id = "your-project-id"
+   private_key_id = "your-private-key-id"
+   private_key = """
+   -----BEGIN PRIVATE KEY-----
+   YOUR_PRIVATE_KEY_CONTENT_HERE
+   -----END PRIVATE KEY-----
+   """
+   client_email = "your-service-account-email"
+   client_id = "your-client-id"
+   auth_uri = "https://accounts.google.com/o/oauth2/auth"
+   token_uri = "https://oauth2.googleapis.com/token"
+   auth_provider_x509_cert_url = "https://www.googleapis.com/oauth2/v1/certs"
+   client_x509_cert_url = "https://www.googleapis.com/robot/v1/metadata/x509/your-service-account-email"
    ```
 
 **Note:** The free tier of the Google Cloud Translation API allows up to **500,000 characters** translated per month.  

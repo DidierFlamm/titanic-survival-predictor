@@ -6,13 +6,27 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-
+import json
+from google.oauth2 import service_account
 
 csv_url = (
     "https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv"
 )
 
-translate_client = translate.Client()
+
+# Récupère le dict des credentials depuis st.secrets
+creds_attrdict = st.secrets["google_credentials"]
+creds_dict = dict(creds_attrdict)
+
+# Crée un JSON string à partir du dict
+creds_json = json.dumps(creds_dict)
+
+# Charge les credentials Google depuis cette JSON string
+credentials = service_account.Credentials.from_service_account_info(
+    json.loads(creds_json)
+)
+
+translate_client = translate.Client(credentials=credentials)
 
 
 @st.cache_data

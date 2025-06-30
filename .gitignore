@@ -28,8 +28,11 @@ __pycache__/
 # CatBoost info folder
 catboost_info/
 
-# Parametres VS Code
+# Paramètres VS Code
 .vscode/
 
 # Credentials
 credentials/
+
+# Streamlit secrets
+.streamlit/secrets.toml
