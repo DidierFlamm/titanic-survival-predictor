@@ -4,6 +4,37 @@ from streamlit_javascript import st_javascript
 import pandas as pd
 import time
 
+# set_page_config() can only be called once per app page, and must be called as the first Streamlit command in your script.
+st.set_page_config(
+    menu_items={
+        "Get Help": None,
+        "Report a bug": None,
+        "About": """## Titanic Survival Predictor  
+This project predicts the survival chances of Titanic passengers using machine learning. The source code is available on [GitHub](https://github.com/DidierFlamm/titanic-survival-predictor)  
+
+© 2025 Didier Flamm  
+✉️ [didier.flamm@gmail.com](mailto:didier.flamm@gmail.com) – 🔗 [LinkedIn](https://www.linkedin.com/in/didier-flamm) – 📁 [Portfolio](https://share.streamlit.io/user/didierflamm)  
+""",
+    }
+)
+
+if "windows" not in st_javascript("navigator.userAgent").lower():
+
+    def format_language(x):
+        return languages.loc[languages["lang"] == x, "language"].values[0]
+
+else:
+
+    def format_language(x):
+        return (
+            languages.loc[languages["lang"] == x, "flag"].values[0]
+            + " "
+            + languages.loc[languages["lang"] == x, "local"].values[0]
+            + " ("
+            + languages.loc[languages["lang"] == x, "region"].values[0]
+            + ")"
+        )
+
 
 st.logo(
     "https://img.icons8.com/?size=100&id=s5NUIabJrb4C&format=png&color=000000",
@@ -44,7 +75,7 @@ st.sidebar.selectbox(
     "Select language",
     options=languages.lang,
     key="lang",
-    format_func=lambda x: languages.loc[languages["lang"] == x, "language"].values[0],  # type: ignore
+    format_func=format_language,  # type: ignore
     label_visibility="collapsed",
     disabled=disabled,
 )
@@ -136,25 +167,6 @@ st.sidebar.markdown(
     unsafe_allow_html=True,
 )
 
-st.set_page_config(
-    menu_items={
-        "Get Help": None,
-        "Report a bug": None,
-        "About": (
-            """## Titanic Survival Predictor  
-Ce projet prédit les chances de survie des passagers du Titanic grâce au **machine learning**. Le code source est disponible sur  
-"""
-            if st.session_state.lang == "fr"
-            else """## Titanic Survival Predictor  
-This project predicts the survival chances of Titanic passengers using machine learning. The source code is available on """
-        )
-        + """[GitHub](https://github.com/DidierFlamm/titanic-survival-predictor)  
-
-© 2025 Didier Flamm  
-✉️ [didier.flamm@gmail.com](mailto:didier.flamm@gmail.com) – 🔗 [LinkedIn](https://www.linkedin.com/in/didier-flamm) – 📁 [Portfolio](https://share.streamlit.io/user/didierflamm)  
-""",
-    }
-)
 
 if "pages" not in st.session_state:
     st.session_state.pages = [
