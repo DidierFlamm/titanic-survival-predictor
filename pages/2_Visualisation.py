@@ -36,7 +36,7 @@ st.write(
     tab_fare,
     tab_sibsp,
     tab_parch,
-    tab_embark,
+    tab_embarked,
 ) = st.tabs(
     [
         "🛟 Survie",
@@ -56,7 +56,7 @@ with tab_survived:
     fig = px.pie(
         df_display,
         names="Survie",
-        category_orders={"Survie": ["🟢 Oui", "🔴 Non"]},
+        category_orders={"Survie": ["Oui", "Non"]},
         title="Répartition des survivants",
     )
     fig.update_traces(textposition="inside", textinfo="value+percent+label")
@@ -94,8 +94,8 @@ with tab_age:
     )
     st.plotly_chart(fig)
     st.write(
-        """Les passagers du Titanic étaient âgés de 5 mois à 80 ans, avec une forte représentation d'adultes entre 18 et 50 ans. 
-        Comme vu sur la page précédente, l'âge de 177 passagers (soit 19.9%) n'est pas renseigné dans le jeu de données. 
+        """Les passagers du Titanic étaient âgés de 5 mois à 80 ans, avec une médiane à 28 ans. 50% des passagers ont entre 20 et 38 ans (intervalle interquartile). 
+        Comme vu sur la page précédente, les âges de 177 passagers (soit 20%) ne sont pas renseignés dans le jeu de données. 
         La valeur médiane de la distribution (28 ans) leur sera arbitrairement attribuée."""
     )
 
@@ -156,7 +156,7 @@ with tab_parch:
     st.plotly_chart(fig)
     st.write("Plus de 3/4 des passagers voyagent sans parent ni enfant.")
 
-with tab_embark:
+with tab_embarked:
     fig = px.pie(
         df_display,
         names="Embarquement",
@@ -173,27 +173,150 @@ with tab_embark:
 
 st.subheader(":blue[Analyse bivariée]", divider=True)
 
+st.write(
+    "L’analyse bivariée consiste à étudier la **relation entre deux variables** afin de comprendre comment elles interagissent ou sont liées. C’est une étape clé pour explorer un dataset avant de modéliser. "
+)
+st.write(
+    "• L'analyse **target/feature** permet d’étudier comment une variable explicative (feature) est liée à la variable cible (target)."
+)
+st.write(
+    "• L'analyse **feature/feature** permet d'explorer la relation entre 2 variables explicatives. Cela peut aider à détecter des dépendances, interactions, ou colinéarités qui influencent la modélisation."
+)
+
 df_display = df_display[df_display["Tarif"] < 500]
 median_age = df_display["Age"].median()
 embarked_mode = df_display["Embarquement"].mode()[0]
 df_display["Age"] = df_display["Age"].fillna(median_age)
 df_display["Embarquement"] = df_display["Embarquement"].fillna(embarked_mode)
 
-hist = px.histogram(df_display, x="Survie", color="Sexe", barmode="group")
-st.plotly_chart(hist)
-
-st.subheader(":blue[Analyse multivariée]", divider=True)
-
-
-fig = px.sunburst(df_display, path=["Sexe", "Survie", "Classe"])
-st.plotly_chart(fig)
-
-st.write(
-    """Ce graphique met en évidence 2 tendances:  
-        • Les femmes n'ayant pas survécu voyageaient très majoritairement en 3ème classe (parmi les 81 femmes n'ayant pas survécu, 72 voyageaient en 3ème classe).  
-        • Les hommes n'ayant pas survécu sont répartis sur les 3 classes mais un déséquilibre important est observée sur la classe 3 (parmi les 347 hommes voyageant en 3ème classe, 300 n'ont pas survécu)"""
+(tab_sex_sur, tab_class_sur, tab_parch_sur, tab_embarked_sur, tab_embarked_class) = (
+    st.tabs(
+        [
+            """🛟 Survie  
+            / ♀️♂️ Sexe""",
+            """🛟 Survie  
+            / 🎟️ Classe""",
+            """🛟 Survie  
+            / 👨‍👩‍👦‍👦 Parents & enfants""",
+            """🛟 Survie  
+            / ⚓ Embarquement""",
+            """🎟️ Classe  
+            / ⚓ Embarquement""",
+        ]
+    )
 )
 
+with tab_sex_sur:
+
+    fig = px.sunburst(
+        df_display,
+        path=["Sexe", "Survie"],
+        title="Analyse de la survie en fonction du sexe des passagers",
+    )
+    st.plotly_chart(fig)
+
+    st.write(
+        """On constate que, proportionnellement, les femmes ont mieux survécu que les hommes :  
+        • 232 survivantes sur 314 femmes, soit 74%  
+        • 107 survivants sur 577 hommes, soit 19%"""
+    )
+
+with tab_class_sur:
+    fig = px.sunburst(
+        df_display,
+        path=["Classe", "Survie"],
+        title="Analyse de la survie en fonction de la classe",
+    )
+    st.plotly_chart(fig)
+
+    st.write(
+        """On constate que, proportionnellement, les passagers de 1ère classe ont mieux survécu que ceux de 2ème classe, qui ont mieux survécu que ceux de 3ème classe :  
+        • 133 survivants sur 216 passagers en 1ère classe, soit 62%  
+        • 87 survivants sur 184 passagers en 2ème classe, soit 47%
+        • 119 survivants sur 491 passagers en 3ème classe, soit 24%"""
+    )
+
+with tab_parch_sur:
+    fig = px.histogram(
+        df_display,
+        x="Parents & Enfants",
+        color="Survie",
+        barmode="stack",
+        category_orders=dict(
+            # Classe=["1ère", "2ème", "3ème"],
+            Survie=["Oui", "Non"],
+        ),
+        title="Analyse de la survie en fonction du nombre de parents et enfants à bord du Titanic",
+    )
+    st.plotly_chart(fig)
+
+    st.write(
+        "On constate que, proportionnellement, les passagers voyageant avec parents et/ou enfants ont mieux survécu que ceux voyageant sans."
+    )
+
+with tab_embarked_sur:
+    fig = px.sunburst(
+        df_display,
+        path=["Embarquement", "Survie"],
+        title="Histogramme empilé de la survie en fonction du port d'embarquement",
+    )
+
+    st.plotly_chart(fig)
+    st.write(
+        """On constate que, proportionnellement, les passagers ayant embarqué à Cherbourg ont mieux survécu que les autres :  
+            • 90 survivants sur 168 passagers ayant embarqué à Cherbourg (54%)  
+            • 30 survivants sur 77 passagers ayant embarqué à Cherbourg (39%)  
+            • 219 survivants sur 646 passagers ayant embarqué à Cherbourg (34%)"""
+    )
+
+with tab_embarked_class:
+    fig = px.sunburst(
+        df_display,
+        path=["Embarquement", "Classe"],
+        title="Analyse de la classe en fonction du port d'embarquement",
+    )
+    st.plotly_chart(fig)
+
+    st.write(
+        """On constate que les passagers ayant embarqué à Cherbourg ont majoritairement voyagé en 1ère classe alors que les autres passagers ont voyagé majoritairement en 3ème classe."""
+    )
+st.subheader(":blue[Analyse multivariée]", divider=True)
+
+st.write(
+    "L’analyse multivariée étudie simultanément les relations entre trois variables ou plus afin de mieux comprendre la structure complexe des données."
+)
+st.write(
+    "Il existe de nombreuses méthodes d'analyse multivariée permettant de détecter les interactions, réduire la dimensionnalité ou encore segmenter les observations (ACP, AFC, clustering, etc...) mais nous n'aborderons ici que 2 visualisations multivariées par graphiques interactifs"
+)
+tab1, tab2 = st.tabs(
+    ["♀️♂️ Sexe / 🛟 Survie / 🎟️ Classe", "⚓ Embarquement / 🛟 Survie / 🎟️ Classe"]
+)
+
+with tab1:
+    fig = px.sunburst(
+        df_display,
+        path=["Sexe", "Survie", "Classe"],
+        title="Tendances de survie par sexe et classe sur le Titanic",
+    )
+    st.plotly_chart(fig)
+
+    st.write(
+        """Ce graphique met en évidence 2 tendances:  
+        • Les femmes n'ayant pas survécu voyageaient très majoritairement en 3ème classe (parmi les 81 femmes n'ayant pas survécu, 72 voyageaient en 3ème classe).  
+        • Les hommes n'ayant pas survécu sont répartis sur les 3 classes mais un déséquilibre important est observée sur la classe 3 (parmi les 347 hommes voyageant en 3ème classe, 300 n'ont pas survécu)"""
+    )
+
+with tab2:
+    fig = px.sunburst(
+        df_display,
+        path=["Embarquement", "Survie", "Classe"],
+        title="Tendances de survie par port d'embarquement et classe sur le Titanic",
+    )
+    st.plotly_chart(fig)
+
+    st.write(
+        "On constate que la meilleure survie des passagers ayant embarqué à Cherbourg est corrélée à une plus grande proportion de passagers voyageant en 1ère classe que chez les passagers ayant embarqué à Queenstown ou Southampton"
+    )
 
 _, col, _ = st.columns(3)
 with col:
