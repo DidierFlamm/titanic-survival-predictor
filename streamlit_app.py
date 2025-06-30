@@ -5,12 +5,23 @@ import os
 import pandas as pd
 from dotenv import load_dotenv
 
-load_dotenv()
+# Vérifie si on est sur Streamlit Cloud (où st.secrets est disponible)
+if "GOOGLE_CREDENTIALS_JSON" in st.secrets:
+    with open("google_key.json", "w") as f:
+        f.write(st.secrets["GOOGLE_CREDENTIALS_JSON"])
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "google_key.json"
+
+# Sinon, essaie de charger une variable d’environnement locale via dotenv
+else:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+
 
 if "GOOGLE_APPLICATION_CREDENTIALS" not in os.environ:
     st.warning(
-        "Clé GOOGLE_APPLICATION_CREDENTIALS not found in .env : traduction won't work",
-        icon="ℹ️",
+        "GOOGLE_APPLICATION_CREDENTIALS API key not found in .env : traduction won't work",
+        icon="🔒",
     )
 
 st.logo(
