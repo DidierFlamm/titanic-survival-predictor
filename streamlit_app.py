@@ -75,7 +75,10 @@ st.sidebar.selectbox(
 )
 
 
-flag = languages.loc[languages.lang == st.session_state.lang, "flag"].values[0]  # type: ignore
+try:
+    flag = languages.loc[languages.lang == st.session_state.lang, "flag"].values[0]
+except:
+    flag = ""
 st.session_state.flag = flag
 
 st.sidebar.subheader("Ambiance", divider=True)
