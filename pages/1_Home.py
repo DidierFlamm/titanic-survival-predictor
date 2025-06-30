@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 import streamlit as st
 import time
-from utils import load_csv, to_display
+from utils import load_csv, to_display, translate_text
 import pandas as pd
 import streamlit.components.v1 as components
-from google.cloud import translate_v2 as translate
 
 
 st.markdown(
@@ -27,7 +26,7 @@ st.header(":blue[Introduction]", divider=True)
 
 # Textes à lire
 
-text_FR = """
+intro_FR = """
 Le naufrage du Titanic est l’une des catastrophes maritimes les plus célèbres de l’histoire. Le 15 avril 1912, lors de son voyage inaugural, le RMS Titanic, pourtant considéré comme insubmersible, a coulé après une collision avec un iceberg. Malheureusement, il n’y avait pas assez de canots de sauvetage pour toutes les personnes à bord, ce qui a entraîné la mort de 1502 des 2224 passagers et membres d’équipage.  
 
 Bien que le hasard ait joué un rôle dans les chances de survie, certains groupes de personnes semblaient avoir plus de chances de survivre que d’autres. L'objectif de ce projet est de construire un modèle prédictif pour répondre à la question « Quels types de personnes avaient le plus de chances de survivre ? » en s’appuyant sur certaines données de 891 passagers, telles que leur nom, âge, sexe, famille, classe, etc...
@@ -35,22 +34,13 @@ Bien que le hasard ait joué un rôle dans les chances de survie, certains group
 Votre capitaine, Flamm Didier, et vos matelots Charlize et James vous souhaitent la bienvenue à bord du projet Titanic. Embarquez pour un voyage serein et passionnant à travers le vaste océan des données !
 """
 
-translate_client = translate.Client()
-
-if not st.session_state.lang.startswith("fr"):
-    text_translated = translate_client.translate(
-        text_FR, target_language=st.session_state.lang.split("-")[0]
-    )
+intro_translated = (
+    intro_FR if st.session_state.lang.startswith("fr") else translate_text(intro_FR)
+)
 
 text_DIDS = """DIDS — Dive Into Data Science"""
 
-text_INTRO = (
-    text_FR
-    if st.session_state.lang.startswith("fr")
-    else text_translated["translatedText"]
-)
-
-text = text_INTRO + text_DIDS
+# text = intro_translated + text_DIDS
 
 
 # Fonction de stream
@@ -62,7 +52,7 @@ def stream_data(text):
 
 script = f"""
 <script>
-    var msgINTRO = new SpeechSynthesisUtterance({text_INTRO!r});
+    var msgINTRO = new SpeechSynthesisUtterance({intro_translated!r});
     msgINTRO.lang = {st.session_state.lang!r};
     msgINTRO.rate = 1.1;
 
@@ -100,10 +90,10 @@ with col2:
 
 if "skip_stream" not in st.session_state:
     st.session_state.skip_stream = True
-    st.write_stream(stream_data(text_INTRO))
+    st.write_stream(stream_data(intro_translated))
     st.write_stream(stream_data(text_DIDS))
 else:
-    st.write(text_INTRO)
+    st.write(intro_translated)
     st.write(text_DIDS)
 
 
