@@ -72,6 +72,7 @@ with st.expander("Afficher les paramètres de la grille de recherche"):
 progress_bar = st.progress(0)
 status_placeholder = st.empty()
 status_placeholder.text(f"0/{len(models)}")
+success_placeholder = st.empty()
 
 
 start_total_time = time.time()
@@ -134,7 +135,7 @@ duration = round(time.time() - start_total_time, 1)
 
 status_placeholder.text("")
 
-st.success(
+success_placeholder.success(
     (
         f"Les {len(models)} modèles ont été optimisés en {duration} s"
         if st.session_state.lang.startswith("fr")
