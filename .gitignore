@@ -30,3 +30,6 @@ catboost_info/
 
 # Parametres VS Code
 .vscode/
+
+# Credentials
+credentials/
