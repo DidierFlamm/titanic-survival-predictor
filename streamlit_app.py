@@ -27,6 +27,10 @@ st.sidebar.selectbox(
 flag = languages.loc[languages.lang == st.session_state.lang, "flag"].values[0]  # type: ignore
 st.session_state.flag = flag
 
+st.sidebar.caption(
+    "🚧 La traduction et les voix de synthèse ne sont pas encore disponibles pour toutes les langues."
+)
+
 st.sidebar.subheader("Ambiance", divider=True)
 
 ambiance = st.sidebar.radio(
