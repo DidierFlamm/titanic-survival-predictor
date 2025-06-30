@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import streamlit as st
 import time
-from utils import load_csv
+from utils import load_csv, to_display
 import pandas as pd
 import streamlit.components.v1 as components
 
@@ -112,23 +112,7 @@ st.header(
 )
 
 df = load_csv(drop_outliers=False)
-
-df_display = df.copy()
-df_display.columns = [
-    "Survie",
-    "Classe",
-    "Nom",
-    "Sexe",
-    "Age",
-    "Fratrie & Conjoint(e)",
-    "Parents & Enfants",
-    "Ticket",
-    "Tarif",
-    "Cabine",
-    "Embarquement",
-]
-df_display["Survie"].replace({1: "🟢", 0: "🔴"}, inplace=True)
-df_display["Sexe"].replace({"male": "H", "female": "F"}, inplace=True)
+df_display = to_display(df)
 
 st.dataframe(df_display)
 st.caption(
@@ -173,43 +157,24 @@ df = pd.DataFrame(
             "Survie",
             "Sexe",
             "Classe",
-            """Fratrie  
-            & Époux(se)""",
-            """Parents  
-            & Enfants""",
+            """Fratrie & Époux(se)""",
+            """Parents & Enfants""",
             "Tarif",
             "Cabine",
-            """Embarquement""",
+            "Embarquement",
         ],
         "Définition": [
             "Est-ce que le passager a survécu ?",
             "Sexe du passager",
-            """Classe du billet  
-            (indicateur du statut socio-économique)""",
-            """Nombre de frères, sœurs, époux(se)  
-            à bord du Titanic""",
-            """Nombre de parents et enfants  
-            à bord du Titanic""",
-            """Tarif de la cabine en livre sterling (£)  
-            pour l'ensemble de ses occupants""",
+            """Classe du billet *(indicateur du statut socio-économique)*:  
+            • 1ère : classe aisée  
+            • 2ème : classe moyenne  
+            • 3ème : classe populaire""",
+            """Nombre de frères, sœurs, époux(se) à bord du Titanic""",
+            """Nombre de parents et enfants à bord du Titanic""",
+            """Tarif de la cabine en livre sterling (£) pour l'ensemble de ses occupants""",
             "Numéro de la cabine",
-            "Port d'embarquement",
-        ],
-        "Valeurs": [
-            """🟢 = Oui  
-            🔴 = Non""",
-            """F = Femme  
-            H = Homme""",
-            """1 = 1ère classe (aisée)  
-            2 = 2ème classe (moyenne)  
-            3 = 3ème classe (populaire)""",
-            "",
-            "",
-            "",
-            "",
-            """C = 🇫🇷 Cherbourg  
-            Q = 🇮🇪 Queenstown  
-            S = 🇬🇧 Southampton""",
+            "Port d'embarquement (voir carte ci-dessous)",
         ],
     }
 )
