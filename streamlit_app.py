@@ -1,10 +1,17 @@
 # -*- coding: utf-8 -*-
 import streamlit as st
 from streamlit_javascript import st_javascript
+import os
 import pandas as pd
 from dotenv import load_dotenv
 
 load_dotenv()
+
+if "GOOGLE_APPLICATION_CREDENTIALS" not in os.environ:
+    st.warning(
+        "Clé GOOGLE_APPLICATION_CREDENTIALS not found in .env : traduction won't work",
+        icon="ℹ️",
+    )
 
 st.logo(
     "https://img.icons8.com/?size=100&id=s5NUIabJrb4C&format=png&color=000000",
@@ -13,14 +20,27 @@ st.logo(
 
 st.sidebar.subheader("Language", divider=True)
 
-languages_csv = "https://raw.githubusercontent.com/DidierFlamm/titanic-survival-predictor/refs/heads/main/data/languages.csv"
-languages = pd.read_csv(languages_csv)
-
 # récupération auto de la langue par défaut du navigateur en JS avec navigator.language
 
-default_language = st_javascript("navigator.language")
-st.session_state.default_language = default_language
-default_index = languages[languages["lang"] == default_language].index[0]
+default_language_js = st_javascript("navigator.language")
+disabled = False
+
+if "default_language" not in st.session_state:
+    if "GOOGLE_APPLICATION_CREDENTIALS" not in os.environ:
+        st.session_state.default_language = (
+            "fr-FR"  # fallback si pas de clé Google Traduction et disable selectbox
+        )
+        disabled = True
+    elif default_language_js != 0:
+        # cas où le language par défaut n'est pas encore récupéré par JS (valeur par défaut = 0)
+        st.session_state.default_language = default_language_js
+
+# Initialisation du selectbox en sync avec default_language
+if "lang" not in st.session_state:
+    st.session_state.lang = st.session_state.default_language
+
+languages_csv = "https://raw.githubusercontent.com/DidierFlamm/titanic-survival-predictor/refs/heads/main/data/languages.csv"
+languages = pd.read_csv(languages_csv)
 
 st.sidebar.selectbox(
     "Select language",
@@ -28,15 +48,11 @@ st.sidebar.selectbox(
     key="lang",
     format_func=lambda x: languages.loc[languages["lang"] == x, "language"].values[0],  # type: ignore
     label_visibility="collapsed",
-    index=int(default_index),
+    disabled=disabled,
 )
 
 flag = languages.loc[languages.lang == st.session_state.lang, "flag"].values[0]  # type: ignore
 st.session_state.flag = flag
-
-st.sidebar.caption(
-    "🚧 La traduction et les voix de synthèse ne sont pas encore disponibles pour toutes les langues."
-)
 
 st.sidebar.subheader("Ambiance", divider=True)
 
