@@ -17,10 +17,10 @@ languages_csv = "https://raw.githubusercontent.com/DidierFlamm/titanic-survival-
 languages = pd.read_csv(languages_csv)
 
 # récupération auto de la langue par défaut du navigateur en JS avec navigator.language
-if "default_lang" not in st.session_state:
-    default_language = st_javascript("navigator.language")
-    st.session_state.default_lang = default_language
-    default_index = languages[languages["lang"] == default_language].index[0]
+
+default_language = st_javascript("navigator.language")
+st.session_state.default_language = default_language
+default_index = languages[languages["lang"] == default_language].index[0]
 
 st.sidebar.selectbox(
     "Select language",
@@ -28,7 +28,7 @@ st.sidebar.selectbox(
     key="lang",
     format_func=lambda x: languages.loc[languages["lang"] == x, "language"].values[0],  # type: ignore
     label_visibility="collapsed",
-    index=int(default_index),  # type: ignore
+    index=int(default_index),
 )
 
 flag = languages.loc[languages.lang == st.session_state.lang, "flag"].values[0]  # type: ignore

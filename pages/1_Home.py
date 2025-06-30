@@ -5,7 +5,6 @@ from utils import load_csv, to_display, translate_text
 import pandas as pd
 import streamlit.components.v1 as components
 
-
 st.markdown(
     "<h1 style='text-align: center; color: #0366d6;'>🚢 Titanic Survival Predictor</h1>",
     unsafe_allow_html=True,
