@@ -1,4 +1,5 @@
 import streamlit as st
+from google.cloud import translate_v2 as translate
 import random
 import numpy as np
 import pandas as pd
@@ -6,7 +7,18 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 
-url = "https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv"
+csv_url = (
+    "https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv"
+)
+
+translate_client = translate.Client()
+
+
+@st.cache_data
+def translate_text(text):
+    return translate_client.translate(
+        text, target_language=st.session_state.lang.split("-")[0]
+    )["translatedText"]
 
 
 def set_seed():
@@ -19,7 +31,7 @@ def set_seed():
 
 @st.cache_data
 def load_csv(drop_outliers: bool):
-    df = pd.read_csv(url, index_col="PassengerId")
+    df = pd.read_csv(csv_url, index_col="PassengerId")
     df.index.name = "#"
     if drop_outliers:
         df = df[df.Fare < 500]
