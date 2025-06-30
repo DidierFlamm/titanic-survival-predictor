@@ -164,7 +164,7 @@ if "pages" not in st.session_state:
     st.session_state.pages = [
         st.Page(
             "pages/1_Home.py",
-            title="Accueil",
+            title="Embarquement",
             icon="⚓",
             default=True,
         ),
