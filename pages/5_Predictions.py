@@ -1,6 +1,5 @@
 import streamlit as st
 from utils import set_seed, load_csv, preprocess_data, get_fare_bounds, to_display
-import numpy as np
 import pandas as pd
 
 st.markdown(
@@ -90,7 +89,7 @@ y_pred = model.predict(X)
 df_display = to_display(df)
 
 df_display.insert(
-    loc=0, column="Chance de survie", value=np.round(y_proba[:, 1] * 100, 2)
+    loc=0, column="Chance de survie", value=(y_proba[:, 1] * 100).round(2)
 )
 df_display = df_display.sort_values(by="Chance de survie", ascending=False)
 df_display.insert(
@@ -109,7 +108,7 @@ st.caption(f"seed de la session = {st.session_state.seed}")
 counts = df_display["Prédiction correcte ?"].value_counts()
 frequencies = df_display["Prédiction correcte ?"].value_counts(normalize=True)
 result = pd.DataFrame(
-    {"Nb": counts, "%": np.round(100 * frequencies, 2).astype(str) + " %"}
+    {"Nb": counts, "%": (100 * frequencies).round(2).astype(str) + " %"}
 )
 
 st.dataframe(result)
