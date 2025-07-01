@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import streamlit as st
-import time
 from utils import load_csv, to_display, translate_text
 import pandas as pd
 import streamlit.components.v1 as components
@@ -36,13 +35,6 @@ Votre capitaine, Flamm Didier, et vos matelots Charlize et James vous souhaitent
 intro_translated = translate_text(intro_FR, st.session_state.lang.split("-")[0])
 
 text_DIDS = """DIDS — Dive Into Data Science"""
-
-
-# Fonction de stream
-def stream_data(text):
-    for word in text.split(" "):
-        yield word + " "
-        time.sleep(0.1)
 
 
 script = f"""
@@ -83,13 +75,13 @@ with col2:
     )
 
 
-if "skip_stream" not in st.session_state:
-    st.session_state.skip_stream = True
-    st.write_stream(stream_data(intro_translated))
-    st.write_stream(stream_data(text_DIDS))
-else:
-    st.write(intro_translated)
-    st.write(text_DIDS)
+# if "skip_stream" not in st.session_state:
+#    st.session_state.skip_stream = True
+#    st.write_stream(stream_data(intro_translated))
+#    st.write_stream(stream_data(text_DIDS))
+# else:
+st.write(intro_translated)
+st.write(text_DIDS)
 
 st.header(
     ":blue[Données]" if st.session_state.lang.startswith("fr") else ":blue[Data]",
