@@ -45,9 +45,9 @@ st.write(
 
 st.subheader(
     (
-        ":blue[Chances de survie des passagers]"
+        ":blue[Chances de survie]"
         if st.session_state.lang.startswith("fr")
-        else ":blue[Survival chances of passengers]"
+        else ":blue[Survival chances]"
     ),
     divider=True,
 )
@@ -106,21 +106,17 @@ st.caption(f"seed de la session = {st.session_state.seed}")
 
 
 st.write(
-    "Les chances de survie des passagers sont prédites par un modèle optimisé, avec :"
-    if st.session_state.lang.startswith("fr")
-    else "The chances of survival are predicted by an optimized model, with :"
+    """🎯 Voici comment interpréter les prédictions du modèle :
+
+- 🟢 **Probabilité ≥ 50 %** : le modèle **prévoit que le passager survit**
+- 🔴 **Probabilité < 50 %** : le modèle **prévoit que le passager ne survit pas**"""
 )
 
 st.write(
-    """• chance de survie ≥ 50% : le modèle prédit que le passager survit  
-• chance de survie < 50% : le modèle prédit que le passager ne survit pas si sa """
-    if st.session_state.lang.startswith("fr")
-    else """• probability ≥ 50%: the passenger survives  
-• probability < 50%: the passenger does not survive"""
-)
+    """✔️ Une **prédiction est dite correcte** si elle correspond à la réalité :  
+le modèle prédit la survie **et** le passager a survécu, ou bien il prédit le décès **et** le passager n’a pas survécu.
 
-st.write(
-    """La prédiction est qualifiée de correcte ✔️ si la prédiction de survie du passager est conforme à la réalité. Sinon, la prédiction est incorrecte ❌."""
+❌ Dans le cas contraire, la prédiction est considérée comme **incorrecte**."""
 )
 
 counts = df_display["Prédiction correcte ?"].value_counts()
@@ -128,24 +124,24 @@ frequencies = df_display["Prédiction correcte ?"].value_counts(normalize=True)
 result = pd.DataFrame(
     {"Nb": counts, "%": (100 * frequencies).round(2).astype(str) + " %"}
 )
+with st.expander("📊 Afficher les statistiques de justesse des prédictions"):
+    st.dataframe(result)
 
-st.dataframe(result)
+st.write(
+    """🧐 **Interpréter une prédiction** n’est pas toujours évident. Pour répondre pleinement à notre question initiale, il ne suffit pas de savoir *qui* a survécu : il faut aussi comprendre **pourquoi** certains passagers avaient plus de chances que d’autres.  
+
+Certains modèles sont dits **interprétables** (comme les arbres de décision ou les k-neighbors), car leur logique peut être représentée visuellement. D'autres en revanche, comme les forêts aléatoires ou les réseaux de neurones, sont de véritables **boîtes noires**, dont les mécanismes internes restent difficiles à décoder."""
+)
 
 st.subheader(
     (
-        ":blue[Chance de survie d'un passager personnalisé]"
+        ":blue[Passager mystère]"
         if st.session_state.lang.startswith("fr")
-        else ":blue[Survival chance of a custom passenger]"
+        else ":blue[Custom passenger]"
     ),
     divider=True,
 )
 
-st.write(
-    """🧐 **Interpréter une prédiction** n’est pas toujours évident.  
-    Pour répondre pleinement à notre question initiale, il ne suffit pas de savoir *qui* a survécu : il faut aussi comprendre **pourquoi** certains passagers avaient plus de chances que d’autres.  
-
-Certains modèles sont dits **interprétables** (comme les arbres de décision ou les k-neighbors), car leur logique peut être représentée visuellement. D'autres en revanche, comme les forêts aléatoires ou les réseaux de neurones, sont de véritables **boîtes noires**, dont les mécanismes internes restent difficiles à décoder."""
-)
 
 st.write(
     """Une méthode simple et universelle consiste à **jouer avec un exemple** : on sélectionne un passager aléatoire, on observe sa probabilité de survie, puis on modifie ses caractéristiques (âge, sexe, classe…) pour voir comment cela influence la prédiction.  
