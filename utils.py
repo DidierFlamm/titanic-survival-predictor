@@ -150,7 +150,7 @@ def preprocess_data(
 
     # memorize les colonnes pour pouvoir réindexer le X custom qui n'aura pas toutes les colones OH
     if "columns" not in st.session_state:
-        st.session_state.columns = X_train.columns
+        st.session_state.columns = list(X_train.columns)
     else:
         X_train = X_train.reindex(columns=st.session_state.columns, fill_value=0)
 
