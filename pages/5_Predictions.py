@@ -144,7 +144,7 @@ st.subheader(
 
 
 st.write(
-    """Une méthode simple et universelle consiste à **jouer avec un exemple** : on sélectionne un passager aléatoire, on observe sa probabilité de survie, puis on modifie ses caractéristiques (âge, sexe, classe…) pour voir comment cela influence la prédiction.  
+    """Une méthode simple et universelle pour interpréter les résultats d'un modèle consiste à **jouer avec un exemple** : on sélectionne un passager aléatoire, on observe sa probabilité de survie, puis on modifie ses caractéristiques (âge, sexe, classe…) pour voir comment cela influence la prédiction.  
     👉 **À vous de jouer !** Remplissez le formulaire ci-dessous et observez l’impact de chaque paramètre sur la chance de survie."""
 )
 
