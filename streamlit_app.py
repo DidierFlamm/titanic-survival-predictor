@@ -8,12 +8,12 @@ import time
 st.set_page_config(
     menu_items={
         "Get Help": None,
-        "Report a bug": None,
+        "Report a bug": "mailto:didier.flamm@gmail.com?subject=Report%20a%20bug%20about%20titanic-survival-predictor%20streamlit%20app",
         "About": """## Titanic Survival Predictor  
 This project predicts the survival chances of Titanic passengers using machine learning. The source code is available on [GitHub](https://github.com/DidierFlamm/titanic-survival-predictor)  
 
 © 2025 Didier Flamm  
-✉️ [didier.flamm@gmail.com](mailto:didier.flamm@gmail.com) – 🔗 [LinkedIn](https://www.linkedin.com/in/didier-flamm) – 📁 [Portfolio](https://share.streamlit.io/user/didierflamm)  
+✉️ [didier.flamm@gmail.com](mailto:didier.flamm@gmail.com) – 💬 [LinkedIn](https://www.linkedin.com/in/didier-flamm) – 📁 [Portfolio](https://share.streamlit.io/user/didierflamm)  
 """,
     }
 )
