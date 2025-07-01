@@ -72,7 +72,7 @@ st.sidebar.selectbox(
 
 try:
     flag = languages.loc[languages.lang == st.session_state.lang, "flag"].values[0]
-except:
+except Exception:
     flag = ""
 st.session_state.flag = flag
 
