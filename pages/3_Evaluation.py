@@ -41,13 +41,10 @@ df = load_csv(drop_outliers=True)
 
 X_train, X_test, y_train, y_test = preprocess_data(df, split=True)
 
-# st.dataframe(X_train)
-# st.dataframe(X_test)
 
 # Récupérer tous les classifiers
 all_classifiers = all_estimators(type_filter="classifier")
 
-# warnings.filterwarnings("ignore")
 
 results = []
 errors = []
@@ -185,18 +182,21 @@ assert best_model is not None, f"best_model_name {best_model_name} non trouvé"
 best_model.fit(X_train, y_train)
 y_pred = best_model.predict(X_test)
 
-balanced_acc = round(100 * balanced_accuracy_score(y_test, y_pred), 2)  # type: ignore
+assert y_test is not None
+# y_test is not none with preprocess_data(df, split=True)
+
+balanced_acc = round(100 * balanced_accuracy_score(y_test, y_pred), 2)
 st.write(f"- Balanced accuracy = **{balanced_acc} %**")
 
 
 # Afficher classification_report sous forme de DataFrame
-report_dict = classification_report(y_test, y_pred, output_dict=True)  # type: ignore
+report_dict = classification_report(y_test, y_pred, output_dict=True)
 df_report = pd.DataFrame(report_dict).transpose()
 st.write("- Classification Report")
 st.dataframe(df_report)
 
 # Afficher la matrice de confusion
-cm = confusion_matrix(y_test, y_pred)  # type: ignore
+cm = confusion_matrix(y_test, y_pred)
 df_cm = pd.DataFrame(cm, index=["Actual 0", "Actual 1"], columns=["Pred 0", "Pred 1"])
 st.write("- Confusion Matrix")
 st.dataframe(df_cm)

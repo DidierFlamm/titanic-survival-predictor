@@ -115,7 +115,10 @@ for idx, name in enumerate(models):
         """
         )
 
-        bal_acc = round(100 * balanced_accuracy_score(y_test, y_pred), 2)  # type: ignore
+        assert y_test is not None
+        # y_test is not none with preprocess_data(df, split=True)
+
+        bal_acc = round(100 * balanced_accuracy_score(y_test, y_pred), 2)
 
         results.append(
             {
@@ -161,7 +164,7 @@ st.write(
 
 df_results = pd.DataFrame(results).sort_values(by="Balanced Accuracy", ascending=False)
 
-df_results.index = range(1, 6)  # type: ignore
+df_results.index = pd.Index(range(1, 6))
 
 st.dataframe(df_results)
 

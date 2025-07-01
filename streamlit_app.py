@@ -64,7 +64,7 @@ st.sidebar.selectbox(
     "Select language",
     options=languages.lang,
     key="lang",
-    format_func=format_language,  # type: ignore
+    format_func=format_language,
     label_visibility="collapsed",
     disabled=disabled,
 )

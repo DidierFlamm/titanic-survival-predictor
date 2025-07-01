@@ -40,17 +40,17 @@ st.subheader(
 )
 
 st.write(
-    "Les chances de survie des passagers sont prédites par un modèle optimisé, sachant que :"
+    "Les chances de survie des passagers sont prédites par un modèle optimisé, avec :"
     if st.session_state.lang.startswith("fr")
-    else "The chances of survival are predicted by an optimized model, knowing :"
+    else "The chances of survival are predicted by an optimized model, with :"
 )
 
 st.write(
-    """le modèle prédit que le passager survit si sa chance de survie ≥ 50%  
-le modèle prédit que le passager ne survit pas si sa chance de survie < 50%"""
+    """• chance de survie ≥ 50% : le modèle prédit que le passager survit  
+• chance de survie < 50% : le modèle prédit que le passager ne survit pas si sa """
     if st.session_state.lang.startswith("fr")
-    else """probability ≥ 50%: the passenger survives  
-probability < 50%: the passenger does not survive"""
+    else """• probability ≥ 50%: the passenger survives  
+• probability < 50%: the passenger does not survive"""
 )
 
 st.write(
@@ -203,8 +203,7 @@ custom = pd.DataFrame(
     ],
     columns=["Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked"],
 )
-custom.index = ["Passenger"]  # type: ignore
-# st.dataframe(custom)
+custom.index = pd.Index(["Passenger"])
 
 
 set_seed()
