@@ -86,7 +86,7 @@ for idx, name in enumerate(models):
 
     with st.spinner(f"Optimizing {name}", show_time=True):
 
-        progress_bar.progress((idx + 1) / len(models))
+        progress_bar.progress((idx) / len(models))
         status_placeholder.text(f"{idx+1}/{len(models)} - {name}")
 
         grid = GridSearchCV(
@@ -136,6 +136,7 @@ for idx, name in enumerate(models):
 
 duration = round(time.time() - start_total_time, 1)
 
+progress_bar.progress(1.0)
 status_placeholder.text("")
 
 success_placeholder.success(
