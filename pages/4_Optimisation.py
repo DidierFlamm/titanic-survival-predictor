@@ -38,6 +38,9 @@ df = load_csv(drop_outliers=True)
 
 X_train, X_test, y_train, y_test = preprocess_data(df, split=True)
 
+# memorize les colonnes pour pouvoir réindexer le X custom qui n'aura pas toutes les colones OH
+if "columns" not in st.session_state:
+    st.session_state.columns = X_train.columns
 
 params = {
     "Logistic Regression": {
