@@ -10,14 +10,14 @@ st.markdown(
 if "df_results" not in st.session_state:
     st.info(
         """Les modèles doivent être optimisés avant de pouvoir réaliser des prédictions fiables.  
-        Merci de bien vouloir exécuter l'étape précédente (📈 Optimisation) jusqu'à son terme.""",
+        Merci de bien vouloir exécuter l'étape 📈 Optimisation jusqu'à son terme.""",
         icon="ℹ️",
     )
     st.page_link(
         st.Page(
             "pages/4_Optimisation.py",
-            title="Optimisation",
-            icon="📈",
+            title="📈 Optimisation",
+            icon="👉",
         )
     )
     st.stop()
