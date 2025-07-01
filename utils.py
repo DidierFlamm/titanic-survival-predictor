@@ -142,23 +142,22 @@ def preprocess_data(
     categorical_cols = ["Sex", "Embarked"]
     X_train = pd.get_dummies(X_train, columns=categorical_cols, drop_first=False)
 
+    # on a choisi drop_first = False car sinon les colonnes OH de la prediction du custom sont droped car unique
+    # donc on supprime manuellement 1 colonne de Sex et Embarked
+    cols_to_drop = {"Sex_female", "Embarked_C"}
+    cols_to_drop = cols_to_drop.intersection(X_train.columns)
+    X_train = X_train.drop(columns=cols_to_drop)
+
     # memorize les colonnes pour pouvoir réindexer le X custom qui n'aura pas toutes les colones OH
     if "columns" not in st.session_state:
         st.session_state.columns = X_train.columns
     else:
         X_train = X_train.reindex(columns=st.session_state.columns, fill_value=0)
 
-    # on a choisi drop_first = False car sinon les colonnes OH de la prediction du custom sont droped car unique
-    # donc on supprime manuellement 1 colonne de Sex et Embarked
-    cols_to_drop = {"Sex_female", "Embarked_C"}
-    cols_to_drop = cols_to_drop.intersection(st.session_state.columns)
-    X_train = X_train.drop(columns=cols_to_drop)
-
     if X_test is not None:
         X_test = pd.get_dummies(X_test, columns=categorical_cols, drop_first=False)
-        # Réindexation pour garantir le même ordre des colonnes (pas garanti apres oh encodage)
+        # Réindexation pour garantir les mêmes colonnes dans X_test et X_train (ordre pas garanti apres oh encodage)
         X_test = X_test.reindex(columns=st.session_state.columns, fill_value=0)
-        X_test = X_test.drop(columns=cols_to_drop)
 
     return X_train, X_test, y_train, y_test
 
