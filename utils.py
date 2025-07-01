@@ -149,16 +149,10 @@ def preprocess_data(
     cols_to_drop = cols_to_drop.intersection(X_train.columns)
     X_train = X_train.drop(columns=cols_to_drop)
 
-    # memorize les colonnes pour pouvoir réindexer le X custom qui n'aura pas toutes les colones OH
-    if "columns" not in st.session_state:
-        st.session_state.columns = list(X_train.columns)
-    else:
-        X_train = X_train.reindex(columns=st.session_state.columns, fill_value=0)
-
     if X_test is not None:
         X_test = pd.get_dummies(X_test, columns=categorical_cols, drop_first=False)
         # Réindexation pour garantir les mêmes colonnes dans X_test et X_train (ordre pas garanti apres oh encodage)
-        X_test = X_test.reindex(columns=st.session_state.columns, fill_value=0)
+        X_test = X_test.reindex(columns=X_train.columns, fill_value=0)
 
     return X_train, X_test, y_train, y_test
 
