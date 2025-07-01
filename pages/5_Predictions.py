@@ -145,7 +145,7 @@ with col1:
 
     age = st.slider("**Age**", 0, 100, 50)
 
-    pclass = st.radio("**Classe**", (1, 2, 3), horizontal=True)
+    pclass = st.radio("**Classe**", (1, 2, 3), index=1, horizontal=True)
 
     fare = st.slider(
         "**Tarif**",
