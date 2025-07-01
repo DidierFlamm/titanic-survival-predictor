@@ -3,6 +3,7 @@ from google.cloud import translate_v2 as translate
 import random
 import numpy as np
 import pandas as pd
+import time
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 import json
@@ -185,3 +186,10 @@ def to_display(df) -> pd.DataFrame:
     )
     df_display["Classe"].replace({1: "1ère", 2: "2ème", 3: "3ème"}, inplace=True)
     return df_display
+
+
+# Fonction de stream
+def stream_data(text):
+    for word in text.split(" "):
+        yield word + " "
+        time.sleep(0.1)
