@@ -87,7 +87,7 @@ for idx, name in enumerate(models):
     with st.spinner(f"Optimizing {name}", show_time=True):
 
         progress_bar.progress((idx) / len(models))
-        status_placeholder.text(f"{idx+1}/{len(models)} - {name}")
+        status_placeholder.text(f"{idx+1}/{len(models)} - optimizing {name}")
 
         grid = GridSearchCV(
             models[name], params[name], cv=5, n_jobs=-1, scoring="balanced_accuracy"
