@@ -169,27 +169,29 @@ with col1:
     )
     st.write("")
 
-    sexe = st.radio(
+    st.radio(
         "**Sexe**",
         ("female", "male"),
         format_func=lambda x: "Femme" if x == "female" else "Homme",
         horizontal=True,
+        key="sexe",
     )
 
-    age = st.slider("**Age**", 0, 100, 50)
+    st.slider("**Age**", 0, 100, 50, key="age")
 
-    pclass = st.radio("**Classe**", (1, 2, 3), index=1, horizontal=True)
+    st.radio("**Classe**", (1, 2, 3), index=1, horizontal=True, key="pclass")
 
-    fare = st.slider(
+    st.slider(
         "**Tarif**",
-        int(bounds[pclass]["min"]),
-        int(bounds[pclass]["max"]),
-        int(bounds[pclass]["median"]),
+        int(bounds[st.session_state.pclass]["min"]),
+        int(bounds[st.session_state.pclass]["max"]),
+        int(bounds[st.session_state.pclass]["median"]),
+        key="fare",
     )
 
-    st.caption("tarif par défaut = valeur médiane de la classe")
+    st.caption("tarif par défaut = valeur médiane de la classe sélectionnée")
 
-    embarked = st.selectbox(
+    st.selectbox(
         "**Port d'embarquement**",
         options=["C", "Q", "S"],
         index=0,
@@ -198,6 +200,7 @@ with col1:
             "Q": "🇮🇪 Queenstown",
             "S": "🇬🇧 Southampton",
         }[x],
+        key="embarked",
     )
 
 
@@ -208,30 +211,31 @@ with col2:
     )
     st.write("")
 
-    spouse = st.radio(
+    st.radio(
         "**Époux(se)**",
         [1, 0],
         index=1,
         format_func=lambda x: "Oui" if x else "Non",
         horizontal=True,
+        key="spouse",
     )
 
-    siblings = st.slider("**Frères et sœurs**", 0, 10, 0)
+    st.slider("**Frères et sœurs**", 0, 10, 0, key="siblings")
 
-    parents = st.radio("**Parents**", (0, 1, 2), horizontal=True)
+    st.radio("**Parents**", (0, 1, 2), horizontal=True, key="parents")
 
-    children = st.slider("**Enfants**", 0, 10, 0)
+    st.slider("**Enfants**", 0, 10, 0, key="children")
 
 custom = pd.DataFrame(
     [
         [
-            pclass,
-            sexe,
-            age,
-            spouse + siblings,
-            parents + children,
-            fare,
-            embarked,
+            st.session_state.pclass,
+            st.session_state.sexe,
+            st.session_state.age,
+            st.session_state.spouse + st.session_state.siblings,
+            st.session_state.parents + st.session_state.children,
+            st.session_state.fare,
+            st.session_state.embarked,
         ]
     ],
     columns=["Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked"],
@@ -253,6 +257,18 @@ st.metric(
     "Survival chance predicted",
     ("🟢" if chance >= 50 else "🔴") + f" {chance} %",
 )
+
+custom.columns = [
+    "Classe",
+    "Sexe",
+    "Age",
+    "Fratrie & Conjoint(e)",
+    "Parents & Enfants",
+    "Tarif",
+    "Embarquement",
+]
+
+st.dataframe(custom)
 
 _, col, _ = st.columns(3)
 with col:
