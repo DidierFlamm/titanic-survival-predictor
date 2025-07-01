@@ -189,7 +189,7 @@ with col1:
         key="fare",
     )
 
-    st.caption("tarif par défaut = valeur médiane de la classe sélectionnée")
+    st.caption("tarif par défaut = valeur médiane de la classe")
 
     st.selectbox(
         "**Port d'embarquement**",
