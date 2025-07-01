@@ -192,16 +192,16 @@ df_display["Embarquement"] = df_display["Embarquement"].fillna(embarked_mode)
 (tab_sex_sur, tab_class_sur, tab_parch_sur, tab_embarked_sur, tab_embarked_class) = (
     st.tabs(
         [
-            """🛟 Survie  
-            / ♀️♂️ Sexe""",
-            """🛟 Survie  
-            / 🎟️ Classe""",
-            """🛟 Survie  
-            / 👨‍👩‍👦‍👦 Parents & enfants""",
-            """🛟 Survie  
-            / ⚓ Embarquement""",
-            """🎟️ Classe  
-            / ⚓ Embarquement""",
+            """🛟 Survie /  
+            ♀️♂️ Sexe""",
+            """🛟 Survie /  
+            🎟️ Classe""",
+            """🛟 Survie /  
+            👨‍👩‍👦‍👦 Parents & enfants""",
+            """🛟 Survie /  
+            ⚓ Embarquement""",
+            """🎟️ Classe /  
+            ⚓ Embarquement""",
         ]
     )
 )
