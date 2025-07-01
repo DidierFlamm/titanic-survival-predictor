@@ -70,7 +70,7 @@ st.sidebar.selectbox(
     format_func=format_language,
     label_visibility="collapsed",
     disabled=disabled,
-    index=index_FR,
+    index=int(index_FR),
 )
 
 
