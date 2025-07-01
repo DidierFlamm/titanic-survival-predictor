@@ -207,8 +207,9 @@ custom.index = pd.Index(["Passenger"])
 
 
 set_seed()
+st.write(st.session_state.columns)
 X, _, _, _ = preprocess_data(custom, split=False)
-# st.dataframe(X)
+st.dataframe(X)
 model = st.session_state[model_choisi]
 y_prob = model.predict_proba(X)
 
