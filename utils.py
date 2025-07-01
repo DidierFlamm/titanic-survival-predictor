@@ -92,7 +92,7 @@ def preprocess_data(
     X = X[X["Fare"] < 500]
 
     # drop "Name", "Ticket" and Cabin except for custom passenger who doesn't have
-    cols_to_drop = set(["Name", "Ticket", "Cabin"]).intersection(X.columns)
+    cols_to_drop = {"Name", "Ticket", "Cabin"}.intersection(X.columns)
     X = X.drop(list(cols_to_drop), axis=1)
 
     # feature engineering
@@ -150,7 +150,8 @@ def preprocess_data(
 
     # on a choisi drop_first = False car sinon les colonnes OH de la prediction du custom sont droped car unique
     # donc on supprime manuellement 1 colonne de Sex et Embarked
-    cols_to_drop = ["Sex_female", "Embarked_C"]
+    cols_to_drop = {"Sex_female", "Embarked_C"}
+    cols_to_drop = cols_to_drop.intersection(st.session_state.columns)
     X_train = X_train.drop(columns=cols_to_drop)
 
     if X_test is not None:
