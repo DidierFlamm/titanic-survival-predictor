@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import streamlit as st
-from streamlit_javascript import st_javascript
+
+# from streamlit_javascript import st_javascript
 import pandas as pd
 import time
 
@@ -27,31 +28,33 @@ st.sidebar.subheader("Language", divider=True)
 
 # récupération auto de la langue par défaut du navigateur en JS avec navigator.language
 
-default_language_js = st_javascript("navigator.language")
+# default_language_js = st_javascript("navigator.language")
 
 disabled = False
 
-if "default_language" not in st.session_state:
-    if "google_credentials" not in st.secrets:
-        st.session_state.default_language = (
-            "fr-FR"  # fallback si pas de clé Google Traduction et disable selectbox
-        )
-        disabled = True
-    elif default_language_js != 0:
-        # cas où le language par défaut est récupéré par JS (valeur par défaut = 0 au 1er run)
-        st.session_state.default_language = default_language_js
+# if "default_language" not in st.session_state:
+if "google_credentials" not in st.secrets:
+    # st.session_state.default_language = (
+    #    "fr-FR"  # fallback si pas de clé Google Traduction et disable selectbox
+    # )
+    disabled = True
+    # elif default_language_js != 0:
+    # cas où le language par défaut est récupéré par JS (valeur par défaut = 0 au 1er run)
+    # st.session_state.default_language = default_language_js
 
 # Initialisation du selectbox en sync avec default_language
-if "lang" not in st.session_state:
-    try:
-        st.session_state.lang = st.session_state.default_language
-    except AttributeError:
-        # attend que navigator.language récupère le langage par défaut
-        time.sleep(0.1)
-        st.rerun()
+# if "lang" not in st.session_state:
+#    try:
+#        st.session_state.lang = st.session_state.default_language
+#    except AttributeError:
+#        # attend que navigator.language récupère le langage par défaut
+#        time.sleep(0.1)
+#        st.rerun()
 
 languages_csv = "https://raw.githubusercontent.com/DidierFlamm/titanic-survival-predictor/refs/heads/main/data/languages.csv"
 languages = pd.read_csv(languages_csv)
+
+index_FR = languages.query("lang == 'fr-FR'").index[0]
 
 
 def format_language(x):
@@ -67,6 +70,7 @@ st.sidebar.selectbox(
     format_func=format_language,
     label_visibility="collapsed",
     disabled=disabled,
+    index=index_FR,
 )
 
 
