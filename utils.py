@@ -179,6 +179,7 @@ def to_display(df) -> pd.DataFrame:
         {"C": "🇫🇷 Cherbourg", "Q": "🇮🇪 Queenstown", "S": "🇬🇧 Southampton"}, inplace=True
     )
     df_display["Classe"].replace({1: "1ère", 2: "2ème", 3: "3ème"}, inplace=True)
+    df_display["Age"] = df_display["Age"].round().astype("Int64")
     return df_display
 
 
