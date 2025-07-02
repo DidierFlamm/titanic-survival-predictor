@@ -278,7 +278,7 @@ with tab_embarked_class:
     st.plotly_chart(fig)
 
     st.write(
-        """On constate que les passagers ayant embarqué à Cherbourg ont majoritairement voyagé en 1ère classe alors que les autres passagers ont voyagé majoritairement en 3ème classe."""
+        """On constate que les passagers ayant embarqué à Cherbourg ont majoritairement voyagé en 1ère classe alors que les passagers ayant embarqué à Queenstown ou Southampton ont voyagé très majoritairement en 3ème classe."""
     )
 st.subheader(":blue[Analyse multivariée]", divider=True)
 
