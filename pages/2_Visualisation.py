@@ -216,7 +216,7 @@ with tab_sex_sur:
     st.plotly_chart(fig)
 
     st.write(
-        """On constate que, proportionnellement, les femmes ont mieux survécu que les hommes :  
+        """On constate que les femmes ont mieux survécu que les hommes :  
         • 232 survivantes sur 314 femmes, soit 74%  
         • 107 survivants sur 577 hommes, soit 19%"""
     )
@@ -232,7 +232,7 @@ with tab_class_sur:
     st.write(
         """On constate que, proportionnellement, les passagers de 1ère classe ont mieux survécu que ceux de 2ème classe, qui ont mieux survécu que ceux de 3ème classe :  
         • 133 survivants sur 216 passagers en 1ère classe, soit 62%  
-        • 87 survivants sur 184 passagers en 2ème classe, soit 47%
+        • 87 survivants sur 184 passagers en 2ème classe, soit 47%  
         • 119 survivants sur 491 passagers en 3ème classe, soit 24%"""
     )
 
