@@ -3,7 +3,6 @@ import streamlit as st
 
 # from streamlit_javascript import st_javascript
 import pandas as pd
-import time
 
 # set_page_config() can only be called once per app page, and must be called as the first Streamlit command in your script.
 st.set_page_config(
@@ -75,7 +74,7 @@ st.sidebar.selectbox(
 
 
 try:
-    flag = languages.loc[languages.lang == st.session_state.lang, "flag"].values[0]
+    flag = languages.loc[languages.lang == st.session_state.lang, "flag"].values[0]  # type: ignore
 except Exception:
     flag = ""
 st.session_state.flag = flag
