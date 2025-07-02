@@ -12,9 +12,10 @@ st.markdown(
 st.image(
     "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Titanic_in_color.png/960px-Titanic_in_color.png",
     caption=(
-        "RMS Titanic au départ de Southampton le 10 avril 1912"
+        """RMS Titanic au départ de Southampton le 10 avril 1912  
+        Francis G. O. Stuart (1843–1923), colorisée (domaine public)"""
         if st.session_state.lang.startswith("fr")
-        else "RMS Titanic departing from Southampton on April 10, 1912"
+        else """RMS Titanic departing from Southampton on April 10, 1912  – Francis G. O. Stuart (1843–1923), colorized (public domain)"""
     ),
 )
 
@@ -91,7 +92,7 @@ st.header(
 df = load_csv(drop_outliers=False)
 df_display = to_display(df)
 
-st.dataframe(df_display)
+st.dataframe(df_display.style.format({"Tarif": "£{:.2f}"}))
 st.caption(
     "Les valeurs 'None' grises indiquent des valeurs manquantes"
     if st.session_state.lang.startswith("fr")
