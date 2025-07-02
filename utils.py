@@ -173,7 +173,7 @@ def to_display(df) -> pd.DataFrame:
         "Cabine",
         "Embarquement",
     ]
-    df_display["Survie"].replace({1: "Oui", 0: "Non"}, inplace=True)
+    df_display["Survie"].replace({1: "🟢 Oui", 0: "🔴 Non"}, inplace=True)
     df_display["Sexe"].replace({"male": "♂️ Homme", "female": "♀️ Femme"}, inplace=True)
     df_display["Embarquement"].replace(
         {"C": "🇫🇷 Cherbourg", "Q": "🇮🇪 Queenstown", "S": "🇬🇧 Southampton"}, inplace=True
