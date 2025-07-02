@@ -13,9 +13,10 @@ st.image(
     "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Titanic_in_color.png/960px-Titanic_in_color.png",
     caption=(
         """RMS Titanic au départ de Southampton le 10 avril 1912  
-        Francis G. O. Stuart (1843–1923), colorisée (domaine public)"""
+        *Photo: Francis G. O. Stuart (1843–1923), colorisée (domaine public)*"""
         if st.session_state.lang.startswith("fr")
-        else """RMS Titanic departing from Southampton on April 10, 1912  – Francis G. O. Stuart (1843–1923), colorized (public domain)"""
+        else """RMS Titanic departing from Southampton on April 10, 1912  
+        *Photo: Francis G. O. Stuart (1843–1923), colorized (public domain)*"""
     ),
 )
 
