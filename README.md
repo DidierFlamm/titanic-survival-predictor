@@ -98,3 +98,9 @@ MIT License – feel free to reuse and adapt.
   
 ## 🙌 Acknowledgements  
 Inspired by the famous Titanic survival classification challenge from [Kaggle](https://www.kaggle.com/competitions/titanic/overview).
+
+## ℹ️ About
+Author : Didier Flamm
+✉️ did_padman@hotmail.com
+🔗 [LinkedIn](https://www.linkedin.com/in/didier-flamm)
+Date   : June 2025
