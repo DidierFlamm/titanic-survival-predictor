@@ -8,19 +8,20 @@ The goal: predict the probability of survival for each Titanic passenger based o
 ---
 
 ## 📁 Project Structure
-[root](https://github.com/DidierFlamm/titanic-survival-predictor)  
-├── main.py          # Streamlit app launcher  
-├── streamlit_app.py # Main Streamlit app (entry point)  
-├── utils.py         # Utility functions  
-├── /pages/          # Additional Streamlit pages  
-└── README.md        # This file
-
+```
+root
+├── main.py           # Streamlit app launcher
+├── streamlit_app.py  # Main Streamlit app (entry point)
+├── utils.py          # Utility functions
+├── /pages/           # Streamlit pages
+└── README.md         # This file
+```
   
 ## 🚀 Quick Start
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/your-username/titanic-survival-predictor.git
+git clone https://github.com/DidierFlamm/titanic-survival-predictor.git
 cd titanic-survival-predictor
 ```
 
