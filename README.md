@@ -84,7 +84,7 @@ Python
 Streamlit  
 Scikit-learn  
 Pandas / NumPy  
-Matplotlib / Seaborn / Plotly  
+Plotly  
   
 ## 📊 Example
 Predict the survival of a 28-year-old woman in 1st class with no family aboard.
