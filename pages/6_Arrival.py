@@ -18,7 +18,7 @@ st.subheader("🎉🚢")
 
 st.write_stream(
     stream_data(
-        """Au nom de tous les membres de l’équipage, je souhaite vous adresser mes plus sincères **félicitations** et **remerciements** pour avoir bravé avec succès cet océan de données en notre compagnie. J’espère que ce projet vous a apporté autant de plaisir que d’apprentissage, et j’ai hâte de vous retrouver très bientôt pour de nouvelles expériences passionnantes avec **DIDS** !
+        """Au nom de tous les membres de l’équipage, je souhaite vous adresser mes plus sincères **félicitations** et **remerciements** pour avoir bravé avec succès cet océan de données. J’espère que ce projet vous a apporté autant de plaisir que d’apprentissage, et j’ai hâte de vous retrouver très bientôt pour de nouvelles expériences passionnantes avec la compagnie **DIDS** !
 """
     )
 )
