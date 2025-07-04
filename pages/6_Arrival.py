@@ -31,9 +31,10 @@ st.write("**Didier**")
 st.divider()
 
 st.markdown(
-    """_Le code source du projet Titanic Survival Predictor est disponible sur <a href="https://github.com/DidierFlamm/titanic-survival-predictor" target="_blank">GitHub</a>.  
-    Découvrez toutes mes applications interactives sur <a href="https://share.streamlit.io/user/didierflamm" target="_blank">Streamlit Community Cloud</a>.  
-    N’hésitez pas à y faire un tour puis me faire part de vos impressions via ✉️ [didier.flamm@gmail.com](mailto:didier.flamm@gmail.com) ou [LinkedIn](https://www.linkedin.com/in/didier-flamm)._""",
+    """_📦 Le code source du projet Titanic Survival Predictor est disponible sur <a href="https://github.com/DidierFlamm/titanic-survival-predictor" target="_blank">GitHub</a>.  
+    🧩 Découvrez toutes mes applications interactives sur <a href="https://share.streamlit.io/user/didierflamm" target="_blank">Streamlit Community Cloud</a>.  
+    N’hésitez pas à y faire un tour puis me faire part de vos impressions via  
+    ✉️ [didier.flamm@gmail.com](mailto:didier.flamm@gmail.com)  ou 💬 [LinkedIn](https://www.linkedin.com/in/didier-flamm)._""",
     unsafe_allow_html=True,
 )
 
