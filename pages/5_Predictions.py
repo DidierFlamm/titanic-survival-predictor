@@ -31,7 +31,7 @@ st.video(video_url, autoplay=True, muted=True)
 set_seed()
 
 st.write(
-    "🛳️ Cher passager, merci pour votre patience ! La traversée des étapes d’évaluation et d’optimisation n’est pas toujours de tout repos – surtout quand les conditions algorithmiques sont capricieuses..."
+    "🚢 Cher passager, merci pour votre patience ! La traversée des étapes d’évaluation et d’optimisation n’est pas toujours de tout repos – surtout quand les conditions algorithmiques sont capricieuses..."
 )
 st.write(
     """🌟 Nous voici enfin arrivés à destination : **les prédictions**, clou du spectacle et raison d’être de tout projet en intelligence artificielle.  
@@ -113,8 +113,7 @@ st.write(
 )
 
 st.write(
-    """✔️ Une **prédiction est dite correcte** si elle correspond à la réalité :  
-le modèle prédit la survie **et** le passager a survécu, ou bien il prédit le décès **et** le passager n’a pas survécu.
+    """✔️ Une **prédiction est dite correcte** si elle correspond à la réalité : le modèle prédit la survie **et** le passager a survécu, ou bien il prédit la non-survie **et** le passager n’a pas survécu.
 
 ❌ Dans le cas contraire, la prédiction est considérée comme **incorrecte**."""
 )
