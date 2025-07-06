@@ -20,7 +20,7 @@ st.write(
     Elle permet de comprendre la **répartition** des données, de détecter d’éventuels **déséquilibres**, 
     ou encore d’identifier des **outliers**, c'est à dire des valeurs extrêmes (statistiquement éloignées) ou aberrantes (souvent erronées).
 
-    👉 Chaque onglet onglet ci-dessous présente une **visualisation unique** de la répartition de la **variable cible** (survie),
+    👉 Chaque onglet ci-dessous présente une **visualisation unique** de la répartition de la **variable cible** (survie),
     ainsi que des **différentes caractéristiques** (âge, sexe, classe, tarif, etc.).
 
     Cette étape est essentielle pour avoir une première idée de la **structure des données** avant de passer 
@@ -64,7 +64,7 @@ with tab_survived:
 
     st.write(
         """La variable cible indique si un passager a survécu (`Oui`) ou pas (`Non`).   
-        On observe que moins de 39% des passages ont survécu."""
+        On observe que moins de **39%** des passages ont survécu."""
     )
 
 with tab_sex:
@@ -76,7 +76,9 @@ with tab_sex:
     )
     fig.update_traces(textposition="inside", textinfo="value+percent+label")
     st.plotly_chart(fig)
-    st.write("Il y avait presque 2 fois plus d'hommes que de femmes à bord du Titanic")
+    st.write(
+        "Il y avait presque **2 fois plus** d'hommes que de femmes à bord du Titanic"
+    )
 
 with tab_age:
     fig = px.histogram(
@@ -94,9 +96,10 @@ with tab_age:
     )
     st.plotly_chart(fig)
     st.write(
-        """Les passagers du Titanic étaient âgés de 5 mois à 80 ans, avec une médiane à 28 ans. 50% des passagers ont entre 20 et 38 ans (intervalle interquartile). 
-        Comme vu sur la page précédente, les âges de 177 passagers (soit 20%) ne sont pas renseignés dans le jeu de données. 
-        La valeur médiane de la distribution (28 ans) leur sera arbitrairement attribuée."""
+        """Les passagers du Titanic étaient âgés de 5 mois à 80 ans, avec une médiane à **28 ans**.  
+        50% des passagers ont entre 20 et 38 ans (intervalle interquartile).  
+        Comme vu sur la page précédente, 177 passagers (soit 20% du jeu de données) n'ont pas leur âge renseigné. 
+        La valeur médiane de la distribution,28 ans, leur sera arbitrairement attribuée."""
     )
 
 with tab_class:
@@ -116,7 +119,7 @@ with tab_fare:
     )
     st.plotly_chart(fig)
     st.write(
-        "Trois passagers présentent un tarif de £512.33, nettement supérieur à la distribution générale. Bien que ces valeurs extrêmes ne soient pas nécessairement aberrantes, elles sont considérées comme des outliers et seront exclues du jeu de données afin d'éviter qu’elles ne biaisent les résultats ultérieurs."
+        "Trois passagers présentent un tarif de **£512.33**, nettement supérieur à la distribution générale. Bien que ces valeurs extrêmes ne soient pas nécessairement aberrantes, elles sont considérées comme des outliers et seront exclues du jeu de données afin d'éviter qu’elles ne biaisent les résultats ultérieurs."
     )
 
 with tab_sibsp:
@@ -128,7 +131,7 @@ with tab_sibsp:
                 df_display["Fratrie & Conjoint(e)"].unique()
             )
         },
-        title="""Répartition du nombre de frères, sœurs et conjoint(e)""",
+        title="""Répartition du nombre de frères, sœurs<br>et conjoint(e)""",
     )
     fig.update_traces(
         textposition="inside",
@@ -137,7 +140,9 @@ with tab_sibsp:
     )
 
     st.plotly_chart(fig)
-    st.write("Plus de 2/3 des passagers voyagent sans frère ni sœur ni conjoint(e).")
+    st.write(
+        "Plus de **2/3** des passagers voyagent sans frère ni sœur ni conjoint(e)."
+    )
 
 with tab_parch:
     fig = px.pie(
@@ -154,7 +159,7 @@ with tab_parch:
         insidetextorientation="radial",
     )
     st.plotly_chart(fig)
-    st.write("Plus de 3/4 des passagers voyagent sans parent ni enfant.")
+    st.write("Plus de **75%** des passagers voyagent sans parent ni enfant.")
 
 with tab_embarked:
     fig = px.pie(
@@ -165,7 +170,7 @@ with tab_embarked:
     fig.update_traces(textposition="auto", textinfo="value+percent+label")
     st.plotly_chart(fig)
     st.write(
-        """Près de 3/4 des passagers ont embarqués à Southampton (Angleterre).  
+        """Près de **75%** des passagers ont embarqués à Southampton (Angleterre).  
              Comme vu sur la page précédente, le port d'embarquement de 2 passagers n'est pas renseigné dans le jeu de données. 
              La valeur majoritaire ('Southampton') leur sera arbitrairement attribuée."""
     )
@@ -211,14 +216,14 @@ with tab_sex_sur:
     fig = px.sunburst(
         df_display,
         path=["Sexe", "Survie"],
-        title="Analyse de la survie en fonction du sexe des passagers",
+        title="""Analyse de la survie en fonction<br>du sexe des passagers""",
     )
     st.plotly_chart(fig)
 
     st.write(
         """On constate que les femmes ont mieux survécu que les hommes :  
-        • 232 survivantes sur 314 femmes, soit 74%  
-        • 107 survivants sur 577 hommes, soit 19%"""
+        • 232 survivantes sur 314 femmes, soit **74%**  
+        • 107 survivants sur 577 hommes, soit **19%**"""
     )
 
 with tab_class_sur:
@@ -231,9 +236,9 @@ with tab_class_sur:
 
     st.write(
         """On constate que, proportionnellement, les passagers de 1ère classe ont mieux survécu que ceux de 2ème classe, qui ont mieux survécu que ceux de 3ème classe :  
-        • 133 survivants sur 216 passagers en 1ère classe, soit 62%  
-        • 87 survivants sur 184 passagers en 2ème classe, soit 47%  
-        • 119 survivants sur 491 passagers en 3ème classe, soit 24%"""
+        • 133 survivants sur 216 passagers en 1ère classe, soit **62**%  
+        • 87 survivants sur 184 passagers en 2ème classe, soit **47**%  
+        • 119 survivants sur 491 passagers en 3ème classe, soit **24%**"""
     )
 
 with tab_parch_sur:
@@ -246,7 +251,7 @@ with tab_parch_sur:
             # Classe=["1ère", "2ème", "3ème"],
             Survie=["Oui", "Non"],
         ),
-        title="Analyse de la survie en fonction du nombre de parents et enfants à bord du Titanic",
+        title="""Analyse de la survie en fonction du nombre<br>de parents et enfants à bord du Titanic""",
     )
     st.plotly_chart(fig)
 
@@ -258,22 +263,22 @@ with tab_embarked_sur:
     fig = px.sunburst(
         df_display,
         path=["Embarquement", "Survie"],
-        title="Histogramme empilé de la survie en fonction du port d'embarquement",
+        title="""Histogramme empilé de la survie en fonction<br>du port d'embarquement""",
     )
 
     st.plotly_chart(fig)
     st.write(
         """On constate que, proportionnellement, les passagers ayant embarqué à Cherbourg ont mieux survécu que les autres :  
-            • 90 survivants sur 168 passagers ayant embarqué à Cherbourg (54%)  
-            • 30 survivants sur 77 passagers ayant embarqué à Cherbourg (39%)  
-            • 219 survivants sur 646 passagers ayant embarqué à Cherbourg (34%)"""
+            • 90 survivants sur 168 passagers ayant embarqué à Cherbourg, soit **54%**  
+            • 30 survivants sur 77 passagers ayant embarqué à Cherbourg, soit **39%**  
+            • 219 survivants sur 646 passagers ayant embarqué à Cherbourg, soit **34%**"""
     )
 
 with tab_embarked_class:
     fig = px.sunburst(
         df_display,
         path=["Embarquement", "Classe"],
-        title="Analyse de la classe en fonction du port d'embarquement",
+        title="""Analyse de la classe en fonction<br>du port d'embarquement""",
     )
     st.plotly_chart(fig)
 
@@ -296,21 +301,21 @@ with tab1:
     fig = px.sunburst(
         df_display,
         path=["Sexe", "Survie", "Classe"],
-        title="Tendances de survie par sexe et classe sur le Titanic",
+        title="Tendances de survie par sexe et classe",
     )
     st.plotly_chart(fig)
 
     st.write(
         """Ce graphique met en évidence 2 tendances:  
-        • Les femmes n'ayant pas survécu voyageaient très majoritairement en 3ème classe (parmi les 81 femmes n'ayant pas survécu, 72 voyageaient en 3ème classe).  
-        • Les hommes n'ayant pas survécu sont répartis sur les 3 classes mais un déséquilibre important est observée sur la classe 3 (parmi les 347 hommes voyageant en 3ème classe, 300 n'ont pas survécu)"""
+        • Les femmes n'ayant pas survécu voyageaient très majoritairement en 3ème classe (parmi les 81 femmes n'ayant pas survécu, 72 voyageaient en 3ème classe, soit **89%**).  
+        • Les hommes n'ayant pas survécu sont répartis sur les 3 classes mais un déséquilibre important est observé sur la classe 3 (parmi les 347 hommes voyageant en 3ème classe, 300 n'ont pas survécu, soit **86%**)"""
     )
 
 with tab2:
     fig = px.sunburst(
         df_display,
         path=["Embarquement", "Survie", "Classe"],
-        title="Tendances de survie par port d'embarquement et classe sur le Titanic",
+        title="Tendances de survie par port<br>d'embarquement et classe",
     )
     st.plotly_chart(fig)
 
