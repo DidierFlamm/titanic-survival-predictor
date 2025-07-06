@@ -320,6 +320,8 @@ with tab2:
 
 _, col, _ = st.columns(3)
 with col:
+    st.write("")
+    st.write("")
     st.page_link(
         st.Page(
             "pages/3_Evaluation.py",
