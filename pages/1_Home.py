@@ -19,7 +19,7 @@ st.write("")
 
 # st.header(":blue[🚢 Titanic Survival Predictor]", divider=False)
 st.markdown(
-    "<h2 style='text-align: center; color: #0366d6;'>🚢Titanic Survival Predictor</h2>",
+    "<h2 style='text-align: center; color: #0366d6;'>🚢 Titanic Survival Predictor 🛟</h2>",
     unsafe_allow_html=True,
 )
 
