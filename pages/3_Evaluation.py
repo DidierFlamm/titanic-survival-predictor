@@ -151,9 +151,9 @@ st.caption(
 )
 
 with st.expander(
-    "Afficher les erreurs"
+    "🐞 Afficher les erreurs"
     if st.session_state.lang.startswith("fr")
-    else "Display errors"
+    else "🐞 Display errors"
 ):
     st.dataframe(errors)
 

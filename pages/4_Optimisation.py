@@ -69,7 +69,7 @@ params = {
     },
 }
 
-with st.expander("Afficher les paramètres de la grille de recherche"):
+with st.expander("🔍 Afficher les détails de la grille de recherche"):
     st.json(params)
 
 progress_bar = st.progress(0)
@@ -131,9 +131,9 @@ for idx, name in enumerate(models):
             }
         )
         with st.expander(
-            "Afficher les résultats de la Grid Search CV"
+            "📊 Afficher les résultats de la Grid Search CV"
             if st.session_state.lang.startswith("fr")
-            else "Display grid search results"
+            else "📊 Display grid search results"
         ):
             st.dataframe(pd.DataFrame(grid.cv_results_))
 
