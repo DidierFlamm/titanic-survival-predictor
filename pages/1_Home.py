@@ -100,10 +100,25 @@ st.caption(
     else "The gray 'None' values indicate missing data"
 )
 
+st.markdown(
+    f"""
+    <div style="text-align: center;">
+        {"Source des données" if st.session_state.lang.startswith("fr") else "Data source"} :
+        <a href="https://github.com/datasciencedojo/datasets/blob/master/titanic.csv" target="_blank">
+            Data Science Dojo
+        </a>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
+st.write("")
+st.write("")
+
 with st.expander(
-    "Afficher les valeurs manquantes"
+    "🕵️ Afficher les valeurs manquantes"
     if st.session_state.lang.startswith("fr")
-    else "Display missing values"
+    else "🕵️ Display missing values"
 ):
     # Compter les valeurs manquantes et formater proprement
     missing = df_display.isna().sum().to_frame(name="Nombre")
@@ -114,13 +129,6 @@ with st.expander(
     missing = missing[missing["Nombre"] > 0]
     missing = missing.sort_values("Nombre", ascending=False)
     st.dataframe(missing, width=300, use_container_width=False)
-
-
-st.markdown(
-    ("Source des données" if st.session_state.lang.startswith("fr") else "Data source")
-    + ' : <a href="https://github.com/datasciencedojo/datasets/blob/master/titanic.csv" target="_blank">Data Science Dojo</a>',
-    unsafe_allow_html=True,
-)
 
 
 st.subheader(
