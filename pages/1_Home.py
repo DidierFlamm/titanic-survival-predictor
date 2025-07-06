@@ -5,7 +5,21 @@ import pandas as pd
 import streamlit.components.v1 as components
 
 st.markdown(
-    "<h1 style='text-align: center; color: #0366d6;'>🚢 Titanic Survival Predictor</h1>",
+    "<h1 style='text-align: center; color: #0366d6;'>🌊 Dive Into... Machine Learning !</h1>",
+    unsafe_allow_html=True,
+)
+
+st.write("")
+st.write("")
+
+# st.markdown(
+#    "<h1 style='text-align: center; color: #0366d6;'>🚢 Project: Titanic Survival Predictor</h1>",
+#    unsafe_allow_html=True,
+# )
+
+# st.header(":blue[🚢 Titanic Survival Predictor]", divider=False)
+st.markdown(
+    "<h2 style='text-align: center; color: #0366d6;'>🚢Titanic Survival Predictor</h2>",
     unsafe_allow_html=True,
 )
 
@@ -21,7 +35,7 @@ st.image(
 )
 
 
-st.header(":blue[Introduction]", divider=True)
+st.subheader(":blue[Introduction]", divider=True)
 
 
 # Textes à lire
@@ -85,7 +99,7 @@ with col2:
 st.write(intro_translated)
 st.write(text_DIDS)
 
-st.header(
+st.subheader(
     ":blue[Données]" if st.session_state.lang.startswith("fr") else ":blue[Data]",
     divider=True,
 )
@@ -137,6 +151,7 @@ st.subheader(
         if st.session_state.lang.startswith("fr")
         else ":blue[Details]"
     ),
+    divider=True,
 )
 df = pd.DataFrame(
     {
