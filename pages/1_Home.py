@@ -5,7 +5,7 @@ import pandas as pd
 import streamlit.components.v1 as components
 
 st.markdown(
-    "<h1 style='text-align: center; color: #0366d6;'>🌊 Dive Into... Machine Learning !</h1>",
+    "<h1 style='text-align: center; color: #0366d6;'>🌊 Dive into Machine Learning 📊</h1>",
     unsafe_allow_html=True,
 )
 
