@@ -69,7 +69,7 @@ params = {
     },
 }
 
-with st.expander("🔍 Afficher les détails de la grille de recherche"):
+with st.expander("🔍 Afficher les détails"):
     st.json(params)
 
 progress_bar = st.progress(0)

@@ -123,7 +123,7 @@ frequencies = df_display["Prédiction correcte ?"].value_counts(normalize=True)
 result = pd.DataFrame(
     {"Nb": counts, "%": (100 * frequencies).round(2).astype(str) + " %"}
 )
-with st.expander("📊 Afficher les statistiques de justesse des prédictions"):
+with st.expander("📊 Afficher les statistiques d'exactitude des prédictions"):
     st.dataframe(result)
 
 st.write(
