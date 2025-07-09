@@ -50,7 +50,7 @@ Votre capitaine, Flamm Didier, et vos matelots Charlize et James vous souhaitent
 
 intro_translated = translate_text(intro_FR, st.session_state.lang.split("-")[0])
 
-text_DIDS = """DIDS — Dive Into Data Science"""
+text_DIDS = """DID — Dive Into Data"""
 
 
 script = f"""
