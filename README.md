@@ -3,7 +3,7 @@
 A Streamlit application presenting a complete Machine Learning case study.  
 The goal: predict the probability of survival for each Titanic passenger based on features like age, sex, class, and family aboard.
 
-🔗 **Live demo available here:** [didstitanic.streamlit.app](https://didstitanic.streamlit.app/)
+🔗 **Live demo available here:** [did-titanic.streamlit.app](https://did-titanic.streamlit.app/)
 
 ---
 
@@ -92,7 +92,7 @@ Predict the survival of a 28-year-old woman in 1st class with no family aboard.
 
 ## 🌐 Live App  
 No setup needed — try it instantly online:  
-👉 [https://didstitanic.streamlit.app](https://didstitanic.streamlit.app)
+👉 [https://didstitanic.streamlit.app](https://did-titanic.streamlit.app)
   
 ## 📄 License  
 MIT License – feel free to reuse and adapt.
