@@ -8,12 +8,12 @@ import pandas as pd
 st.set_page_config(
     menu_items={
         "Get Help": None,
-        "Report a bug": "mailto:didier.flamm@gmail.com?subject=Reporting%20a%20bug%20in%20titanic-survival-predictor%20Streamlit%20app&body=OS%20(Windows,%20macOS,%20Linux,%20Android,%20iOS):%0ABrowser:%0ABug%20you%20encountered:%0A%0AThanks!",
+        "Report a bug": "mailto:contact@diveintodata.fr?subject=Reporting%20a%20bug%20in%20titanic-survival-predictor%20Streamlit%20app&body=OS%20(Windows,%20macOS,%20Linux,%20Android,%20iOS):%0ABrowser:%0ABug%20you%20encountered:%0A%0AThanks!",
         "About": """## Titanic Survival Predictor  
 This project predicts the survival chances of Titanic passengers using machine learning. The source code is available on [GitHub](https://github.com/DidierFlamm/titanic-survival-predictor)  
 
 © 2025 Didier Flamm  
-✉️ [didier.flamm@gmail.com](mailto:didier.flamm@gmail.com) – 💬 [LinkedIn](https://www.linkedin.com/in/didier-flamm) – 📁 [Portfolio](https://share.streamlit.io/user/didierflamm)  
+✉️ [contact@diveintodata.fr](mailto:contact@diveintodata.fr) – 💬 [LinkedIn](https://www.linkedin.com/in/didier-flamm) – 📁 [Portfolio](https://share.streamlit.io/user/didierflamm)  
 """,
     }
 )
@@ -87,16 +87,16 @@ ambiance = st.sidebar.radio(
     label_visibility="collapsed",
 )
 
-#trance_url = "https://mstore.pics/download?data=Q0t5My9HMkFCU0pQZnZpWk1MTXJISEo2V20vMTVkNiszWVRLTkIxVERaczlSUk1LYi9Jb2Q5cHRsR05NcVhhL2ozUUF3dElnUG5oNXVKSWtrZ0MvRnBuWDRJS3J6VG4vRDREOThHSUF5RG9ITlU1NkxWS2dlZHMrblJ1Q2NkOTlSYVNGaGhtcWR3aXRWeGtTekVUa2pPSzhhNHJ4YTVSYVNhQkRzczNTYkRKNWhpNjl3TDJmK1RVb3UwU1Y2WEt6aGNTU0ZLL214dlM2Y3YveE9wT1NnY2R1bDBXekN2VjZPVWc4UitQUHdwRlRTd3k4UFJOQ0NJa25iYWJzbFRDZy9tdDk2a3FMc2NLNjIxdkcrRUZsYmpZZTlld2c5dXVqVmxyVk05dldrRGVHTE1FS0pHbkVNclZtY25mYTNJVi8vRUxUQlJpUXFHWW1lOFQxTms0aWxsV2RvWk85MHd5clVrdGxWN1FINGVpbHFmdEpLNCtEZy95cUlSSnN4cmZtckNsYWZRaWtsRHNuZU1PWWJkWG5rbjBKVHVYMVovQ0JBUDQzL1R1T2tpRUwwMjIxQXI2NEowalU3QnR4OWpXWFhVL1NmblNDc2E4WmlSckV0cm9KVE9hMzkyTjdXYi9TS25YMDFYMGkzMG8zRkZzY3RHTmxDcGlETllNQUJrRm9HSktoaHdnVjRPb3F0Z3Y3RU83b0h2QkdDQXUzQTdTY29ua05YK3NoNGFDdE1WbnFzUkRxVmc1Q1QvVGdSL1lzZHVTb1U0Tk9nZG1QbTlxcFowVGpqNkdpV3V2L0dtbWpHQWQ0Z291NXJYZHg1QWh6d2ZSd1A2L2FZRHNEVUExWA"
+# trance_url = "https://mstore.pics/download?data=Q0t5My9HMkFCU0pQZnZpWk1MTXJISEo2V20vMTVkNiszWVRLTkIxVERaczlSUk1LYi9Jb2Q5cHRsR05NcVhhL2ozUUF3dElnUG5oNXVKSWtrZ0MvRnBuWDRJS3J6VG4vRDREOThHSUF5RG9ITlU1NkxWS2dlZHMrblJ1Q2NkOTlSYVNGaGhtcWR3aXRWeGtTekVUa2pPSzhhNHJ4YTVSYVNhQkRzczNTYkRKNWhpNjl3TDJmK1RVb3UwU1Y2WEt6aGNTU0ZLL214dlM2Y3YveE9wT1NnY2R1bDBXekN2VjZPVWc4UitQUHdwRlRTd3k4UFJOQ0NJa25iYWJzbFRDZy9tdDk2a3FMc2NLNjIxdkcrRUZsYmpZZTlld2c5dXVqVmxyVk05dldrRGVHTE1FS0pHbkVNclZtY25mYTNJVi8vRUxUQlJpUXFHWW1lOFQxTms0aWxsV2RvWk85MHd5clVrdGxWN1FINGVpbHFmdEpLNCtEZy95cUlSSnN4cmZtckNsYWZRaWtsRHNuZU1PWWJkWG5rbjBKVHVYMVovQ0JBUDQzL1R1T2tpRUwwMjIxQXI2NEowalU3QnR4OWpXWFhVL1NmblNDc2E4WmlSckV0cm9KVE9hMzkyTjdXYi9TS25YMDFYMGkzMG8zRkZzY3RHTmxDcGlETllNQUJrRm9HSktoaHdnVjRPb3F0Z3Y3RU83b0h2QkdDQXUzQTdTY29ua05YK3NoNGFDdE1WbnFzUkRxVmc1Q1QvVGdSL1lzZHVTb1U0Tk9nZG1QbTlxcFowVGpqNkdpV3V2L0dtbWpHQWQ0Z291NXJYZHg1QWh6d2ZSd1A2L2FZRHNEVUExWA"
 
 video_url = "https://youtu.be/-sMdatCs4Pc"
 
 if ambiance.startswith("😎"):
-    #st.sidebar.audio(
+    # st.sidebar.audio(
     #    trance_url,
     #    format="audio/mpeg",  # = mp3
     #    autoplay=True,
-    #)
+    # )
 
     st.sidebar.video(video_url, autoplay=True, muted=False)
 

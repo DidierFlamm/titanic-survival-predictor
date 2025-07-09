@@ -102,6 +102,6 @@ Inspired by the famous Titanic survival classification challenge from [Kaggle](h
 
 ## ℹ️ About
 Author : Didier Flamm  
-✉️ did_padman@hotmail.com  
+✉️ contact@diveintodata.fr
 🔗 [LinkedIn](https://www.linkedin.com/in/didier-flamm)  
 Date : June 2025
