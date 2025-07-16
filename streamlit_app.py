@@ -83,7 +83,7 @@ st.sidebar.subheader("Ambiance", divider=True)
 
 ambiance = st.sidebar.radio(
     "Select ambiance",
-    ("🔇 Silent mode", "😎 Summer version", "💿 Titanic OST"),
+    ("🔇 Silent mode", "😎 Summer remix", "💿 Titanic OST"),
     label_visibility="collapsed",
 )
 
