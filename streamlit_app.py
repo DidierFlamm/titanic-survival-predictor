@@ -160,7 +160,7 @@ st.sidebar.subheader("View all apps", divider=True)
 st.sidebar.markdown(
     """
     <a href="https://share.streamlit.io/user/didierflamm" target="_blank">
-        <img src="https://raw.githubusercontent.com/DidierFlamm/DidierFlamm/main/dids.webp" width="100%"; />
+        <img src="https://raw.githubusercontent.com/DidierFlamm/DidierFlamm/main/DID_nobg.png" width="100%"; />
     </a>
     """,
     unsafe_allow_html=True,
