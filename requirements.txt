@@ -5,3 +5,4 @@ plotly
 scikit_learn
 streamlit
 streamlit-javascript
+altair<5
