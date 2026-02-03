@@ -3,6 +3,6 @@ numpy
 pandas
 plotly
 scikit_learn
-streamlit>=1.31,<1.36
+streamlit>=1.36
 streamlit-javascript
 altair<5
