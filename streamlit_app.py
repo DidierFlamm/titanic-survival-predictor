@@ -18,11 +18,6 @@ This project predicts the survival chances of Titanic passengers using machine l
     }
 )
 
-#st.logo(
-#    #"https://img.icons8.com/?size=100&id=#s5NUIabJrb4C&format=png&color=000000",
-#    size="large",
-#)
-
 st.sidebar.subheader("Language", divider=True)
 
 # récupération auto de la langue par défaut du navigateur en JS avec navigator.language
