@@ -3,5 +3,4 @@ numpy
 pandas
 plotly
 scikit_learn
-streamlit
-streamlit-javascript
+streamlit>=1.36
